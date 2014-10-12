@@ -1,6 +1,6 @@
 /*
 MainUI.java
- */
+*/
 
 package ClaspUI;
 
@@ -11,13 +11,18 @@ import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 
+@SuppressWarnings("serial")
 public class MainUI extends JFrame {
 	
 	// Constants for window width and height
-	private final int INIT_WIDTH = 525; 
+	private final int INIT_WIDTH = 400;
 	private final int INIT_HEIGHT = 300;
 	private JTextField userField;
 	private JPasswordField passField;
@@ -39,6 +44,7 @@ public class MainUI extends JFrame {
 		
 		// Set size and position of the window
 		setSize(INIT_WIDTH, INIT_HEIGHT);
+		setResizable(false);
 		setLocationRelativeTo(null);
 		
 		// Set window layout to a GridBagLayout
@@ -54,9 +60,14 @@ public class MainUI extends JFrame {
 		
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.gridy = 0;
-		gbc.insets = new Insets(0, 0, 20, 0);
-		JLabel label = new JLabel("Clasp Login");
-		label.setFont(UIManager.getFont("Label.font").deriveFont((float) 24.0));
+		gbc.insets = new Insets(0, 0, 5, 0);
+		BufferedImage loginImage = null;
+		try {
+			loginImage = ImageIO.read(new File("ClaspLogin.png"));
+		} catch (IOException e) {
+			// Do something if the image is not found
+		}
+		JLabel label = new JLabel(new ImageIcon(loginImage));
 		this.add(label, gbc);
 		gbc.ipady = 0;
 		gbc.insets = new Insets(0, 0, 0, 0);
@@ -88,6 +99,7 @@ public class MainUI extends JFrame {
 		setVisible(true);
 	}
 	
+	// ActionListener for login
 	private class LoginListener implements ActionListener {
 	    public void actionPerformed(ActionEvent e) {	    	
 	    	JOptionPane.showMessageDialog(null, 
