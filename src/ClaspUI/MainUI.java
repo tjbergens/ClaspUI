@@ -61,19 +61,25 @@ public class MainUI extends JFrame {
 		gbc.ipady = 0;
 		gbc.insets = new Insets(0, 0, 0, 0);
 		
+		LoginListener loginListener = new LoginListener();
+		
 		// Add components to pane, add pane to window
-		userField = new JTextField(16);
 		pane.add(new JLabel("Username"));
+		userField = new JTextField(16);
+		userField.addActionListener(loginListener);
 		pane.add(userField);
-		passField = new JPasswordField(16);
+		
 		pane.add(new JLabel("Password"));
+		passField = new JPasswordField(16);
+		passField.addActionListener(loginListener);
 		pane.add(passField);
+		
 		gbc.gridy = 1;
 		this.add(pane, gbc);
 		
 		// Add button for login
 		JButton loginButton = new JButton("Log in");
-		loginButton.addActionListener(new LoginListener());
+		loginButton.addActionListener(loginListener);
 		gbc.insets = new Insets(20, 0, 0, 0);
 		gbc.gridy = 2;
 		this.add(loginButton, gbc);
