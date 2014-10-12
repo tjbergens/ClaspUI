@@ -19,7 +19,7 @@ import javax.swing.border.Border;
 public class MainUI extends JFrame {
 	
 	// Constants for window width and height
-	private final int INIT_WIDTH = 520; 
+	private final int INIT_WIDTH = 525; 
 	private final int INIT_HEIGHT = 300;
 	private JTextField userField;
 	private JPasswordField passField;
