@@ -2,11 +2,13 @@ package ClaspBackend;
 
 import ClaspUI.MainUI;
 
-public class Main {
-
+public final class Main {
+	
+	public static MainUI claspWindow;
+	
 	public static void main(String[] args) {
 		
-		MainUI claspWindow = new MainUI();
+		claspWindow = new MainUI();
 		
 	}
 	
