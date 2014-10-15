@@ -8,6 +8,7 @@ import java.io.*;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
+import ClaspBackend.AuthEngine;
 import ClaspUI.MainUI.View;
 
 @SuppressWarnings("serial")
@@ -77,10 +78,19 @@ public class LoginUI extends JPanel {
 		
 		@Override
 	    public void actionPerformed(ActionEvent e) {	    	
-	    	JOptionPane.showMessageDialog(null, 
-	    		"You have logged in!\nUsername: " + userField.getText() +
-	    				"\nPass: " + String.valueOf(passField.getPassword()));
+
+            String userName = userField.getText();
+            String masterPassword = String.valueOf(passField.getPassword());
+
+            JOptionPane.showMessageDialog(null,
+	    		"You have logged in!\nUsername: " + userName +
+	    				"\nPass: " + masterPassword);
 	    	parent.changeView(View.PASSWORDS);
+
+            AuthEngine authenticator = new AuthEngine();
+            authenticator.makeKey(masterPassword, userName);
+
+
 	    }
 	}
 	
