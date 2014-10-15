@@ -7,6 +7,7 @@ import java.io.*;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.border.BevelBorder;
 
 import ClaspBackend.AuthEngine;
 import ClaspUI.MainUI.View;
@@ -54,11 +55,13 @@ public class LoginUI extends JPanel {
 		pane.add(new JLabel("Username"));
 		userField = new JTextField(16);
 		userField.addActionListener(loginListener);
+		userField.setToolTipText("Enter your username");
 		pane.add(userField);
 		
 		pane.add(new JLabel("Password"));
 		passField = new JPasswordField(16);
 		passField.addActionListener(loginListener);
+		passField.setToolTipText("Enter your password");
 		pane.add(passField);
 		
 		gbc.gridy = 1;
@@ -81,7 +84,25 @@ public class LoginUI extends JPanel {
 
             String userName = userField.getText();
             String masterPassword = String.valueOf(passField.getPassword());
-
+            
+            // Reset component borders
+            userField.setBorder(null);
+            userField.updateUI();
+            passField.setBorder(null);
+            passField.updateUI();
+            
+            // Apply red border if username is empty or whitespace, then return
+            if (userName.trim().isEmpty()) {
+            	userField.setBorder(BorderFactory.createLineBorder(Color.red));
+            	return;
+            }
+            
+            // Apply red border if password is empty, then return
+            if (masterPassword.isEmpty()) {
+            	passField.setBorder(BorderFactory.createLineBorder(Color.red));
+            	return;
+            }
+            	
             JOptionPane.showMessageDialog(null,
 	    		"You have logged in!\nUsername: " + userName +
 	    				"\nPass: " + masterPassword);
