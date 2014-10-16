@@ -4,7 +4,10 @@ import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
+
 import java.security.NoSuchAlgorithmException;
+import java.security.Provider;
+import java.security.Security;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
 
@@ -17,9 +20,11 @@ public class AuthEngine {
 
         SecretKeyFactory factory = null;
         try {
-            factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256");
+            factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
+            for (Provider p : Security.getProviders())
+            	System.out.println(p);
         }
         KeySpec spec = new PBEKeySpec(masterPass.toCharArray(), username.getBytes(), 65536, 256);
         SecretKey tmp = null;
