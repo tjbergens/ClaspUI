@@ -39,8 +39,12 @@ public class LoginUI extends JPanel {
 		gbc.gridy = 0;
 		gbc.insets = new Insets(0, 0, 5, 0);
 		BufferedImage loginImage = null;
+		BufferedImage plusImage = null;
+		BufferedImage forgotImage = null;
 		try {
 			loginImage = ImageIO.read(new File("ClaspLogin.png"));
+			plusImage = ImageIO.read(new File("PlusIcon.png"));
+			forgotImage = ImageIO.read(new File("QuestionIcon.png"));
 		} catch (IOException e) {
 			// Do something if the image is not found
 		}
@@ -73,6 +77,20 @@ public class LoginUI extends JPanel {
 		gbc.insets = new Insets(20, 0, 0, 0);
 		gbc.gridy = 2;
 		this.add(loginButton, gbc);
+		
+		// Bottom most buttons for creating an account and resetting password
+		JButton createAccountButton = new JButton("Create Account");
+		createAccountButton.setIcon(new ImageIcon(plusImage));
+		
+		JButton forgotPassButton = new JButton("Forgot Password");
+		forgotPassButton.setIcon(new ImageIcon(forgotImage));
+		
+		JPanel bottomPane = new JPanel();
+		bottomPane.add(createAccountButton);
+		bottomPane.add(forgotPassButton);
+		
+		gbc.gridy = 3;
+		this.add(bottomPane, gbc);
 		
 	}
 	
