@@ -100,8 +100,8 @@ public class LoginUI extends JPanel {
 		@Override
 	    public void actionPerformed(ActionEvent e) {	    	
 
-            String userName = userField.getText();
-            String masterPassword = String.valueOf(passField.getPassword());
+            MainUI.userName = userField.getText();
+            MainUI.masterPassword = String.valueOf(passField.getPassword());
             
             // Reset component borders
             userField.setBorder(null);
@@ -110,24 +110,24 @@ public class LoginUI extends JPanel {
             passField.updateUI();
             
             // Apply red border if username is empty or whitespace, then return
-            if (userName.trim().isEmpty()) {
+            if (MainUI.userName.trim().isEmpty()) {
             	userField.setBorder(BorderFactory.createLineBorder(Color.red));
             	return;
             }
             
             // Apply red border if password is empty, then return
-            if (masterPassword.isEmpty()) {
+            if (MainUI.masterPassword.isEmpty()) {
             	passField.setBorder(BorderFactory.createLineBorder(Color.red));
             	return;
             }
             	
             JOptionPane.showMessageDialog(null,
-	    		"You have logged in!\nUsername: " + userName +
-	    				"\nPass: " + masterPassword);
+	    		"You have logged in!\nUsername: " + MainUI.userName +
+	    				"\nPass: " + MainUI.masterPassword);
 	    	parent.changeView(View.PASSWORDS);
 
             AuthEngine authenticator = new AuthEngine();
-            authenticator.makeKey(masterPassword, userName);
+            authenticator.makeKey(MainUI.masterPassword, MainUI.userName);
 
 
 	    }
