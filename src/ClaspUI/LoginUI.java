@@ -126,9 +126,8 @@ public class LoginUI extends JPanel {
 	    				"\nPass: " + MainUI.masterPassword);
 	    	parent.changeView(View.PASSWORDS);
 
-            AuthEngine authenticator = new AuthEngine();
-            authenticator.makeKey(MainUI.masterPassword, MainUI.userName);
-
+            String cryptoKey = AuthEngine.makeKey(MainUI.masterPassword, MainUI.userName);
+            System.err.println(cryptoKey);
 
 	    }
 	}

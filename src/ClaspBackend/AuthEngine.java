@@ -9,12 +9,12 @@ import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
 
-/**
- * Created by TJ on 10/15/2014.
- */
 public class AuthEngine {
 
-    public void makeKey(String masterPass, String username){
+    private static final int ITERATIONS = 5000;
+    private static final int KEYLENGTH = 256;
+
+    public static String makeKey(String masterPass, String username){
 
         SecretKeyFactory factory = null;
         try {
@@ -22,7 +22,8 @@ public class AuthEngine {
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
-        KeySpec spec = new PBEKeySpec(masterPass.toCharArray(), username.getBytes(), 65536, 256);
+
+        KeySpec spec = new PBEKeySpec(masterPass.toCharArray(), username.getBytes(), ITERATIONS, KEYLENGTH);
         SecretKey tmp = null;
         try {
             tmp = factory.generateSecret(spec);
@@ -32,5 +33,7 @@ public class AuthEngine {
         SecretKey secret = new SecretKeySpec(tmp.getEncoded(), "AES");
         String keyString = secret.getEncoded().toString();
         System.out.println(keyString);
+
+        return keyString;
     }
 }

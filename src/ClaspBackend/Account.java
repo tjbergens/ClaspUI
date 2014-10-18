@@ -5,14 +5,21 @@ public class Account {
 	private String accountName;
 	private String userName; //says unused but used in constructor
 	private String password; //says unused but used in constructor
+    private String description;
 	
 	//Constructor sets all attributes
-	 public Account(String accountName, String userName, String password){
+	 public Account(String accountName, String userName, String password, String description){
 		this.accountName = accountName;
 		this.userName = userName;
 		this.password = password;
+        this.description = description;
 	}
-	 
+
+    public Account(String accountName, String userName, String password){
+        this.accountName = accountName;
+        this.userName = userName;
+        this.password = password;
+    }
 	 //created equals function for the arraylist.remove method.
 	 public boolean equals(Object obj) {
 		 if(obj == null) return false;

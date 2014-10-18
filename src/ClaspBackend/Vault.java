@@ -1,64 +1,70 @@
 package ClaspBackend;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.json.JSONArray;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.stream.JsonWriter;
 
 /*I have not provided an output yet as i am not sure how the organization is supposed to go
  * I have not included the encryption or decryption in here either.
  * 
  */
 
-
+// Static as only one user will be logged in using this application. Vault does not need to be an instance.
 public class Vault {
-	//Create master username and MasterPassword not sure how to do authentication
-	private String masterUserName;
-	private String masterPassword;
+
 	//Creates a list of all accounts associate with the users vault
-	private ArrayList<Account> accounts = new ArrayList<Account>();
-	
-	//Constructor for the Vault class in case of new User
-	public Vault(String masterUserName, String masterPassword) throws FileNotFoundException, IOException, ParseException, JSONException{
-		this.masterPassword = masterPassword;
-		this.masterUserName = masterUserName;
-	
-	
-		//Not sure if all the JSON is correct I am getting a weird notification from eclipse on line 29
-		//Create new parser
-		JSONParser parser = new JSONParser();
-		//Get the contents of JSON file assuming its being stored as an object
-		JSONObject mainJSON = (JSONObject) parser.parse(new FileReader("path_to_json_file"));
-		//Create JSONArray to store all Accounts in JSON file
-		JSONArray jsonArr = new JSONArray();  
-		//Get the JSONArray from the JSON file, assuming this is how the JSON file information is being stored
-		jsonArr = mainJSON.getJSONArray("Account");
-		//for each entry in the array add an account to current Users Vault
-		for(int i = 0; i < jsonArr.length(); i++){
-			JSONObject subAccount = jsonArr.getJSONObject(i);
-			addAccount(subAccount.getString("accountName"), subAccount.getString("userName"), subAccount.getString("password"));
-		}
-	}
-	
-	//If user wants to add a new account that is not already listed in the JSON file (not sure if this needs to be handled in UI)
+	private ArrayList<Account> accounts;
+    private Gson gson;
+    private File file;
+    private FileWriter writer;
+
+    public Vault() {
+
+        accounts = new ArrayList<Account>();
+        gson = new GsonBuilder().create();
+        file = new File("test.json");
+        try {
+            writer = new FileWriter(file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    //If user wants to add a new account that is not already listed in the JSON file (not sure if this needs to be handled in UI)
 	public void addAccount(String accountName, String userName, String password){ 
-		accounts.add(new Account(accountName, userName, password));
+
+        accounts.add(new Account(accountName, userName, password));
 	}
-	
+
+    public void updateAccount(Account oldAccount, Account newAccount){
+
+        accounts.remove(oldAccount);
+        accounts.add(newAccount);
+        this.saveAccounts();
+    }
+
 	//Remove an account from the JSON file
 	public void removeAccount(Account obj) {//Syntax error here? I don't see it
-		accounts.remove(obj);
+
+        accounts.remove(obj);
+        this.saveAccounts();
 	}
 	
 	//Returns the list of accounts to Main so that they may be displayed
-	public ArrayList<Account> getAccount(){//Syntax error here? I don't see it
-		return accounts;
+	public ArrayList<Account> getAccounts(){//Syntax error here? I don't see it
+
+        return accounts;
 	}
+
+    public void saveAccounts() {
+
+        gson.toJson(accounts, writer);
+    }
 	
 }
