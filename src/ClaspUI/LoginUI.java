@@ -7,7 +7,6 @@ import java.io.*;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.border.BevelBorder;
 
 import ClaspBackend.AuthEngine;
 import ClaspUI.MainUI.View;

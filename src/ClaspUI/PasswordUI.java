@@ -1,5 +1,6 @@
 package ClaspUI;
 
+import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -9,8 +10,6 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 
 import ClaspUI.MainUI.View;
-
-import static ClaspUI.MainUI.*;
 
 @SuppressWarnings("serial")
 public class PasswordUI extends JPanel {
@@ -27,9 +26,11 @@ public class PasswordUI extends JPanel {
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		GridBagConstraints gbc = new GridBagConstraints();
 		setLayout(gridBagLayout);
-		welcomeLabel = new JLabel("Welcome " + userName + "!");
+		welcomeLabel = new JLabel();
 		backButton = new JButton("Back");
 		backButton.addActionListener(new BackButtonListener());
+		
+		updateData();
 		
 		// Add components
 		gbc.insets = new Insets(20, 20, 20, 20);
@@ -40,6 +41,16 @@ public class PasswordUI extends JPanel {
 		
 		setVisible(true);
 	}
+	
+	private void updateData() {
+		welcomeLabel.setText("Welcome " + MainUI.userName + "!");
+	}
+	
+	public void paintComponent(Graphics g) {
+		updateData();
+		super.paintComponent(g);
+	}
+	
 	
 	private class BackButtonListener implements ActionListener {
 
