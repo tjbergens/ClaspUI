@@ -10,6 +10,8 @@ import javax.swing.*;
 
 import ClaspUI.MainUI.View;
 
+import static ClaspUI.MainUI.*;
+
 @SuppressWarnings("serial")
 public class PasswordUI extends JPanel {
 	
@@ -25,8 +27,7 @@ public class PasswordUI extends JPanel {
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		GridBagConstraints gbc = new GridBagConstraints();
 		setLayout(gridBagLayout);
-		
-		welcomeLabel = new JLabel("Welcome username!");
+		welcomeLabel = new JLabel("Welcome " + userName + "!");
 		backButton = new JButton("Back");
 		backButton.addActionListener(new BackButtonListener());
 		

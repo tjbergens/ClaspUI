@@ -13,7 +13,14 @@ public class MainUI extends JFrame {
 	// Constants for window width and height
 	private final int INIT_WIDTH = 400;
 	private final int INIT_HEIGHT = 300;
-	public static enum View {
+
+
+    public static String userName;
+
+    // For debugging. Will be removed later.
+    public static String masterPassword;
+
+    public static enum View {
 		LOGIN, PASSWORDS
 	};
 	private CardLayout cardLayout;
