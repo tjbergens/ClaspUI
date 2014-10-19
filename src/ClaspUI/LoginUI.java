@@ -80,6 +80,7 @@ public class LoginUI extends JPanel {
 		// Bottom most buttons for creating an account and resetting password
 		JButton createAccountButton = new JButton("Create Account");
 		createAccountButton.setIcon(new ImageIcon(plusImage));
+		createAccountButton.addActionListener(new createAccountListener());
 		
 		JButton forgotPassButton = new JButton("Forgot Password");
 		forgotPassButton.setIcon(new ImageIcon(forgotImage));
@@ -129,6 +130,17 @@ public class LoginUI extends JPanel {
             System.err.println(cryptoKey);
 
 	    }
+	}
+	
+	private class createAccountListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+
+			new CreateAccountDialog();
+			
+		}
+		
 	}
 	
 }
