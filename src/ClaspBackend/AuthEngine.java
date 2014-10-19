@@ -14,7 +14,7 @@ public class AuthEngine {
     private static final int ITERATIONS = 5000;
     private static final int KEYLENGTH = 256;
 
-    public static String makeKey(String masterPass, String username){
+    private static String makeKey(String phraseInput, String salt){
 
         SecretKeyFactory factory = null;
         try {
@@ -23,7 +23,7 @@ public class AuthEngine {
             e.printStackTrace();
         }
 
-        KeySpec spec = new PBEKeySpec(masterPass.toCharArray(), username.getBytes(), ITERATIONS, KEYLENGTH);
+        KeySpec spec = new PBEKeySpec(phraseInput.toCharArray(), salt.getBytes(), ITERATIONS, KEYLENGTH);
         SecretKey tmp = null;
         try {
             tmp = factory.generateSecret(spec);
@@ -35,5 +35,15 @@ public class AuthEngine {
         System.out.println(keyString);
 
         return keyString;
+    }
+
+    public static String getKey(String phraseInput, String salt) {
+
+        return makeKey(phraseInput, salt);
+    }
+
+    public static String getHash(String phraseInput, String salt) {
+
+        return makeKey(phraseInput, salt);
     }
 }
