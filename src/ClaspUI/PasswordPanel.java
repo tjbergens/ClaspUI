@@ -1,18 +1,20 @@
 package ClaspUI;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.SpringLayout;
+import javax.swing.border.TitledBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-
-import java.awt.Toolkit;
-import java.awt.datatransfer.Clipboard;
-import java.awt.datatransfer.StringSelection;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 @SuppressWarnings("serial")
 public class PasswordPanel extends JPanel {
@@ -22,10 +24,12 @@ public class PasswordPanel extends JPanel {
 	private char echoChar;
 	
 	public PasswordPanel(String userPass) {
+		setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		
 		// Set layout
 		SpringLayout springLayout = new SpringLayout();
 		setLayout(springLayout);
+		setPreferredSize(new Dimension(224, 72));
 		
 		// Password field
 		passwordField = new JPasswordField();
@@ -38,7 +42,7 @@ public class PasswordPanel extends JPanel {
 		JButton btnCopy = new JButton("Copy");
 		btnCopy.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				StringSelection clip = new StringSelection(passwordField.getPassword().toString());
+				StringSelection clip = new StringSelection(String.valueOf(passwordField.getPassword()));
 				Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
 				clipboard.setContents(clip, clip);
 			}

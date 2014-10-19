@@ -7,7 +7,9 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.*;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 import ClaspUI.MainUI.View;
 
@@ -36,7 +38,12 @@ public class PasswordUI extends JPanel {
 		gbc.insets = new Insets(20, 20, 20, 20);
 		gbc.gridy = 0;
 		add(welcomeLabel, gbc);
+		
 		gbc.gridy = 1;
+		PasswordPanel pp = new PasswordPanel("Test Pass");
+		add(pp, gbc);
+		
+		gbc.gridy = 2;
 		add(backButton, gbc);
 		
 		setVisible(true);
