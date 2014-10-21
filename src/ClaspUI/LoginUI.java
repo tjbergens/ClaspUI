@@ -138,7 +138,7 @@ public class LoginUI extends JPanel {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 
-			new CreateAccountDialog();
+			new CreateAccountDialog(parent);
 			
 		}
 		

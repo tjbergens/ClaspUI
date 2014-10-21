@@ -5,6 +5,7 @@ import java.awt.*;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
@@ -15,10 +16,10 @@ public class CreateAccountDialog extends JDialog {
 	final int PAD_X = 20;
 	final int PAD_Y = 10;
 
-	public CreateAccountDialog() {
+	public CreateAccountDialog(JFrame parent) {
 		
 		// Set title, stop parent from allowing interaction
-		super((Dialog)null, "Create an account", true);
+		super(parent, "Create an account", true);
 		
 		// Set column widths
 		GridBagLayout gridBagLayout = new GridBagLayout();

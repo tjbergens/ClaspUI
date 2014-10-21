@@ -5,6 +5,10 @@ MainUI.java
 package ClaspUI;
 
 import java.awt.*;
+import java.io.File;
+import java.util.ArrayList;
+
+import javax.imageio.ImageIO;
 import javax.swing.*;
 
 @SuppressWarnings("serial")
@@ -34,6 +38,17 @@ public class MainUI extends JFrame {
 		// Close the program when the window is closed
 		// By default, closing the window leaves the program running in the background
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+		// Set window icons
+		try {
+			ArrayList<Image> list = new ArrayList<Image>();
+			list.add(ImageIO.read(new File("ClaspIcon16.png")));
+			list.add(ImageIO.read(new File("ClaspIcon32.png")));
+			list.add(ImageIO.read(new File("ClaspIcon256.png")));
+			setIconImages(list);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 		// Set look and feel to match the system
 		try {
