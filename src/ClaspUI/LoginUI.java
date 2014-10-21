@@ -1,12 +1,22 @@
 package ClaspUI;
 
-import java.awt.*;
-import java.awt.event.*;
-import java.awt.image.BufferedImage;
-import java.io.*;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-import javax.imageio.ImageIO;
-import javax.swing.*;
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
 
 import ClaspBackend.AuthEngine;
 import ClaspUI.MainUI.View;
@@ -37,17 +47,8 @@ public class LoginUI extends JPanel {
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.gridy = 0;
 		gbc.insets = new Insets(0, 0, 5, 0);
-		BufferedImage loginImage = null;
-		BufferedImage plusImage = null;
-		BufferedImage forgotImage = null;
-		try {
-			loginImage = ImageIO.read(new File("ClaspLogin.png"));
-			plusImage = ImageIO.read(new File("PlusIcon.png"));
-			forgotImage = ImageIO.read(new File("QuestionIcon.png"));
-		} catch (IOException e) {
-			// Do something if the image is not found
-		}
-		JLabel label = new JLabel(new ImageIcon(loginImage));
+
+		JLabel label = new JLabel(new ImageIcon("ClaspLogin.png"));
 		this.add(label, gbc);
 		gbc.ipady = 0;
 		gbc.insets = new Insets(0, 0, 0, 0);
@@ -55,13 +56,13 @@ public class LoginUI extends JPanel {
 		LoginListener loginListener = new LoginListener();
 		
 		// Add components to pane, add pane to window
-		pane.add(new JLabel("Username"));
+		pane.add(new JLabel("Username:"));
 		userField = new JTextField(16);
 		userField.addActionListener(loginListener);
 		userField.setToolTipText("Enter your username");
 		pane.add(userField);
 		
-		pane.add(new JLabel("Password"));
+		pane.add(new JLabel("Password:"));
 		passField = new JPasswordField(16);
 		passField.addActionListener(loginListener);
 		passField.setToolTipText("Enter your password");
@@ -72,6 +73,7 @@ public class LoginUI extends JPanel {
 		
 		// Add button for login
 		JButton loginButton = new JButton("Log in");
+		loginButton.setIcon(new ImageIcon("LoginIcon.png"));
 		loginButton.addActionListener(loginListener);
 		gbc.insets = new Insets(20, 0, 0, 0);
 		gbc.gridy = 2;
@@ -79,11 +81,11 @@ public class LoginUI extends JPanel {
 		
 		// Bottom most buttons for creating an account and resetting password
 		JButton createAccountButton = new JButton("Create Account");
-		createAccountButton.setIcon(new ImageIcon(plusImage));
+		createAccountButton.setIcon(new ImageIcon("PlusIcon.png"));
 		createAccountButton.addActionListener(new createAccountListener());
 		
 		JButton forgotPassButton = new JButton("Forgot Password");
-		forgotPassButton.setIcon(new ImageIcon(forgotImage));
+		forgotPassButton.setIcon(new ImageIcon("QuestionIcon.png"));
 		
 		JPanel bottomPane = new JPanel();
 		bottomPane.add(createAccountButton);
