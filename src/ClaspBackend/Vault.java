@@ -1,13 +1,15 @@
 package ClaspBackend;
 
-import java.io.File;
+
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.stream.JsonWriter;
+import com.google.gson.reflect.TypeToken;
 
 /*I have not provided an output yet as i am not sure how the organization is supposed to go
  * I have not included the encryption or decryption in here either.
@@ -20,19 +22,24 @@ public class Vault {
 	//Creates a list of all accounts associate with the users vault
 	private ArrayList<Account> accounts;
     private Gson gson;
-    private File file;
-    private FileWriter writer;
+    private FileReader reader;
+    private FileWriter writer;  
 
     public Vault() {
 
         accounts = new ArrayList<Account>();
         gson = new GsonBuilder().create();
-        file = new File("test.json");
         try {
-            writer = new FileWriter(file);
+			reader = new FileReader("input.json");
+		} catch (FileNotFoundException e1) {
+			e1.printStackTrace();
+		}
+        try {
+            writer = new FileWriter("output.json");
         } catch (IOException e) {
             e.printStackTrace();
         }
+        this.accounts = getAccounts();
     }
 
 
@@ -40,6 +47,7 @@ public class Vault {
 	public void addAccount(String accountName, String userName, String password){ 
 
         accounts.add(new Account(accountName, userName, password));
+        this.saveAccounts();
 	}
 
     public void updateAccount(Account oldAccount, Account newAccount){
@@ -50,7 +58,7 @@ public class Vault {
     }
 
 	//Remove an account from the JSON file
-	public void removeAccount(Account obj) {//Syntax error here? I don't see it
+	public void removeAccount(Account obj) {
 
         accounts.remove(obj);
         this.saveAccounts();
@@ -58,12 +66,11 @@ public class Vault {
 	
 	//Returns the list of accounts to Main so that they may be displayed
 	public ArrayList<Account> getAccounts(){//Syntax error here? I don't see it
-
+		accounts = gson.fromJson(reader, new TypeToken<ArrayList<Account>>(){}.getType());
         return accounts;
 	}
 
     public void saveAccounts() {
-
         gson.toJson(accounts, writer);
     }
 	
