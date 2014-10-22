@@ -44,9 +44,9 @@ public class Vault {
 
 
     //If user wants to add a new account that is not already listed in the JSON file (not sure if this needs to be handled in UI)
-	public void addAccount(String accountName, String userName, String password){ 
+	public void addAccount(String accountName, String userName, String password, String description){ 
 
-        accounts.add(new Account(accountName, userName, password));
+        accounts.add(new Account(accountName, userName, password, description));
         this.saveAccounts();
 	}
 
