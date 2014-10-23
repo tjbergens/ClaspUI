@@ -33,6 +33,7 @@ public class MainUI extends JFrame {
 	};
 	private CardLayout cardLayout;
 	private JPanel content;
+	PasswordUI passwordUI;
 
 	public MainUI() {
 		
@@ -72,7 +73,8 @@ public class MainUI extends JFrame {
 		
 		// Add UI views to content panel
 		content.add(new LoginUI(this), View.LOGIN.toString());
-		content.add(new PasswordUI(this), View.PASSWORDS.toString());
+		passwordUI = new PasswordUI(this);
+		content.add(passwordUI, View.PASSWORDS.toString());
 
 		this.add(content);
 		// Call to show all components

@@ -39,7 +39,7 @@ public class Vault {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        this.accounts = getAccounts();
+        //this.accounts = getAccounts();
     }
 
 
@@ -72,6 +72,14 @@ public class Vault {
 
     public void saveAccounts() {
         gson.toJson(accounts, writer);
+    }
+    
+    public void closeOutput() {
+    	try {
+    		writer.close();
+    	} catch (Exception e) {
+    		e.printStackTrace();
+    	}
     }
 	
 }

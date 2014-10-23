@@ -133,6 +133,8 @@ public class LoginUI extends JPanel {
             String passHash = AuthEngine.getHash(cryptoKey, MainUI.masterPassword);
             System.err.println("Key: " + cryptoKey);
             System.err.println("Password Hash: " + passHash);
+            
+            parent.passwordUI.addPasswords(MainUI.vault.getAccounts());
 	    }
 	}
 	
