@@ -4,6 +4,8 @@ MainUI.java
 
 package ClaspUI;
 
+import ClaspBackend.Vault;
+
 import java.awt.*;
 import java.io.File;
 import java.util.ArrayList;
@@ -23,6 +25,8 @@ public class MainUI extends JFrame {
 
     // For debugging. Will be removed later.
     public static String masterPassword;
+
+    public static Vault vault = new Vault();
 
     public static enum View {
 		LOGIN, PASSWORDS

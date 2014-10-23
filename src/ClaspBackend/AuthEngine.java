@@ -31,9 +31,7 @@ public class AuthEngine {
             e.printStackTrace();
         }
         SecretKey secret = new SecretKeySpec(tmp.getEncoded(), "AES");
-        String keyString = secret.getEncoded().toString();
-        System.out.println(keyString);
-
+        String keyString = Integer.toString(secret.hashCode());
         return keyString;
     }
 
