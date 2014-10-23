@@ -1,6 +1,8 @@
 package ClaspUI;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -61,6 +63,7 @@ public class CreateAccountDialog extends JDialog {
 		gbc.gridy = 6;
 		gbc.insets = new Insets(10, 10, 20, 10);
 		add(submitButton, gbc);
+        submitButton.addActionListener(new submitButtonListener());
 		
 		pack();
 		setLocationRelativeTo(null);
@@ -79,5 +82,15 @@ public class CreateAccountDialog extends JDialog {
 		add(jc, gbc);
 		
 	}
+
+    private class submitButtonListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+
+
+        }
+
+    }
 	
 }

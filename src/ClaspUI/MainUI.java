@@ -11,8 +11,6 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
-import ClaspBackend.Vault;
-
 @SuppressWarnings("serial")
 public class MainUI extends JFrame {
 	

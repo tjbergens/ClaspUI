@@ -20,7 +20,6 @@ import javax.swing.JTextField;
 
 import ClaspBackend.CryptoKit;
 import ClaspBackend.SessionManager;
-import ClaspBackend.Vault;
 import ClaspUI.MainUI.View;
 
 @SuppressWarnings("serial")
@@ -107,9 +106,6 @@ public class LoginUI extends JPanel {
 
             SessionManager.setUserName(userField.getText());
             SessionManager.setMasterPassword(String.valueOf(passField.getPassword()));
-
-            // TO DO: Need to handle login failures, etc.
-            SessionManager.login();
             
             // Reset component borders
             userField.setBorder(null);
@@ -128,6 +124,9 @@ public class LoginUI extends JPanel {
             	passField.setBorder(BorderFactory.createLineBorder(Color.red));
             	return;
             }
+
+            // TO DO: Need to handle login failures, etc.
+            SessionManager.login();
             	
             JOptionPane.showMessageDialog(null,
 	    		"You have logged in!\nUsername: " + SessionManager.getUserName() +
@@ -138,8 +137,10 @@ public class LoginUI extends JPanel {
             String passHash = CryptoKit.getHash(cryptoKey, SessionManager.getMasterPassword());
             System.err.println("Key: " + cryptoKey);
             System.err.println("Password Hash: " + passHash);
-            
-            parent.passwordUI.addPasswords(SessionManager.retrievePasswords());
+
+            SessionManager.login();
+
+            parent.passwordUI.addPasswords(SessionManager.getAccounts());
 	    }
 	}
 	

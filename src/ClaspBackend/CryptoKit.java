@@ -8,6 +8,7 @@ import javax.crypto.spec.SecretKeySpec;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
+import java.util.ArrayList;
 
 public class CryptoKit {
 
@@ -46,19 +47,19 @@ public class CryptoKit {
     }
 
     // TO DO
-    public static Vault encryptVault(Vault vault) {
+    public static ArrayList<Account> encryptAccounts(ArrayList<Account> accounts) {
 
         String text = null;
         String cipherText = encryptText(text);
-        return vault;
+        return accounts;
     }
 
     // TO DO
-    public static Vault decryptVault(Vault vault) {
+    public static ArrayList<Account> decryptAccounts(ArrayList<Account> accounts) {
 
         String cipherText = null;
         String text = decryptCipherText(cipherText);
-        return vault;
+        return accounts;
     }
 
     public static String encryptText(String text) {

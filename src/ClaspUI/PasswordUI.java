@@ -29,9 +29,6 @@ public class PasswordUI extends JPanel {
 	private JLabel welcomeLabel;
 	private JPanel contentPane;
 
-    // Passwords to be edited/removed/added and saved to Vault
-	private ArrayList<Account> passwords = SessionManager.retrievePasswords();
-
 	public PasswordUI(MainUI parent) {
 		
 		this.parent = parent;

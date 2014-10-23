@@ -1,18 +1,31 @@
 package ClaspBackend;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
+
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class SessionManager {
 
     private static String authToken;
-    private static Vault vault = new Vault();
     private static String userName;
     private static String masterPassword;
+
+    private static ArrayList<Account> accounts;
+    public static Gson gson;
+    public static FileReader reader;
+    public static FileWriter writer;
 
     //TO DO
     public static int login(){
 
         authToken =  SessionManager.getAuthToken();
+        accounts = getAccounts();
 
         // HTTP SUCCESS INT
         return 200;
@@ -27,31 +40,50 @@ public class SessionManager {
     }
 
     // Called by the UI when saving the passwords is required.
-    public static int savePasswords(ArrayList<Account> accounts){
+    public static int saveAccounts(ArrayList<Account> newAccounts) {
 
-        SessionManager.vault.saveAccounts(accounts);
-        SessionManager.sendVault();
+        try {
+            writer = new FileWriter(userName + ".json");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-        // HTTP SUCCESS
+        accounts = newAccounts;
+        ArrayList<Account> encryptedAccounts = CryptoKit.encryptAccounts(accounts);
+        gson.toJson(encryptedAccounts, writer);
+
+        try {
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        //HTTP Success
         return 200;
+
     }
 
     // Called by the UI when retrieving the credentials to display.
-    public static ArrayList<Account> retrievePasswords() {
+    public static ArrayList<Account> getAccounts() {
 
-        SessionManager.vault = CryptoKit.decryptVault(SessionManager.vault);
-        ArrayList<Account> accounts = SessionManager.vault.getAccounts();
+        gson = new GsonBuilder().create();
+        try {
+            reader = new FileReader(SessionManager.userName + ".json");
+        } catch (FileNotFoundException e1) {
+            e1.printStackTrace();
+        }
+
+        ArrayList <Account> encryptedAccounts = gson.fromJson(reader, new TypeToken<ArrayList<Account>>(){}.getType());
+
+        accounts = CryptoKit.decryptAccounts(encryptedAccounts);
+
+        try {
+            reader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return accounts;
-    }
-    //TO DO
-    private static int sendVault() {
 
-        //DO SOMETHING
-        SessionManager.vault = CryptoKit.encryptVault(SessionManager.vault);
-        //HTTP SUCCESS INT
-        return 200;
     }
-
 
     public static void setMasterPassword(String masterPassword){
 
