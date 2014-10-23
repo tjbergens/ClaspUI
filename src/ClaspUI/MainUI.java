@@ -34,10 +34,11 @@ public class MainUI extends JFrame {
 		
 		// Calls JFrame constructor to set title
 		super("Clasp Password Manager");
-				
+		
 		// Close the program when the window is closed
 		// By default, closing the window leaves the program running in the background
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setMinimumSize(new Dimension(INIT_WIDTH, INIT_HEIGHT));
 
 		// Set window icons
 		try {

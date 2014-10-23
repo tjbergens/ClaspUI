@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.SpringLayout;
@@ -23,13 +24,12 @@ public class PasswordPanel extends JPanel {
 	private JCheckBox chckbxShowPassword;
 	private char echoChar;
 	
-	public PasswordPanel(String userPass) {
-		setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+	public PasswordPanel(String location, String userName, String userPass) {
+		setBorder(new TitledBorder(null, location, TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		
 		// Set layout
 		SpringLayout springLayout = new SpringLayout();
 		setLayout(springLayout);
-		setPreferredSize(new Dimension(224, 72));
 		
 		// Password field
 		passwordField = new JPasswordField();
@@ -49,6 +49,9 @@ public class PasswordPanel extends JPanel {
 		});
 		add(btnCopy);
 		
+		JLabel userLabel = new JLabel("Username: " + userName);
+		add(userLabel);
+		
 		// Checkbox
 		chckbxShowPassword = new JCheckBox("Show Password?");
 		chckbxShowPassword.addChangeListener(new ChangeListener() {
@@ -62,8 +65,12 @@ public class PasswordPanel extends JPanel {
 		});
 		add(chckbxShowPassword);
 		
+		// Constrain username label
+		springLayout.putConstraint(SpringLayout.NORTH, userLabel, 10, SpringLayout.NORTH, this);
+		springLayout.putConstraint(SpringLayout.WEST, userLabel, 10, SpringLayout.WEST, this);
+		
 		// Constrain password field
-		springLayout.putConstraint(SpringLayout.NORTH, passwordField, 10, SpringLayout.NORTH, this);
+		springLayout.putConstraint(SpringLayout.NORTH, passwordField, 10, SpringLayout.SOUTH, userLabel);
 		springLayout.putConstraint(SpringLayout.WEST, passwordField, 10, SpringLayout.WEST, this);
 				
 		// Constrain show password checkbox
@@ -76,5 +83,8 @@ public class PasswordPanel extends JPanel {
 
 	}
 	
+	public Dimension getPreferredSize() {
+		return new Dimension(224, 112);
+	}
 	
 }

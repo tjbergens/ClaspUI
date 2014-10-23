@@ -2,10 +2,10 @@ package ClaspBackend;
 
 public class Account {
 	//I guessed that these are all the attributes of a subaccount
-	private String accountName;
-	private String userName; //says unused but used in constructor
-	private String password; //says unused but used in constructor
-    private String description;
+	public String accountName;
+	public String userName; //says unused but used in constructor
+	public String password; //says unused but used in constructor
+	public String description;
 	
 	//Constructor sets all attributes
 	 public Account(String accountName, String userName, String password, String description){
