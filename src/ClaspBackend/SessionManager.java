@@ -29,6 +29,7 @@ public class SessionManager {
     // Called by the UI when saving the passwords is required.
     public static int savePasswords(ArrayList<Account> accounts){
 
+        SessionManager.vault.saveAccounts(accounts);
         SessionManager.sendVault();
 
         // HTTP SUCCESS
@@ -51,6 +52,7 @@ public class SessionManager {
         //HTTP SUCCESS INT
         return 200;
     }
+
 
     public static void setMasterPassword(String masterPassword){
 
