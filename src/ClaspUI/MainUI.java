@@ -5,6 +5,7 @@ MainUI.java
 package ClaspUI;
 
 import ClaspBackend.AuthEngine;
+import ClaspBackend.SessionManager;
 import ClaspBackend.Vault;
 
 import java.awt.*;
@@ -22,15 +23,6 @@ public class MainUI extends JFrame {
 	private final int INIT_WIDTH = 400;
 	private final int INIT_HEIGHT = 300;
 
-
-    public static String userName;
-
-    // For debugging. Will be removed later.
-    public static String masterPassword;
-
-    // Vault resides here for now.
-    public static Vault vault = new Vault();
-    public AuthEngine authenticator;
 
     public static enum View {
 		LOGIN, PASSWORDS

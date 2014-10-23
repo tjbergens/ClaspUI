@@ -2,26 +2,59 @@ package ClaspBackend;
 
 public class SessionManager {
 
-    private String authToken;
-    private Vault vault;
+    private static String authToken;
+    private static Vault vault;
+    private static String userName;
+    private static String masterPassword;
 
     //TO DO
-    public int login(){
+    public static int login(){
 
-        return 0;
+        authToken =  SessionManager.getAuthToken();
+        // HTTP SUCCESS INT
+        return 200;
+    }
+
+    // TO DO
+    public static String getAuthToken() {
+
+        // DO SOMETHING
+
+        return SessionManager.authToken;
     }
 
     //TO DO
-    public int sendVault(Vault vault) {
+    public static int sendVault() {
 
-
-
-        return 0;
+        //DO SOMETHING
+        SessionManager.vault = null;
+        //HTTP SUCCESS INT
+        return 200;
     }
 
     //TO DO
-    public int retrieveVault(Vault vault) {
+    public static Vault retrieveVault() {
 
-        return 0;
+        SessionManager.vault = null;
+        return SessionManager.vault;
+    }
+
+    public static void setMasterPassword(String masterPassword){
+
+        SessionManager.masterPassword = masterPassword;
+    }
+
+    public static void setUserName(String userName){
+
+        SessionManager.userName = userName;
+    }
+
+    public static String getMasterPassword(){
+        return SessionManager.masterPassword;
+    }
+
+    public static String getUserName(){
+
+        return SessionManager.userName;
     }
 }

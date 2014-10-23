@@ -17,6 +17,7 @@ import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
 
 import ClaspBackend.Account;
+import ClaspBackend.SessionManager;
 import ClaspUI.MainUI.View;
 
 @SuppressWarnings("serial")
@@ -73,7 +74,7 @@ public class PasswordUI extends JPanel {
 	}
 	
 	private void updateData() {
-		welcomeLabel.setText("Welcome " + MainUI.userName + "!");
+		welcomeLabel.setText("Welcome " + SessionManager.getUserName() + "!");
 	}
 	
 	public void paintComponent(Graphics g) {
