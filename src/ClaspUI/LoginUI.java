@@ -86,6 +86,7 @@ public class LoginUI extends JPanel {
 		
 		JButton forgotPassButton = new JButton("Forgot Password");
 		forgotPassButton.setIcon(new ImageIcon("QuestionIcon.png"));
+		forgotPassButton.addActionListener(new resetPasswordListener());
 		
 		JPanel bottomPane = new JPanel();
 		bottomPane.add(createAccountButton);
@@ -141,6 +142,17 @@ public class LoginUI extends JPanel {
 		public void actionPerformed(ActionEvent e) {
 
 			new CreateAccountDialog(parent);
+			
+		}
+		
+	}
+	
+	private class resetPasswordListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+
+			new ResetPasswordDialog(parent);
 			
 		}
 		
