@@ -67,6 +67,7 @@ public class Vault {
 	//Returns the list of accounts to Main so that they may be displayed
 	public ArrayList<Account> getAccounts(){//Syntax error here? I don't see it
 		accounts = gson.fromJson(reader, new TypeToken<ArrayList<Account>>(){}.getType());
+
         return accounts;
 	}
 

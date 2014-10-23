@@ -44,4 +44,33 @@ public class CryptoKit {
 
         return makeKey(phraseInput, salt);
     }
+
+    // TO DO
+    public static Vault encryptVault(Vault vault) {
+
+        String text = null;
+        String cipherText = encryptText(text);
+        return vault;
+    }
+
+    // TO DO
+    public static Vault decryptVault(Vault vault) {
+
+        String cipherText = null;
+        String text = decryptCipherText(cipherText);
+        return vault;
+    }
+
+    public static String encryptText(String text) {
+
+        // TO DO
+        String cipherText = null;
+        return cipherText;
+    }
+
+    public static String decryptCipherText(String cipherText) {
+
+        String text = null;
+        return text;
+    }
 }

@@ -18,7 +18,6 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-import ClaspBackend.AuthEngine;
 import ClaspBackend.CryptoKit;
 import ClaspBackend.SessionManager;
 import ClaspUI.MainUI.View;
@@ -107,6 +106,9 @@ public class LoginUI extends JPanel {
 
             SessionManager.setUserName(userField.getText());
             SessionManager.setMasterPassword(String.valueOf(passField.getPassword()));
+
+            // TO DO: Need to handle login failures, etc.
+            SessionManager.login();
             
             // Reset component borders
             userField.setBorder(null);

@@ -4,13 +4,8 @@ MainUI.java
 
 package ClaspUI;
 
-import ClaspBackend.AuthEngine;
-import ClaspBackend.SessionManager;
-import ClaspBackend.Vault;
-
 import java.awt.*;
 import java.io.File;
-import java.net.Authenticator;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;

@@ -1,5 +1,7 @@
 package ClaspBackend;
 
+import java.util.ArrayList;
+
 public class SessionManager {
 
     private static String authToken;
@@ -11,6 +13,7 @@ public class SessionManager {
     public static int login(){
 
         authToken =  SessionManager.getAuthToken();
+
         // HTTP SUCCESS INT
         return 200;
     }
@@ -23,20 +26,30 @@ public class SessionManager {
         return SessionManager.authToken;
     }
 
-    //TO DO
-    public static int sendVault() {
+    // Called by the UI when saving the passwords is required.
+    public static int savePasswords(ArrayList<Account> accounts){
 
-        //DO SOMETHING
-        SessionManager.vault = null;
-        //HTTP SUCCESS INT
+        SessionManager.sendVault();
+
+        // HTTP SUCCESS
         return 200;
     }
 
-    //TO DO
-    public static Vault retrieveVault() {
+    // Called by the UI when retrieving the credentials to display.
+    public static ArrayList<Account> retrievePasswords() {
 
-        SessionManager.vault = null;
-        return SessionManager.vault;
+
+        ArrayList<Account> accounts = null;
+        SessionManager.vault = CryptoKit.decryptVault(SessionManager.vault);
+        return accounts;
+    }
+    //TO DO
+    private static int sendVault() {
+
+        //DO SOMETHING
+        SessionManager.vault = CryptoKit.encryptVault(SessionManager.vault);
+        //HTTP SUCCESS INT
+        return 200;
     }
 
     public static void setMasterPassword(String masterPassword){
