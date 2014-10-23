@@ -18,6 +18,7 @@ import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
 
 import ClaspBackend.Account;
+import ClaspBackend.SessionManager;
 import ClaspUI.MainUI.View;
 
 @SuppressWarnings("serial")
@@ -27,7 +28,10 @@ public class PasswordUI extends JPanel {
 	private JButton logoutButton;
 	private JLabel welcomeLabel;
 	private JPanel contentPane;
-	
+
+    // Passwords to be edited/removed/added and saved to Vault
+	private ArrayList<Account> passwords = SessionManager.retrievePasswords();
+
 	public PasswordUI(MainUI parent) {
 		
 		this.parent = parent;
@@ -87,7 +91,7 @@ public class PasswordUI extends JPanel {
 	}
 	
 	private void updateData() {
-		welcomeLabel.setText("Welcome " + MainUI.userName + "!");
+		welcomeLabel.setText("Welcome " + SessionManager.getUserName() + "!");
 	}
 	
 	public void paintComponent(Graphics g) {

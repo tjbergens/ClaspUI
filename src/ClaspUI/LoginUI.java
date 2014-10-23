@@ -18,7 +18,8 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-import ClaspBackend.AuthEngine;
+import ClaspBackend.CryptoKit;
+import ClaspBackend.SessionManager;
 import ClaspUI.MainUI.View;
 
 @SuppressWarnings("serial")
@@ -103,8 +104,11 @@ public class LoginUI extends JPanel {
 		@Override
 	    public void actionPerformed(ActionEvent e) {	    	
 
-            MainUI.userName = userField.getText();
-            MainUI.masterPassword = String.valueOf(passField.getPassword());
+            SessionManager.setUserName(userField.getText());
+            SessionManager.setMasterPassword(String.valueOf(passField.getPassword()));
+
+            // TO DO: Need to handle login failures, etc.
+            SessionManager.login();
             
             // Reset component borders
             userField.setBorder(null);
@@ -113,24 +117,24 @@ public class LoginUI extends JPanel {
             passField.updateUI();
             
             // Apply red border if username is empty or whitespace, then return
-            if (MainUI.userName.trim().isEmpty()) {
+            if (SessionManager.getUserName().trim().isEmpty()) {
             	userField.setBorder(BorderFactory.createLineBorder(Color.red));
             	return;
             }
             
             // Apply red border if password is empty, then return
-            if (MainUI.masterPassword.isEmpty()) {
+            if (SessionManager.getMasterPassword().isEmpty()) {
             	passField.setBorder(BorderFactory.createLineBorder(Color.red));
             	return;
             }
             	
             JOptionPane.showMessageDialog(null,
-	    		"You have logged in!\nUsername: " + MainUI.userName +
-	    				"\nPass: " + MainUI.masterPassword);
+	    		"You have logged in!\nUsername: " + SessionManager.getUserName() +
+	    				"\nPass: " + SessionManager.getMasterPassword());
 	    	parent.changeView(View.PASSWORDS);
 
-            String cryptoKey = AuthEngine.getKey(MainUI.masterPassword, MainUI.userName);
-            String passHash = AuthEngine.getHash(cryptoKey, MainUI.masterPassword);
+            String cryptoKey = CryptoKit.getKey(SessionManager.getMasterPassword(), SessionManager.getUserName());
+            String passHash = CryptoKit.getHash(cryptoKey, SessionManager.getMasterPassword());
             System.err.println("Key: " + cryptoKey);
             System.err.println("Password Hash: " + passHash);
             

@@ -47,30 +47,30 @@ public class Vault {
 	public void addAccount(String accountName, String userName, String password, String description){ 
 
         accounts.add(new Account(accountName, userName, password, description));
-        this.saveAccounts();
 	}
 
+    // Might not need if we handle ArrayList of accounts in UI and then save.
     public void updateAccount(Account oldAccount, Account newAccount){
 
         accounts.remove(oldAccount);
         accounts.add(newAccount);
-        this.saveAccounts();
     }
 
 	//Remove an account from the JSON file
 	public void removeAccount(Account obj) {
 
         accounts.remove(obj);
-        this.saveAccounts();
 	}
 	
 	//Returns the list of accounts to Main so that they may be displayed
 	public ArrayList<Account> getAccounts(){//Syntax error here? I don't see it
 		accounts = gson.fromJson(reader, new TypeToken<ArrayList<Account>>(){}.getType());
+
         return accounts;
 	}
 
-    public void saveAccounts() {
+    public void saveAccounts(ArrayList<Account> accounts) {
+
         gson.toJson(accounts, writer);
     }
     

@@ -4,8 +4,6 @@ MainUI.java
 
 package ClaspUI;
 
-import ClaspBackend.Vault;
-
 import java.awt.*;
 import java.io.File;
 import java.util.ArrayList;
@@ -20,13 +18,6 @@ public class MainUI extends JFrame {
 	private final int INIT_WIDTH = 400;
 	private final int INIT_HEIGHT = 300;
 
-
-    public static String userName;
-
-    // For debugging. Will be removed later.
-    public static String masterPassword;
-
-    public static Vault vault = new Vault();
 
     public static enum View {
 		LOGIN, PASSWORDS

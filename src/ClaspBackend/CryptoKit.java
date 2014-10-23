@@ -1,15 +1,15 @@
 package ClaspBackend;
 
+
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
-
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
 
-public class AuthEngine {
+public class CryptoKit {
 
     private static final int ITERATIONS = 5000;
     private static final int KEYLENGTH = 256;
@@ -43,5 +43,34 @@ public class AuthEngine {
     public static String getHash(String phraseInput, String salt) {
 
         return makeKey(phraseInput, salt);
+    }
+
+    // TO DO
+    public static Vault encryptVault(Vault vault) {
+
+        String text = null;
+        String cipherText = encryptText(text);
+        return vault;
+    }
+
+    // TO DO
+    public static Vault decryptVault(Vault vault) {
+
+        String cipherText = null;
+        String text = decryptCipherText(cipherText);
+        return vault;
+    }
+
+    public static String encryptText(String text) {
+
+        // TO DO
+        String cipherText = null;
+        return cipherText;
+    }
+
+    public static String decryptCipherText(String cipherText) {
+
+        String text = null;
+        return text;
     }
 }
