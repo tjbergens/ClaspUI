@@ -27,7 +27,6 @@ public class MainUI extends JFrame {
 	private CardLayout cardLayout;
 	private JPanel content;
 	PasswordUI passwordUI;
-	public static Vault vault;
 
 	public MainUI() {
 		

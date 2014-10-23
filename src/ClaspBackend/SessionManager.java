@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class SessionManager {
 
     private static String authToken;
-    private static Vault vault;
+    private static Vault vault = new Vault();
     private static String userName;
     private static String masterPassword;
 
@@ -39,9 +39,8 @@ public class SessionManager {
     // Called by the UI when retrieving the credentials to display.
     public static ArrayList<Account> retrievePasswords() {
 
-
-        ArrayList<Account> accounts = null;
         SessionManager.vault = CryptoKit.decryptVault(SessionManager.vault);
+        ArrayList<Account> accounts = SessionManager.vault.getAccounts();
         return accounts;
     }
     //TO DO
