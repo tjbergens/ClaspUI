@@ -4,10 +4,12 @@ MainUI.java
 
 package ClaspUI;
 
+import ClaspBackend.AuthEngine;
 import ClaspBackend.Vault;
 
 import java.awt.*;
 import java.io.File;
+import java.net.Authenticator;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
@@ -26,7 +28,9 @@ public class MainUI extends JFrame {
     // For debugging. Will be removed later.
     public static String masterPassword;
 
+    // Vault resides here for now.
     public static Vault vault = new Vault();
+    public AuthEngine authenticator;
 
     public static enum View {
 		LOGIN, PASSWORDS
