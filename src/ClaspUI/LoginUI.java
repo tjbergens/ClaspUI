@@ -20,6 +20,7 @@ import javax.swing.JTextField;
 
 import ClaspBackend.CryptoKit;
 import ClaspBackend.SessionManager;
+import ClaspBackend.Vault;
 import ClaspUI.MainUI.View;
 
 @SuppressWarnings("serial")
@@ -137,6 +138,8 @@ public class LoginUI extends JPanel {
             String passHash = CryptoKit.getHash(cryptoKey, SessionManager.getMasterPassword());
             System.err.println("Key: " + cryptoKey);
             System.err.println("Password Hash: " + passHash);
+            
+            MainUI.vault = new Vault();
             
             parent.passwordUI.addPasswords(MainUI.vault.getAccounts());
 	    }
