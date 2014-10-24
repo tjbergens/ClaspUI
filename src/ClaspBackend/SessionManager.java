@@ -4,11 +4,9 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
+import java.util.List;
 
 public class SessionManager {
 
@@ -16,8 +14,7 @@ public class SessionManager {
     private static String userName;
     private static String masterPassword;
 
-    private static ArrayList<Account> accounts;
-    public static Gson gson;
+    private static List<Account> accounts = new ArrayList<Account>();
     public static FileReader reader;
     public static FileWriter writer;
 
@@ -26,6 +23,12 @@ public class SessionManager {
 
         authToken =  SessionManager.getAuthToken();
         accounts = getAccounts();
+
+        // Testing
+        Account test = new Account("Google", "Googler", "password123");
+        accounts.add(test);
+        System.err.println(accounts.get(0).toString());
+        saveAccounts(accounts);
 
         // HTTP SUCCESS INT
         return 200;
@@ -40,7 +43,7 @@ public class SessionManager {
     }
 
     // Called by the UI when saving the passwords is required.
-    public static int saveAccounts(ArrayList<Account> newAccounts) {
+    public static int saveAccounts(List<Account> newAccounts) {
 
         try {
             writer = new FileWriter(userName + ".json");
@@ -49,8 +52,13 @@ public class SessionManager {
         }
 
         accounts = newAccounts;
-        ArrayList<Account> encryptedAccounts = CryptoKit.encryptAccounts(accounts);
-        gson.toJson(encryptedAccounts, writer);
+        List<Account> encryptedAccounts = CryptoKit.encryptAccounts(accounts);
+        String s = new Gson().toJson(encryptedAccounts);
+        try {
+            writer.write(s);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         try {
             writer.close();
@@ -63,19 +71,18 @@ public class SessionManager {
     }
 
     // Called by the UI when retrieving the credentials to display.
-    public static ArrayList<Account> getAccounts() {
+    public static List<Account> getAccounts() {
 
-        gson = new GsonBuilder().create();
+        Gson gson = new GsonBuilder().create();
         try {
             reader = new FileReader(SessionManager.userName + ".json");
         } catch (FileNotFoundException e1) {
             e1.printStackTrace();
         }
 
-        ArrayList <Account> encryptedAccounts = gson.fromJson(reader, new TypeToken<ArrayList<Account>>(){}.getType());
+        List <Account> encryptedAccounts = gson.fromJson(reader, new TypeToken<List<Account>>(){}.getType());
 
         accounts = CryptoKit.decryptAccounts(encryptedAccounts);
-
         try {
             reader.close();
         } catch (IOException e) {

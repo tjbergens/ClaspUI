@@ -9,6 +9,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
 import java.util.ArrayList;
+import java.util.List;
 
 public class CryptoKit {
 
@@ -47,7 +48,7 @@ public class CryptoKit {
     }
 
     // TO DO
-    public static ArrayList<Account> encryptAccounts(ArrayList<Account> accounts) {
+    public static List<Account> encryptAccounts(List<Account> accounts) {
 
         String text = null;
         String cipherText = encryptText(text);
@@ -55,7 +56,7 @@ public class CryptoKit {
     }
 
     // TO DO
-    public static ArrayList<Account> decryptAccounts(ArrayList<Account> accounts) {
+    public static List<Account> decryptAccounts(List<Account> accounts) {
 
         String cipherText = null;
         String text = decryptCipherText(cipherText);

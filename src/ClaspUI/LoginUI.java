@@ -138,8 +138,6 @@ public class LoginUI extends JPanel {
             System.err.println("Key: " + cryptoKey);
             System.err.println("Password Hash: " + passHash);
 
-            SessionManager.login();
-
             parent.passwordUI.addPasswords(SessionManager.getAccounts());
 	    }
 	}

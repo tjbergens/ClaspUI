@@ -8,6 +8,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -72,7 +73,7 @@ public class PasswordUI extends JPanel {
 
 	}
 	
-	public void addPasswords(ArrayList<Account> passwords) {
+	public void addPasswords(List<Account> passwords) {
 				
 		contentPane.removeAll();
 		

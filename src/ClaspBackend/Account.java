@@ -5,15 +5,7 @@ public class Account {
 	public String accountName;
 	public String userName; //says unused but used in constructor
 	public String password; //says unused but used in constructor
-	public String description;
-	
-	//Constructor sets all attributes
-	 public Account(String accountName, String userName, String password, String description){
-		this.accountName = accountName;
-		this.userName = userName;
-		this.password = password;
-        this.description = description;
-	}
+
 
     public Account(String accountName, String userName, String password){
         this.accountName = accountName;
