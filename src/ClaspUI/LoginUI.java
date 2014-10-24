@@ -133,10 +133,6 @@ public class LoginUI extends JPanel {
 	    				"\nPass: " + SessionManager.getMasterPassword());
 	    	parent.changeView(View.PASSWORDS);
 
-            String cryptoKey = CryptoKit.getKey(SessionManager.getMasterPassword(), SessionManager.getUserName());
-            String passHash = CryptoKit.getHash(cryptoKey, SessionManager.getMasterPassword());
-            System.err.println("Key: " + cryptoKey);
-            System.err.println("Password Hash: " + passHash);
 
             parent.passwordUI.addPasswords(SessionManager.getAccounts());
 	    }

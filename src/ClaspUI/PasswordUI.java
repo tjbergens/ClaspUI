@@ -82,7 +82,7 @@ public class PasswordUI extends JPanel {
 		for (int i = 0; i < passwords.size(); ++i) {
 			Account current = passwords.get(i);
 			gbc.gridy = i;
-			PasswordPanel pp = new PasswordPanel(current.accountName, current.userName, current.password);
+			PasswordPanel pp = new PasswordPanel(current.accountName.toString(), current.userName.toString(), current.password.toString());
 			contentPane.add(pp, gbc);
 		}
 		

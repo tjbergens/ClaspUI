@@ -4,8 +4,10 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
+import javax.crypto.SecretKey;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class SessionManager {
@@ -13,6 +15,8 @@ public class SessionManager {
     private static String authToken;
     private static String userName;
     private static String masterPassword;
+    private static SecretKey cryptoKey;
+    private static SecretKey passHash;
 
     private static List<Account> accounts = new ArrayList<Account>();
     public static FileReader reader;
@@ -22,7 +26,12 @@ public class SessionManager {
     public static int login(){
 
         authToken =  SessionManager.getAuthToken();
-        accounts = getAccounts();
+        //accounts = getAccounts();
+
+        cryptoKey = CryptoKit.getKey(SessionManager.getMasterPassword(), SessionManager.getUserName());
+        passHash = CryptoKit.getHash(cryptoKey.toString(), SessionManager.getMasterPassword());
+        System.err.println("Key: " + cryptoKey);
+        System.err.println("Password Hash: " + passHash);
 
         // Testing
         Account test = new Account("Google", "Googler", "password123");
@@ -52,13 +61,8 @@ public class SessionManager {
         }
 
         accounts = newAccounts;
-        List<Account> encryptedAccounts = CryptoKit.encryptAccounts(accounts);
-        String s = new Gson().toJson(encryptedAccounts);
-        try {
-            writer.write(s);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        List<Account> encryptedAccounts = CryptoKit.encryptAccounts(accounts, cryptoKey);
+        new Gson().toJson(encryptedAccounts, new TypeToken<List<Account>>(){}.getType() ,writer);
 
         try {
             writer.close();
@@ -82,7 +86,7 @@ public class SessionManager {
 
         List <Account> encryptedAccounts = gson.fromJson(reader, new TypeToken<List<Account>>(){}.getType());
 
-        accounts = CryptoKit.decryptAccounts(encryptedAccounts);
+        accounts = CryptoKit.decryptAccounts(encryptedAccounts, cryptoKey);
         try {
             reader.close();
         } catch (IOException e) {
