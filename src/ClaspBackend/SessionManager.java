@@ -5,9 +5,11 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import javax.crypto.SecretKey;
-import java.io.*;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 public class SessionManager {
@@ -23,9 +25,11 @@ public class SessionManager {
     public static FileWriter writer;
 
     //TO DO
-    public static int login(){
+    public static int login() {
 
-        authToken =  SessionManager.getAuthToken();
+        authToken = SessionManager.getAuthToken();
+
+        // Disabled for now until we get adding accounts working in the UI.
         //accounts = getAccounts();
 
         cryptoKey = CryptoKit.getKey(SessionManager.getMasterPassword(), SessionManager.getUserName());
@@ -33,7 +37,7 @@ public class SessionManager {
         System.err.println("Key: " + cryptoKey);
         System.err.println("Password Hash: " + passHash);
 
-        // Testing
+        // Testing. Go on, add more accounts or whatever to see how it looks in the JSON file and in the UI.
         Account test = new Account(new String("Google"), new String("Googler"), new String("password123"));
         accounts.add(test);
         System.err.println(accounts.get(0).toString());
@@ -64,7 +68,8 @@ public class SessionManager {
         List<Account> encryptedAccounts = CryptoKit.encryptAccounts(accounts, cryptoKey);
         GsonBuilder gsonBuilder = new GsonBuilder();
         Gson includeNullsGson = gsonBuilder.serializeNulls().create();
-        includeNullsGson.toJson(encryptedAccounts, new TypeToken<ArrayList<Account>>(){}.getType() ,writer);
+        includeNullsGson.toJson(encryptedAccounts, new TypeToken<ArrayList<Account>>() {
+        }.getType(), writer);
 
         try {
             writer.close();
@@ -87,7 +92,8 @@ public class SessionManager {
 
         GsonBuilder gsonBuilder = new GsonBuilder();
         Gson includeNullsGson = gsonBuilder.serializeNulls().create();
-        List <Account> encryptedAccounts = includeNullsGson.fromJson(reader, new TypeToken<ArrayList<Account>>(){}.getType());
+        List<Account> encryptedAccounts = includeNullsGson.fromJson(reader, new TypeToken<ArrayList<Account>>() {
+        }.getType());
 
         accounts = CryptoKit.decryptAccounts(encryptedAccounts, cryptoKey);
         try {
@@ -99,21 +105,21 @@ public class SessionManager {
 
     }
 
-    public static void setMasterPassword(String masterPassword){
+    public static void setMasterPassword(String masterPassword) {
 
         SessionManager.masterPassword = masterPassword;
     }
 
-    public static void setUserName(String userName){
+    public static void setUserName(String userName) {
 
         SessionManager.userName = userName;
     }
 
-    public static String getMasterPassword(){
+    public static String getMasterPassword() {
         return SessionManager.masterPassword;
     }
 
-    public static String getUserName(){
+    public static String getUserName() {
 
         return SessionManager.userName;
     }

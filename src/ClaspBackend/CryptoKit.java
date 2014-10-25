@@ -2,17 +2,13 @@ package ClaspBackend;
 
 
 import javax.crypto.*;
-import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
 import javax.xml.bind.DatatypeConverter;
-import java.io.*;
-import java.security.AlgorithmParameters;
-import java.security.InvalidAlgorithmParameterException;
+import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
-import java.security.spec.InvalidParameterSpecException;
 import java.security.spec.KeySpec;
 import java.util.List;
 
@@ -64,7 +60,7 @@ public class CryptoKit {
             currentAccount.password = encryptText(currentAccount.password, secret);
         }
 
-            return accounts;
+        return accounts;
     }
 
     // TO DO
