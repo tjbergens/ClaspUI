@@ -14,15 +14,14 @@ import java.util.List;
 
 public class SessionManager {
 
+    public static FileReader reader;
+    public static FileWriter writer;
     private static String authToken;
     private static String userName;
     private static String masterPassword;
     private static SecretKey cryptoKey;
     private static SecretKey passHash;
-
     private static List<Account> accounts = new ArrayList<Account>();
-    public static FileReader reader;
-    public static FileWriter writer;
 
     //TO DO
     public static int login() {
@@ -105,22 +104,22 @@ public class SessionManager {
 
     }
 
+    public static String getMasterPassword() {
+        return SessionManager.masterPassword;
+    }
+
     public static void setMasterPassword(String masterPassword) {
 
         SessionManager.masterPassword = masterPassword;
     }
 
-    public static void setUserName(String userName) {
-
-        SessionManager.userName = userName;
-    }
-
-    public static String getMasterPassword() {
-        return SessionManager.masterPassword;
-    }
-
     public static String getUserName() {
 
         return SessionManager.userName;
+    }
+
+    public static void setUserName(String userName) {
+
+        SessionManager.userName = userName;
     }
 }

@@ -16,17 +16,11 @@ public class MainUI extends JFrame {
     // Constants for window width and height
     private final int INIT_WIDTH = 400;
     private final int INIT_HEIGHT = 300;
-
-
-    public static enum View {
-        LOGIN, PASSWORDS
-    }
+    PasswordUI passwordUI;
 
     ;
     private CardLayout cardLayout;
     private JPanel content;
-    PasswordUI passwordUI;
-
     public MainUI() {
 
         // Calls JFrame constructor to set title
@@ -75,6 +69,10 @@ public class MainUI extends JFrame {
 
     public void changeView(View view) {
         cardLayout.show(content, view.toString());
+    }
+
+    public static enum View {
+        LOGIN, PASSWORDS
     }
 
 }
