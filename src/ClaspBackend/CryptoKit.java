@@ -6,7 +6,7 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
 import javax.xml.bind.DatatypeConverter;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.security.AlgorithmParameters;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
@@ -20,8 +20,6 @@ public class CryptoKit {
 
     private static final int ITERATIONS = 5000;
     private static final int KEYLENGTH = 128;
-    private static byte[] iv;
-    public static String textText = new String("testing");
 
     private static SecretKey makeKey(String phraseInput, String salt) {
 
@@ -40,7 +38,7 @@ public class CryptoKit {
             e.printStackTrace();
         }
         SecretKey secret = new SecretKeySpec(tmp.getEncoded(), "AES");
-        //String keyString = Integer.toString(secret.hashCode());
+
         return secret;
     }
 
@@ -57,27 +55,26 @@ public class CryptoKit {
     // TO DO
     public static List<Account> encryptAccounts(List<Account> accounts, SecretKey secret) {
 
-//        for (Account currentAccount : accounts) {
-//            currentAccount.accountName = encryptText(currentAccount.accountName, secret);
-//           currentAccount.userName = encryptText(currentAccount.userName, secret);
-//            currentAccount.password = encryptText(currentAccount.password, secret);
-//       }
-        //textText = "testingGeasd;fkashjephauidva;dkjfasd";
-        //textText = encryptText(textText, secret);
-        return accounts;
+        for (Account currentAccount : accounts) {
+
+            currentAccount.accountName = encryptText(currentAccount.accountName, secret);
+
+            currentAccount.userName = encryptText(currentAccount.userName, secret);
+
+            currentAccount.password = encryptText(currentAccount.password, secret);
+        }
+
+            return accounts;
     }
 
     // TO DO
     public static List<Account> decryptAccounts(List<Account> accounts, SecretKey secret) {
 
-//        for (Account currentAccount : accounts) {
-//            currentAccount.accountName = decryptCipherText(currentAccount.accountName, secret);
-//            currentAccount.userName = decryptCipherText(currentAccount.userName, secret);
-//            currentAccount.password = decryptCipherText(currentAccount.password, secret);
-//        }
-
-        //textText=decryptCipherText(textText, secret);
-
+        for (Account currentAccount : accounts) {
+            currentAccount.accountName = decryptCipherText(currentAccount.accountName, secret);
+            currentAccount.userName = decryptCipherText(currentAccount.userName, secret);
+            currentAccount.password = decryptCipherText(currentAccount.password, secret);
+        }
 
         return accounts;
     }
@@ -87,14 +84,12 @@ public class CryptoKit {
         // TO DO
         byte[] cipherText = null;
         try {
-            Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+            Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
             cipher.init(Cipher.ENCRYPT_MODE, key);
-            AlgorithmParameters params = cipher.getParameters();
-            iv = params.getParameterSpec(IvParameterSpec.class).getIV();
 
             System.out.println("TEXT:" + text);
 
-            cipherText = cipher.doFinal(text.getBytes());
+            cipherText = cipher.doFinal(text.getBytes("UTF-8"));
 
             System.out.println("CIPHERTEXT:" + DatatypeConverter.printBase64Binary(cipherText));
 
@@ -108,9 +103,9 @@ public class CryptoKit {
             e.printStackTrace();
         } catch (BadPaddingException e) {
             e.printStackTrace();
-        } catch (InvalidParameterSpecException e) {
-            e.printStackTrace();
         } catch (IllegalBlockSizeException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
         return cipherText.toString();
@@ -121,8 +116,8 @@ public class CryptoKit {
         byte[] text = null;
 
         try {
-            Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
-            cipher.init(Cipher.DECRYPT_MODE, secret, new IvParameterSpec(iv));
+            Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
+            cipher.init(Cipher.DECRYPT_MODE, secret);
 
             System.err.println("CIPHERTEXT:" + cipherText);
             text = cipher.doFinal(DatatypeConverter.parseBase64Binary(cipherText));
@@ -130,8 +125,6 @@ public class CryptoKit {
 
             return new String(text, "UTF-8");
         } catch (InvalidKeyException e) {
-            e.printStackTrace();
-        } catch (InvalidAlgorithmParameterException e) {
             e.printStackTrace();
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();

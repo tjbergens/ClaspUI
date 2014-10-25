@@ -34,7 +34,7 @@ public class SessionManager {
         System.err.println("Password Hash: " + passHash);
 
         // Testing
-        Account test = new Account("Google", "Googler", "password123");
+        Account test = new Account(new String("Google"), new String("Googler"), new String("password123"));
         accounts.add(test);
         System.err.println(accounts.get(0).toString());
         saveAccounts(accounts);
@@ -62,7 +62,9 @@ public class SessionManager {
 
         accounts = newAccounts;
         List<Account> encryptedAccounts = CryptoKit.encryptAccounts(accounts, cryptoKey);
-        new Gson().toJson(encryptedAccounts, new TypeToken<List<Account>>(){}.getType() ,writer);
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        Gson includeNullsGson = gsonBuilder.serializeNulls().create();
+        includeNullsGson.toJson(encryptedAccounts, new TypeToken<ArrayList<Account>>(){}.getType() ,writer);
 
         try {
             writer.close();
@@ -77,14 +79,15 @@ public class SessionManager {
     // Called by the UI when retrieving the credentials to display.
     public static List<Account> getAccounts() {
 
-        Gson gson = new GsonBuilder().create();
         try {
             reader = new FileReader(SessionManager.userName + ".json");
         } catch (FileNotFoundException e1) {
             e1.printStackTrace();
         }
 
-        List <Account> encryptedAccounts = gson.fromJson(reader, new TypeToken<List<Account>>(){}.getType());
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        Gson includeNullsGson = gsonBuilder.serializeNulls().create();
+        List <Account> encryptedAccounts = includeNullsGson.fromJson(reader, new TypeToken<ArrayList<Account>>(){}.getType());
 
         accounts = CryptoKit.decryptAccounts(encryptedAccounts, cryptoKey);
         try {
