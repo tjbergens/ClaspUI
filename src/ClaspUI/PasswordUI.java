@@ -2,9 +2,11 @@ package ClaspUI;
 
 import ClaspBackend.Account;
 import ClaspBackend.SessionManager;
+//import ClaspUI.LoginUI.createAccountListener;
 import ClaspUI.MainUI.View;
 
 import javax.swing.*;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -41,9 +43,11 @@ public class PasswordUI extends JPanel {
 
         JButton addButton = new JButton("Add Password");
         addButton.setIcon(new ImageIcon("PlusIcon.png"));
+        addButton.addActionListener(new addAccountListener());
         bottomPane.add(addButton);
 
         JButton deleteButton = new JButton("Delete Password");
+        deleteButton.addActionListener(new deleteAccountListener());
         bottomPane.add(deleteButton);
 
         bottomPane.add(logoutButton);
@@ -85,6 +89,28 @@ public class PasswordUI extends JPanel {
         super.paintComponent(g);
     }
 
+    private class addAccountListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+
+            new AddAccountDialog(parent);
+
+        }
+
+    }
+    
+    private class deleteAccountListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+
+            new DeleteAccountDialog(parent);
+
+        }
+
+    }
+    
     private class LogoutButtonListener implements ActionListener {
 
         @Override
