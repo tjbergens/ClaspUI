@@ -25,7 +25,7 @@ public class DeleteAccountDialog extends JDialog {
 
         // Dialog title label
         JLabel titleLabel = new JLabel("Are you sure you want to delete this password?");
-        titleLabel.setFont(titleLabel.getFont().deriveFont(24.0f));
+        titleLabel.setFont(titleLabel.getFont().deriveFont(16.0f));
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridwidth = 2;
         gbc.insets = new Insets(20, 10, 10, 10);
@@ -43,7 +43,7 @@ public class DeleteAccountDialog extends JDialog {
      // Cancel button
         JButton cancelButton = new JButton("Cancel");
         gbc.gridy = 6;
-        gbc.insets = new Insets(10, -350, 20, 10);
+        gbc.insets = new Insets(10, -250, 20, 10);
         add(cancelButton, gbc);
         cancelButton.addActionListener(new cancelButtonListener());
 
@@ -67,7 +67,7 @@ public class DeleteAccountDialog extends JDialog {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-
+        	dispose();
 
         }
 

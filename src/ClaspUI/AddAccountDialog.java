@@ -2,8 +2,6 @@ package ClaspUI;
 
 import javax.swing.*;
 
-//import ClaspUI.DeleteAccountDialog.cancelButtonListener;
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -36,7 +34,7 @@ public class AddAccountDialog extends JDialog {
 
         // Account site
         addComponent(new JLabel("Account Location"), 0, 1);
-        addComponent(new JPasswordField(16), 1, 1);
+        addComponent(new JTextField(16), 1, 1);
         
         // Username components
         addComponent(new JLabel("Username"), 0, 2);
@@ -92,7 +90,7 @@ public class AddAccountDialog extends JDialog {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-
+        	dispose();
 
         }
 
