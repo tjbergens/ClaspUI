@@ -1,7 +1,7 @@
 package ClaspBackend;
 
 public final class Constraints {
-	private static String string[] = new String[2];
+	private static String string[] = null;
 
 	private Constraints(){
 		
@@ -11,7 +11,7 @@ public final class Constraints {
 		//splits the email at the @ symbol
 		string = userName.split("@");
 		//make sure both sides contain something
-		if(string[0].isEmpty() || string[1].isEmpty() || string[0] == null || string[1] == null){
+		if(string.length != 2 || string[0].isEmpty() || string[1].isEmpty()){
 			return false;
 		}
 		else
