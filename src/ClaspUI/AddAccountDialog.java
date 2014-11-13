@@ -2,6 +2,8 @@ package ClaspUI;
 
 import javax.swing.*;
 
+import ClaspBackend.Account;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -34,22 +36,27 @@ public class AddAccountDialog extends JDialog {
 
         // Account site
         addComponent(new JLabel("Account Location"), 0, 1);
-        addComponent(new JTextField(16), 1, 1);
+        final JTextField accountName = (JTextField) addComponent(new JTextField(16), 1, 1);
         
         // Username components
         addComponent(new JLabel("Username"), 0, 2);
-        addComponent(new JTextField(16), 1, 2);
+        final JTextField username = (JTextField) addComponent(new JTextField(16), 1, 2);
 
         // Password
         addComponent(new JLabel("Password"), 0, 3);
-        addComponent(new JPasswordField(16), 1, 3);
+        final JTextField password = (JTextField) addComponent(new JPasswordField(16), 1, 3);
 
         // Submit button
         JButton submitButton = new JButton("Submit");
         gbc.gridy = 6;
         gbc.insets = new Insets(10, -100, 20, 10);
         add(submitButton, gbc);
-        submitButton.addActionListener(new submitButtonListener());
+        submitButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new Account(accountName.getText(), username.getText(), password.getText());
+				dispose();
+			}
+		});
 
         // Cancel button
         JButton cancelButton = new JButton("Cancel");
@@ -64,7 +71,7 @@ public class AddAccountDialog extends JDialog {
     }
 
     // Add a label or text entry field
-    private void addComponent(JComponent jc, int x, int y) {
+    private JComponent addComponent(JComponent jc, int x, int y) {
 
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = x;
@@ -73,18 +80,10 @@ public class AddAccountDialog extends JDialog {
         gbc.fill = GridBagConstraints.BOTH;
 
         add(jc, gbc);
-
+        return jc;
     }
 
-    private class submitButtonListener implements ActionListener {
 
-        @Override
-        public void actionPerformed(ActionEvent e) {
-
-
-        }
-
-    }
     
     private class cancelButtonListener implements ActionListener {
 
