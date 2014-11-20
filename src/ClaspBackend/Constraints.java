@@ -20,7 +20,7 @@ public final class Constraints {
 	
 	//takes in a potential password
 	public static boolean password(String password){
-		String pattern= "^[a-zA-Z0-9]*$";
+		String pattern= "^[a-zA-Z0-9]{12,*}$";
 		//check if the password is alphanumeric
 		if(password.matches(pattern)){
 			return true;
@@ -29,11 +29,14 @@ public final class Constraints {
 			return false;
 	}
 	
+	//takes in a string and determines length
 	public static boolean chkLength(String check){
 		
-		if(check.length() < 140)
+		if(check.length() <= 100)
+			//return true if string is less than 100 characters
 			return true;
 		else
+			//return false if it is greater than 100 characters
 			return false;
 	}
 }
