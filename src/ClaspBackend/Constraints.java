@@ -20,7 +20,7 @@ public final class Constraints {
 	
 	//takes in a potential password
 	public static boolean password(String password){
-		String pattern= "^[a-zA-Z0-9]{12,*}$";
+		String pattern= "^[a-zA-Z0-9]{12,100}$";
 		//check if the password is alphanumeric
 		if(password.matches(pattern)){
 			return true;
