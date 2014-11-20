@@ -28,4 +28,12 @@ public final class Constraints {
 		else
 			return false;
 	}
+	
+	public static boolean chkLength(String check){
+		
+		if(check.length() < 140)
+			return true;
+		else
+			return false;
+	}
 }
