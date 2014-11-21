@@ -3,6 +3,9 @@ package ClaspBackend;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import retrofit.RequestInterceptor;
+import retrofit.RestAdapter;
+import retrofit.http.*;
 
 import javax.crypto.SecretKey;
 import java.io.FileNotFoundException;
@@ -22,6 +25,46 @@ public class SessionManager {
     private static SecretKey cryptoKey;
     private static SecretKey passHash;
     private static List<Account> accounts = new ArrayList<Account>();
+
+
+    RequestInterceptor requestInterceptor = new RequestInterceptor() {
+        @Override
+        public void intercept(RequestFacade request) {
+            request.addHeader("User-Agent", "Clasp-App");
+        }
+    };
+    public static RestAdapter restAdapter = new RestAdapter.Builder()
+            .setEndpoint("http://alpacapass.com:8001")
+            .build();
+    public static AlpacaService service = restAdapter.create(AlpacaService.class);
+
+    public interface AlpacaService {
+
+        // Get Accounts Interface Method
+        @GET("/accounts")
+        List<Account> listAccounts(@Header("Authorization: Token ") String token);
+
+        // Delete Account Interface Method
+        @DELETE("/accounts/{id}")
+        void deleteAccount(@Path("id") String id);
+
+        // Add Account Interface Method
+        @POST("/accounts/")
+        void addAccount();
+
+        // Update Account Interface Method
+        @PUT("/accounts/{id}")
+        void updateAccount(@Path("id") String id);
+
+        // Get Auth Token Interface Method
+        @GET("/api-token-auth/")
+        String getAuthToken();
+
+        // Register Account Interface Method
+        @POST("/users/register")
+        void createAccount();
+
+    }
 
     //TO DO
     public static int login() {
@@ -44,6 +87,12 @@ public class SessionManager {
 
         // HTTP SUCCESS INT
         return 200;
+    }
+
+    public static void createAccount() {
+
+
+
     }
 
     // TO DO
