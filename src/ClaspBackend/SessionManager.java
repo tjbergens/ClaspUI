@@ -34,6 +34,7 @@ public class SessionManager {
         }
     };
     public static RestAdapter restAdapter = new RestAdapter.Builder()
+            .setLogLevel(RestAdapter.LogLevel.FULL)
             .setEndpoint("http://alpacapass.com:8001")
             .build();
     public static AlpacaService service = restAdapter.create(AlpacaService.class);
@@ -46,23 +47,23 @@ public class SessionManager {
 
         // Delete Account Interface Method
         @DELETE("/accounts/{id}")
-        void deleteAccount(@Path("id") String id);
+        void deleteAccount(@Header("Authorization: Token ") String token, @Path("id") String id);
 
         // Add Account Interface Method
         @POST("/accounts/")
-        void addAccount();
+        void addAccount(@Header("Authorization: Token ") String token);
 
         // Update Account Interface Method
         @PUT("/accounts/{id}")
-        void updateAccount(@Path("id") String id);
+        void updateAccount(@Header("Authorization: Token ") String token, @Path("id") String id);
 
         // Get Auth Token Interface Method
-        @GET("/api-token-auth/")
-        String getAuthToken();
+        @POST("/api-token-auth/")
+        String getAuthToken(@Field("username") String username, @Field("password") String password);
 
         // Register Account Interface Method
         @POST("/users/register")
-        void createAccount();
+        void registerAccount(@Field("username") String username, @Field("email") String email, @Field("password") String password);
 
     }
 
@@ -78,12 +79,14 @@ public class SessionManager {
         passHash = CryptoKit.getHash(cryptoKey.toString(), SessionManager.getMasterPassword());
         System.err.println("Key: " + cryptoKey);
         System.err.println("Password Hash: " + passHash);
+        SessionManager.getAccounts();
+
 
         // Testing. Go on, add more accounts or whatever to see how it looks in the JSON file and in the UI.
-        Account test = new Account(new String("Google"), new String("Googler"), new String("password123"));
-        accounts.add(test);
-        System.err.println(accounts.get(0).toString());
-        saveAccounts(accounts);
+        //Account test = new Account(new String("Google"), new String("Googler"), new String("password123"));
+        //accounts.add(test);
+        //System.err.println(accounts.get(0).toString());
+        //saveAccounts(accounts);
 
         // HTTP SUCCESS INT
         return 200;
@@ -91,15 +94,18 @@ public class SessionManager {
 
     public static void createAccount() {
 
-
+        cryptoKey = CryptoKit.getKey(SessionManager.getMasterPassword(), SessionManager.getUserName());
+        passHash = CryptoKit.getHash(cryptoKey.toString(), SessionManager.getMasterPassword());
+        service.registerAccount(userName, "", passHash.toString());
 
     }
 
     // TO DO
     public static String getAuthToken() {
 
-        // DO SOMETHING
-
+        // Call auth token request.
+        System.err.println(passHash.toString());
+        authToken = service.getAuthToken(userName, passHash.toString());
         return SessionManager.authToken;
     }
 
@@ -132,23 +138,25 @@ public class SessionManager {
     // Called by the UI when retrieving the credentials to display.
     public static List<Account> getAccounts() {
 
-        try {
-            reader = new FileReader(SessionManager.userName + ".json");
-        } catch (FileNotFoundException e1) {
-            e1.printStackTrace();
-        }
+//        try {
+//            reader = new FileReader(SessionManager.userName + ".json");
+//        } catch (FileNotFoundException e1) {
+//            e1.printStackTrace();
+//        }
+//
+//        GsonBuilder gsonBuilder = new GsonBuilder();
+//        Gson includeNullsGson = gsonBuilder.serializeNulls().create();
+//        List<Account> encryptedAccounts = includeNullsGson.fromJson(reader, new TypeToken<ArrayList<Account>>() {
+//        }.getType());
 
-        GsonBuilder gsonBuilder = new GsonBuilder();
-        Gson includeNullsGson = gsonBuilder.serializeNulls().create();
-        List<Account> encryptedAccounts = includeNullsGson.fromJson(reader, new TypeToken<ArrayList<Account>>() {
-        }.getType());
+        List<Account> encryptedAccounts = service.listAccounts(authToken);
 
         accounts = CryptoKit.decryptAccounts(encryptedAccounts, cryptoKey);
-        try {
-            reader.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            reader.close();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
         return accounts;
 
     }
@@ -171,4 +179,5 @@ public class SessionManager {
 
         SessionManager.userName = userName;
     }
+
 }

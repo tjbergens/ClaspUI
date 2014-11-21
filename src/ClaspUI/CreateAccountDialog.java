@@ -1,5 +1,7 @@
 package ClaspUI;
 
+import ClaspBackend.SessionManager;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -81,7 +83,8 @@ public class CreateAccountDialog extends JDialog {
         @Override
         public void actionPerformed(ActionEvent e) {
 
-
+            // Send Create Account Request
+            SessionManager.createAccount();
         }
 
     }
