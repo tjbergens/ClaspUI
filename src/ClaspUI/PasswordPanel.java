@@ -11,7 +11,6 @@ import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
 
 @SuppressWarnings("serial")
 public class PasswordPanel extends JPanel {
@@ -83,23 +82,22 @@ public class PasswordPanel extends JPanel {
 
     }
 
+    public Dimension getPreferredSize() {
+        return new Dimension(224, 112);
+    }
+
     public class updateAccountListener implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            int reply = JOptionPane.showConfirmDialog(null, "Are you sure you want to change this Password?", "Change Password?",  JOptionPane.YES_NO_OPTION);
-            if (reply == JOptionPane.YES_OPTION)
-            {
+            int reply = JOptionPane.showConfirmDialog(null, "Are you sure you want to change this Password?", "Change Password?", JOptionPane.YES_NO_OPTION);
+            if (reply == JOptionPane.YES_OPTION) {
                 SessionManager.updateAccount(id, new String(passwordField.getPassword()));
                 updateUI();
             }
 
         }
 
-    }
-
-    public Dimension getPreferredSize() {
-        return new Dimension(224, 112);
     }
 
 }

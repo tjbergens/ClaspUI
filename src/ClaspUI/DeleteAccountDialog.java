@@ -32,15 +32,14 @@ public class DeleteAccountDialog extends JDialog {
         add(titleLabel, gbc);
 
 
-
         // Submit button
         JButton submitButton = new JButton("Submit");
         gbc.gridy = 6;
         gbc.insets = new Insets(10, -100, 20, 10);
         add(submitButton, gbc);
         submitButton.addActionListener(new submitButtonListener());
-        
-     // Cancel button
+
+        // Cancel button
         JButton cancelButton = new JButton("Cancel");
         gbc.gridy = 6;
         gbc.insets = new Insets(10, -250, 20, 10);
@@ -62,12 +61,12 @@ public class DeleteAccountDialog extends JDialog {
         }
 
     }
-    
+
     public class cancelButtonListener implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-        	dispose();
+            dispose();
 
         }
 

@@ -1,17 +1,12 @@
 package ClaspBackend;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
 import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
 import retrofit.http.*;
 
 import javax.crypto.SecretKey;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,13 +14,6 @@ public class SessionManager {
 
     public static FileReader reader;
     public static FileWriter writer;
-    private static String authToken;
-    private static String userName;
-    private static String masterPassword;
-    private static SecretKey cryptoKey;
-    private static String passHash;
-    private static List<Account> accounts = new ArrayList<Account>();
-
     // Intercepts all requests to append user agent string globally
     public static RequestInterceptor requestInterceptor = new RequestInterceptor() {
         @Override
@@ -33,45 +21,20 @@ public class SessionManager {
             request.addHeader("User-Agent", "Clasp-App");
         }
     };
-
     // Build REST service adapter with full logging
     public static RestAdapter restAdapter = new RestAdapter.Builder()
             .setLogLevel(RestAdapter.LogLevel.FULL)
             .setEndpoint("http://alpacapass.com:8001")
             .setRequestInterceptor(requestInterceptor)
             .build();
-
     // Create interface instance for REST services
     public static AlpacaService service = restAdapter.create(AlpacaService.class);
-
-    public interface AlpacaService {
-
-        // Get Accounts Interface Method
-        @GET("/accounts/?format=json")
-        List<Account> listAccounts(@Header("Authorization") String token);
-
-        // Delete Account Interface Method
-        @DELETE("/accounts/{id}")
-        void deleteAccount(@Header("Authorization") String token, @Path("id") String id);
-
-        // Add Account Interface Method
-        @POST("/accounts/?format=json")
-        Account addAccount(@Header("Authorization") String token, @Body NewAccount account);
-
-        // Update Account Interface Method
-        @PUT("/accounts/{id}/?format=json")
-        Account updateAccount(@Header("Authorization") String token, @Path("id") String id, @Body Account account);
-
-        // Get Auth Token Interface Method
-        @POST("/api-token-auth/")
-        @Multipart
-        AuthToken getAuthToken(@Part("username") String username, @Part("password") String password);
-
-        // Register Account Interface Method
-        @POST("/users/register/?format=json")
-        String createAccount(@Body RegistrationAccount account);
-
-    }
+    private static String authToken;
+    private static String userName;
+    private static String masterPassword;
+    private static SecretKey cryptoKey;
+    private static String passHash;
+    private static List<Account> accounts = new ArrayList<Account>();
 
     //TO DO
     public static int login() {
@@ -107,15 +70,14 @@ public class SessionManager {
         password = CryptoKit.getHash(cryptoKey.toString(), password);
 
 
-
         // Send it off to attempt registration.
         service.createAccount(new RegistrationAccount(username, email, password));
     }
 
     public static void updateAccount(String id, String newPass) {
 
-        for(Account account : accounts) {
-            if(account.getId().equals(id)) {
+        for (Account account : accounts) {
+            if (account.getId().equals(id)) {
                 account.password = newPass;
                 service.updateAccount("Token " + authToken, id, CryptoKit.encryptAccount(account, cryptoKey));
             }
@@ -130,32 +92,6 @@ public class SessionManager {
         AuthAccount account = new AuthAccount(userName, passHash);
         AuthToken token = service.getAuthToken(userName, passHash);
         SessionManager.authToken = token.token;
-    }
-
-    // Called by the UI when saving the passwords is required.
-    public static int saveAccounts(List<Account> newAccounts) {
-
-        try {
-            writer = new FileWriter(userName + ".json");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        accounts = newAccounts;
-        List<Account> encryptedAccounts = CryptoKit.encryptAccounts(accounts, cryptoKey);
-        GsonBuilder gsonBuilder = new GsonBuilder();
-        Gson includeNullsGson = gsonBuilder.serializeNulls().create();
-        includeNullsGson.toJson(encryptedAccounts, new TypeToken<ArrayList<Account>>() {
-        }.getType(), writer);
-
-        try {
-            writer.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        //HTTP Success
-        return 200;
-
     }
 
     public static int addAccount(NewAccount account) {
@@ -207,5 +143,34 @@ public class SessionManager {
     public static void setUserName(String userName) {
 
         SessionManager.userName = userName;
+    }
+
+    public interface AlpacaService {
+
+        // Get Accounts Interface Method
+        @GET("/accounts/?format=json")
+        List<Account> listAccounts(@Header("Authorization") String token);
+
+        // Delete Account Interface Method
+        @DELETE("/accounts/{id}")
+        void deleteAccount(@Header("Authorization") String token, @Path("id") String id);
+
+        // Add Account Interface Method
+        @POST("/accounts/?format=json")
+        Account addAccount(@Header("Authorization") String token, @Body NewAccount account);
+
+        // Update Account Interface Method
+        @PUT("/accounts/{id}/?format=json")
+        Account updateAccount(@Header("Authorization") String token, @Path("id") String id, @Body Account account);
+
+        // Get Auth Token Interface Method
+        @POST("/api-token-auth/")
+        @Multipart
+        AuthToken getAuthToken(@Part("username") String username, @Part("password") String password);
+
+        // Register Account Interface Method
+        @POST("/users/register/?format=json")
+        String createAccount(@Body RegistrationAccount account);
+
     }
 }

@@ -2,15 +2,15 @@ package ClaspUI;
 
 import ClaspBackend.Account;
 import ClaspBackend.SessionManager;
-//import ClaspUI.LoginUI.createAccountListener;
 import ClaspUI.MainUI.View;
 
 import javax.swing.*;
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
+
+//import ClaspUI.LoginUI.createAccountListener;
 
 @SuppressWarnings("serial")
 public class PasswordUI extends JPanel {
@@ -104,7 +104,7 @@ public class PasswordUI extends JPanel {
         }
 
     }
-    
+
     private class deleteAccountListener implements ActionListener {
 
         @Override
@@ -115,7 +115,7 @@ public class PasswordUI extends JPanel {
         }
 
     }
-    
+
     private class LogoutButtonListener implements ActionListener {
 
         @Override

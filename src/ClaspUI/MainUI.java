@@ -21,6 +21,7 @@ public class MainUI extends JFrame {
     ;
     private CardLayout cardLayout;
     private JPanel content;
+
     public MainUI() {
 
         // Calls JFrame constructor to set title

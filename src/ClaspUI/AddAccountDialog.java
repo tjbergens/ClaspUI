@@ -1,11 +1,9 @@
 package ClaspUI;
 
-import javax.swing.*;
-
-import ClaspBackend.Account;
 import ClaspBackend.NewAccount;
 import ClaspBackend.SessionManager;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -39,7 +37,7 @@ public class AddAccountDialog extends JDialog {
         // Account site
         addComponent(new JLabel("Account Location"), 0, 1);
         final JTextField accountName = (JTextField) addComponent(new JTextField(16), 1, 1);
-        
+
         // Username components
         addComponent(new JLabel("Username"), 0, 2);
         final JTextField username = (JTextField) addComponent(new JTextField(16), 1, 2);
@@ -57,11 +55,11 @@ public class AddAccountDialog extends JDialog {
 
         // Add account listener
         submitButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				SessionManager.addAccount(new NewAccount(accountName.getText(), username.getText(), password.getText()));
-				dispose();
-			}
-		});
+            public void actionPerformed(ActionEvent e) {
+                SessionManager.addAccount(new NewAccount(accountName.getText(), username.getText(), password.getText()));
+                dispose();
+            }
+        });
 
         // Cancel button
         JButton cancelButton = new JButton("Cancel");
@@ -69,7 +67,7 @@ public class AddAccountDialog extends JDialog {
         gbc.insets = new Insets(10, -250, 20, 10);
         add(cancelButton, gbc);
         cancelButton.addActionListener(new cancelButtonListener());
-        
+
         pack();
         setLocationRelativeTo(null);
         setVisible(true);
@@ -89,12 +87,11 @@ public class AddAccountDialog extends JDialog {
     }
 
 
-    
     private class cancelButtonListener implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-        	dispose();
+            dispose();
 
         }
 
