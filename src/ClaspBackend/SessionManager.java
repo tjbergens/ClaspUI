@@ -68,8 +68,8 @@ public class SessionManager {
         AuthToken getAuthToken(@Part("username") String username, @Part("password") String password);
 
         // Register Account Interface Method
-        @POST("/users/register")
-        void createAccount();
+        @POST("/users/register/?format=json")
+        String createAccount(@Body RegistrationAccount account);
 
     }
 
@@ -101,10 +101,15 @@ public class SessionManager {
         return 200;
     }
 
-    public static void createAccount() {
+    public static void createAccount(String username, String email, String password) {
+
+        cryptoKey = CryptoKit.getKey(password, username);
+        password = CryptoKit.getHash(cryptoKey.toString(), password);
 
 
 
+        // Send it off to attempt registration.
+        service.createAccount(new RegistrationAccount(username, email, password));
     }
 
     public static void updateAccount(String id, String newPass) {
