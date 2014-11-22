@@ -74,7 +74,8 @@ public class SessionManager {
 
         cryptoKey = CryptoKit.getKey(SessionManager.getMasterPassword(), SessionManager.getUserName());
         passHash = CryptoKit.getHash(cryptoKey.toString(), SessionManager.getMasterPassword());
-        authToken = SessionManager.getAuthToken();
+        SessionManager.getAuthToken();
+        System.err.println("Auth Token: " + authToken);
 
         // Disabled for now until we get adding accounts working in the UI.
         //accounts = getAccounts();
@@ -99,12 +100,12 @@ public class SessionManager {
     }
 
     // TO DO
-    public static String getAuthToken() {
+    public static void getAuthToken() {
 
         // DO SOMETHING
         AuthAccount account = new AuthAccount(userName, passHash);
         AuthToken token = service.getAuthToken(userName, passHash);
-        return SessionManager.authToken;
+        SessionManager.authToken = token.token;
     }
 
     // Called by the UI when saving the passwords is required.
