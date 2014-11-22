@@ -3,6 +3,8 @@ package ClaspUI;
 import javax.swing.*;
 
 import ClaspBackend.Account;
+import ClaspBackend.NewAccount;
+import ClaspBackend.SessionManager;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -14,7 +16,7 @@ public class AddAccountDialog extends JDialog {
     final int PAD_X = 20;
     final int PAD_Y = 10;
 
-    public AddAccountDialog(JFrame parent) {
+    public AddAccountDialog(final JFrame parent) {
 
         // Set title, stop parent from allowing interaction
         super(parent, "Add new Password", true);
@@ -51,9 +53,12 @@ public class AddAccountDialog extends JDialog {
         gbc.gridy = 6;
         gbc.insets = new Insets(10, -100, 20, 10);
         add(submitButton, gbc);
+
+
+        // Add account listener
         submitButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new Account(accountName.getText(), username.getText(), password.getText());
+				SessionManager.addAccount(new NewAccount(accountName.getText(), username.getText(), password.getText()));
 				dispose();
 			}
 		});

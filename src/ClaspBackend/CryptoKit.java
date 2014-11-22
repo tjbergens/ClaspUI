@@ -63,6 +63,17 @@ public class CryptoKit {
         return accounts;
     }
 
+    public static NewAccount encryptNewAccount(NewAccount account, SecretKey secret) {
+
+        account.accountName = encryptText(account.accountName, secret);
+
+        account.userName = encryptText(account.userName, secret);
+
+        account.password = encryptText(account.password, secret);
+
+        return account;
+    }
+
     // TO DO
     public static List<Account> decryptAccounts(List<Account> accounts, SecretKey secret) {
 

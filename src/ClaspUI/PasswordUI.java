@@ -65,6 +65,7 @@ public class PasswordUI extends JPanel {
 
     }
 
+    // Refresh password list
     public void addPasswords(List<Account> passwords) {
 
         contentPane.removeAll();
@@ -74,7 +75,7 @@ public class PasswordUI extends JPanel {
         for (int i = 0; i < passwords.size(); ++i) {
             Account current = passwords.get(i);
             gbc.gridy = i;
-            PasswordPanel pp = new PasswordPanel(current.accountName.toString(), current.userName.toString(), current.password.toString());
+            PasswordPanel pp = new PasswordPanel(current.accountName.toString(), current.userName.toString(), current.password.toString(), current.id);
             contentPane.add(pp, gbc);
         }
 
@@ -95,6 +96,10 @@ public class PasswordUI extends JPanel {
         public void actionPerformed(ActionEvent e) {
 
             new AddAccountDialog(parent);
+            System.err.println("about to update password list...");
+            addPasswords(SessionManager.getAccounts());
+            contentPane.updateUI();
+            System.err.println("....done.");
 
         }
 

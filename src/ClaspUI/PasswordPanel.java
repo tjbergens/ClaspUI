@@ -16,8 +16,9 @@ public class PasswordPanel extends JPanel {
     private JPasswordField passwordField;
     private JCheckBox chckbxShowPassword;
     private char echoChar;
+    private String id;
 
-    public PasswordPanel(String location, String userName, String userPass) {
+    public PasswordPanel(String location, String userName, String userPass, String id) {
         setBorder(new TitledBorder(null, location, TitledBorder.LEADING, TitledBorder.TOP, null, null));
 
         // Set layout
