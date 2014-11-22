@@ -43,9 +43,9 @@ public class CryptoKit {
         return makeKey(phraseInput, salt);
     }
 
-    public static SecretKey getHash(String phraseInput, String salt) {
+    public static String getHash(String phraseInput, String salt) {
 
-        return makeKey(phraseInput, salt);
+        return DatatypeConverter.printBase64Binary(makeKey(phraseInput, salt).getEncoded());
     }
 
     // TO DO

@@ -23,7 +23,7 @@ public class SessionManager {
     private static String userName;
     private static String masterPassword;
     private static SecretKey cryptoKey;
-    private static SecretKey passHash;
+    private static String passHash;
     private static List<Account> accounts = new ArrayList<Account>();
 
 
@@ -34,6 +34,7 @@ public class SessionManager {
         }
     };
     public static RestAdapter restAdapter = new RestAdapter.Builder()
+            .setLogLevel(RestAdapter.LogLevel.FULL)
             .setEndpoint("http://alpacapass.com:8001")
             .build();
     public static AlpacaService service = restAdapter.create(AlpacaService.class);
@@ -42,23 +43,24 @@ public class SessionManager {
 
         // Get Accounts Interface Method
         @GET("/accounts")
-        List<Account> listAccounts(@Header("Authorization: Token ") String token);
+        List<Account> listAccounts(@Header("Authorization") String token);
 
         // Delete Account Interface Method
         @DELETE("/accounts/{id}")
-        void deleteAccount(@Path("id") String id);
+        void deleteAccount(@Header("Authorization") String token, @Path("id") String id);
 
         // Add Account Interface Method
         @POST("/accounts/")
-        void addAccount();
+        void addAccount(@Header("Authorization") String token);
 
         // Update Account Interface Method
         @PUT("/accounts/{id}")
-        void updateAccount(@Path("id") String id);
+        void updateAccount(@Header("Authorization") String token, @Path("id") String id);
 
         // Get Auth Token Interface Method
-        @GET("/api-token-auth/")
-        String getAuthToken();
+        @POST("/api-token-auth/")
+        @Multipart
+        AuthToken getAuthToken(@Part("username") String username, @Part("password") String password);
 
         // Register Account Interface Method
         @POST("/users/register")
@@ -69,13 +71,14 @@ public class SessionManager {
     //TO DO
     public static int login() {
 
+
+        cryptoKey = CryptoKit.getKey(SessionManager.getMasterPassword(), SessionManager.getUserName());
+        passHash = CryptoKit.getHash(cryptoKey.toString(), SessionManager.getMasterPassword());
         authToken = SessionManager.getAuthToken();
 
         // Disabled for now until we get adding accounts working in the UI.
         //accounts = getAccounts();
 
-        cryptoKey = CryptoKit.getKey(SessionManager.getMasterPassword(), SessionManager.getUserName());
-        passHash = CryptoKit.getHash(cryptoKey.toString(), SessionManager.getMasterPassword());
         System.err.println("Key: " + cryptoKey);
         System.err.println("Password Hash: " + passHash);
 
@@ -99,7 +102,8 @@ public class SessionManager {
     public static String getAuthToken() {
 
         // DO SOMETHING
-
+        AuthAccount account = new AuthAccount(userName, passHash);
+        AuthToken token = service.getAuthToken(userName, passHash);
         return SessionManager.authToken;
     }
 
