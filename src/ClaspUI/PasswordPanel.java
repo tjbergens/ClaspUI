@@ -1,5 +1,7 @@
 package ClaspUI;
 
+import ClaspBackend.SessionManager;
+
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ChangeEvent;
@@ -9,6 +11,7 @@ import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 
 @SuppressWarnings("serial")
 public class PasswordPanel extends JPanel {
@@ -21,6 +24,8 @@ public class PasswordPanel extends JPanel {
     public PasswordPanel(String location, String userName, String userPass, String id) {
         setBorder(new TitledBorder(null, location, TitledBorder.LEADING, TitledBorder.TOP, null, null));
 
+        // Save id
+        this.id = id;
         // Set layout
         SpringLayout springLayout = new SpringLayout();
         setLayout(springLayout);
@@ -29,6 +34,7 @@ public class PasswordPanel extends JPanel {
         passwordField = new JPasswordField();
         passwordField.setColumns(16);
         passwordField.setText(userPass);
+        passwordField.addActionListener(new updateAccountListener());
         echoChar = passwordField.getEchoChar();
         add(passwordField);
 
@@ -74,6 +80,21 @@ public class PasswordPanel extends JPanel {
         // Constrain copy button
         springLayout.putConstraint(SpringLayout.NORTH, btnCopy, 0, SpringLayout.NORTH, passwordField);
         springLayout.putConstraint(SpringLayout.WEST, btnCopy, 10, SpringLayout.EAST, passwordField);
+
+    }
+
+    public class updateAccountListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            int reply = JOptionPane.showConfirmDialog(null, "Are you sure you want to change this Password?", "Change Password?",  JOptionPane.YES_NO_OPTION);
+            if (reply == JOptionPane.YES_OPTION)
+            {
+                SessionManager.updateAccount(id, new String(passwordField.getPassword()));
+                updateUI();
+            }
+
+        }
 
     }
 

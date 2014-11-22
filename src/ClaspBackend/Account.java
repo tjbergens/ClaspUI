@@ -14,12 +14,16 @@ public class Account {
         this.password = password;
     }
 
+    public String getId() {
+        return this.id;
+    }
+
     //created equals function for the arraylist.remove method.
     public boolean equals(Object obj) {
         if (obj == null) return false;
         if (obj == this) return true;
         if (!(obj instanceof Account)) return false;
         Account o = (Account) obj;
-        return o.accountName == this.accountName;
+        return o.id == this.id;
     }
 }

@@ -3,7 +3,6 @@ package ClaspBackend;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
-import retrofit.Callback;
 import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
 import retrofit.http.*;
@@ -57,11 +56,11 @@ public class SessionManager {
 
         // Add Account Interface Method
         @POST("/accounts/?format=json")
-        NewAccount addAccount(@Header("Authorization") String token, @Body NewAccount account);
+        Account addAccount(@Header("Authorization") String token, @Body NewAccount account);
 
         // Update Account Interface Method
         @PUT("/accounts/{id}/?format=json")
-        void updateAccount(@Header("Authorization") String token, @Path("id") String id);
+        Account updateAccount(@Header("Authorization") String token, @Path("id") String id, @Body Account account);
 
         // Get Auth Token Interface Method
         @POST("/api-token-auth/")
@@ -105,6 +104,17 @@ public class SessionManager {
     public static void createAccount() {
 
 
+
+    }
+
+    public static void updateAccount(String id, String newPass) {
+
+        for(Account account : accounts) {
+            if(account.getId().equals(id)) {
+                account.password = newPass;
+                service.updateAccount("Token " + authToken, id, CryptoKit.encryptAccount(account, cryptoKey));
+            }
+        }
 
     }
 
