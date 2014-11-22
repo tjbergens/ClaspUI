@@ -95,6 +95,7 @@ public class CreateAccountDialog extends JDialog {
         public void actionPerformed(ActionEvent e) {
 
             SessionManager.createAccount(userField.getText(), emailField.getText(), new String(passField.getPassword()));
+            dispose();
         }
 
     }
