@@ -1,5 +1,6 @@
 package ClaspUI;
 
+import ClaspBackend.Constraints;
 import ClaspBackend.SessionManager;
 import retrofit.RetrofitError;
 
@@ -114,8 +115,8 @@ class PasswordPanel extends JPanel {
         @Override
         public void actionPerformed(ActionEvent e) {
             int reply = JOptionPane.showConfirmDialog(null, "Are you sure you want to change this Password?", "Change Password?", JOptionPane.YES_NO_OPTION);
-            if (reply == JOptionPane.YES_OPTION) {
-
+            if (reply == JOptionPane.YES_OPTION && checkLength()) {
+            
                 try {
                     SessionManager.updateAccount(id, new String(passwordField.getPassword()));
                     SessionManager.retrieveAccounts();
@@ -128,6 +129,14 @@ class PasswordPanel extends JPanel {
 
         }
 
+    }
+    
+    private boolean checkLength() {
+    	    if(!Constraints.chkLength(new String(passwordField.getPassword()))){
+    		JOptionPane.showMessageDialog(null, "Password must be less than 100 characters", "Password Error", JOptionPane.ERROR_MESSAGE);
+    		return false;
+    	}
+    	else return true;
     }
 
     // Call function to confirm and delete specified account.

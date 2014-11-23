@@ -97,29 +97,22 @@ class CreateAccountDialog extends JDialog {
 
     }
     
+  //checks validity of user argument
     private boolean checkConstraints(){
     	if(!Constraints.userName(userField.getText())){
-	    	JLabel errorFont = new JLabel("Username must be 2-100 characters and contain only Alphanumeric characters");
-	    	errorFont.setForeground(Color.red);
-	    	addComponent(errorFont, 2, 1);
+    		JOptionPane.showMessageDialog(null, "Username must be 2-100 characters and contain only Alphanumeric characters", "Username Error", JOptionPane.ERROR_MESSAGE);
 	    	return false;
     	}
     	else if(!Constraints.email(emailField.getText())){
-    		JLabel errorFont = new JLabel("email must follow format username@domain");
-        	errorFont.setForeground(Color.red);
-        	addComponent(errorFont, 2, 2);
+    		JOptionPane.showMessageDialog(null, "Email must be in format Username@Domain", "Email Error", JOptionPane.ERROR_MESSAGE);
         	return false;
     	}
     	else if(!Constraints.password(new String(passField.getPassword()))){
-    		JLabel errorFont = new JLabel("Password must be 10-100 characters and contain only Alphanumeric characters");
-        	errorFont.setForeground(Color.red);
-        	addComponent(errorFont, 2, 3);
+    		JOptionPane.showMessageDialog(null, "Password must be 10-100 characters and contain only Alphanumeric characters", "Password Error", JOptionPane.ERROR_MESSAGE);
         	return false;	
     	}
     	else if(!(new String(passField.getPassword()).equals(new String(repeatField.getPassword())))){
-    		JLabel errorFont = new JLabel("Passwords do not match");
-        	errorFont.setForeground(Color.red);
-        	addComponent(errorFont, 2, 4);
+    		JOptionPane.showMessageDialog(null, "Passwords do not match", "Password Error", JOptionPane.ERROR_MESSAGE);
         	return false;
     	}
     	else return true;
