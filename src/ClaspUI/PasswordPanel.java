@@ -7,11 +7,14 @@ import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 @SuppressWarnings("serial")
 class PasswordPanel extends JPanel {
@@ -43,6 +46,8 @@ class PasswordPanel extends JPanel {
 
         // Copy button
         JButton btnCopy = new JButton("Copy");
+        springLayout.putConstraint(SpringLayout.NORTH, btnCopy, -1, SpringLayout.NORTH, passwordField);
+        springLayout.putConstraint(SpringLayout.WEST, btnCopy, 6, SpringLayout.EAST, passwordField);
         btnCopy.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 StringSelection clip = new StringSelection(String.valueOf(passwordField.getPassword()));
@@ -53,12 +58,19 @@ class PasswordPanel extends JPanel {
         add(btnCopy);
 
         // Delete button
-        JButton btnDelete = new JButton("Delete");
-        btnDelete.addActionListener(new deleteAccountListener());
+        JLabel btnDelete = new JLabel("×");
+        springLayout.putConstraint(SpringLayout.NORTH, btnDelete, -10, SpringLayout.NORTH, this);
+                springLayout.putConstraint(SpringLayout.EAST, btnDelete, 0, SpringLayout.EAST, this);
+        
+        btnDelete.setFont(new Font("Tahoma", Font.PLAIN, 18));
+        btnDelete.setForeground(Color.red);
+        btnDelete.addMouseListener(new deleteAccountListener());
         add(btnDelete);
+        
 
         // Update button
-        JButton btnUpdate = new JButton("Update");
+        JButton btnUpdate = new JButton("Save");
+        springLayout.putConstraint(SpringLayout.EAST, btnUpdate, 0, SpringLayout.EAST, btnCopy);
         btnUpdate.addActionListener(new updateAccountListener());
         add(btnUpdate);
 
@@ -67,6 +79,7 @@ class PasswordPanel extends JPanel {
 
         // Checkbox
         chckbxShowPassword = new JCheckBox("Show Password?");
+        springLayout.putConstraint(SpringLayout.NORTH, btnUpdate, 0, SpringLayout.NORTH, chckbxShowPassword);
         chckbxShowPassword.addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent e) {
                 if (chckbxShowPassword.isSelected()) {
@@ -89,18 +102,6 @@ class PasswordPanel extends JPanel {
         // Constrain show password checkbox
         springLayout.putConstraint(SpringLayout.WEST, chckbxShowPassword, 10, SpringLayout.WEST, this);
         springLayout.putConstraint(SpringLayout.NORTH, chckbxShowPassword, 10, SpringLayout.SOUTH, passwordField);
-
-        // Constrain copy button
-        springLayout.putConstraint(SpringLayout.NORTH, btnCopy, 0, SpringLayout.NORTH, this);
-        springLayout.putConstraint(SpringLayout.WEST, btnCopy, 10, SpringLayout.EAST, userLabel);
-
-        // Constrain delete button
-        springLayout.putConstraint(SpringLayout.SOUTH, btnDelete, 0, SpringLayout.SOUTH, passwordField);
-        springLayout.putConstraint(SpringLayout.WEST, btnDelete, 10, SpringLayout.EAST, passwordField);
-
-        // Constrain update button
-        springLayout.putConstraint(SpringLayout.SOUTH, btnUpdate, 0, SpringLayout.SOUTH, chckbxShowPassword);
-        springLayout.putConstraint(SpringLayout.WEST, btnUpdate, 10, SpringLayout.EAST, chckbxShowPassword);
 
     }
 
@@ -130,11 +131,11 @@ class PasswordPanel extends JPanel {
     }
 
     // Call function to confirm and delete specified account.
-    private class deleteAccountListener implements ActionListener {
+    private class deleteAccountListener implements MouseListener {
 
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            int reply = JOptionPane.showConfirmDialog(null, "Are you sure you want to DELETE these credentials?", "DELETE Credentials?", JOptionPane.YES_NO_OPTION);
+		@Override
+		public void mouseClicked(MouseEvent arg0) {
+			int reply = JOptionPane.showConfirmDialog(null, "Are you sure you want to DELETE these credentials?", "DELETE Credentials?", JOptionPane.YES_NO_OPTION);
             if (reply == JOptionPane.YES_OPTION) {
 
                 try {
@@ -146,8 +147,32 @@ class PasswordPanel extends JPanel {
                     parent.handleRetroError(error);
                 }
             }
+			
+		}
 
-        }
+		@Override
+		public void mouseEntered(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseExited(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mousePressed(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
 
     }
 
