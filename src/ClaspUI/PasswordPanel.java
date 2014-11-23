@@ -58,11 +58,11 @@ class PasswordPanel extends JPanel {
         add(btnCopy);
 
         // Delete button
-        JLabel btnDelete = new JLabel("×");
+        JLabel btnDelete = new JLabel("\u00d7");
         springLayout.putConstraint(SpringLayout.NORTH, btnDelete, -10, SpringLayout.NORTH, this);
                 springLayout.putConstraint(SpringLayout.EAST, btnDelete, 0, SpringLayout.EAST, this);
         
-        btnDelete.setFont(new Font("Tahoma", Font.PLAIN, 18));
+        btnDelete.setFont(btnDelete.getFont().deriveFont(18.0f));
         btnDelete.setForeground(Color.red);
         btnDelete.addMouseListener(new deleteAccountListener());
         add(btnDelete);
