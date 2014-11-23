@@ -1,6 +1,8 @@
 package ClaspBackend;
 
 public final class Constraints {
+
+    private static final int MAX_CHAR_LENGTH = 100;
     private static String string[] = null;
 
     private Constraints() {
@@ -31,7 +33,7 @@ public final class Constraints {
     //takes in a string and determines length
     public static boolean chkLength(String check) {
 
-        if (check.length() <= 100)
+        if (check.length() <= MAX_CHAR_LENGTH)
             //return true if string is less than 100 characters
             return true;
         else

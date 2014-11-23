@@ -1,6 +1,6 @@
 package ClaspBackend;
 
-// Account that will be sent to web service.
+// New Account that will be sent to web service.
 public class NewAccount {
 
     //I guessed that these are all the attributes of a subaccount

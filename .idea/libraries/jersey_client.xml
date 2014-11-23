@@ -1,8 +1,6 @@
 <component name="libraryTable">
   <library name="jersey-client">
-    <CLASSES>
-      <root url="jar://$PROJECT_DIR$/jaxrs-ri/lib/jersey-client.jar!/" />
-    </CLASSES>
+    <CLASSES />
     <JAVADOC />
     <SOURCES />
   </library>

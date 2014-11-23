@@ -15,14 +15,17 @@ import java.awt.event.ActionListener;
 @SuppressWarnings("serial")
 public class PasswordPanel extends JPanel {
 
+    private MainUI parent;
     private JPasswordField passwordField;
     private JCheckBox chckbxShowPassword;
     private char echoChar;
     private String id;
 
-    public PasswordPanel(String location, String userName, String userPass, String id) {
-        setBorder(new TitledBorder(null, location, TitledBorder.LEADING, TitledBorder.TOP, null, null));
+    public PasswordPanel(String location, String userName, String userPass, String id, MainUI parent) {
 
+        this.parent = parent;
+
+        setBorder(new TitledBorder(null, location, TitledBorder.LEADING, TitledBorder.TOP, null, null));
         // Save id
         this.id = id;
         // Set layout
@@ -47,6 +50,11 @@ public class PasswordPanel extends JPanel {
             }
         });
         add(btnCopy);
+
+        // Delete button
+        JButton btnDelete = new JButton("Delete");
+        btnDelete.addActionListener(new deleteAccountListener());
+        add(btnDelete);
 
         JLabel userLabel = new JLabel("Username: " + userName);
         add(userLabel);
@@ -80,6 +88,10 @@ public class PasswordPanel extends JPanel {
         springLayout.putConstraint(SpringLayout.NORTH, btnCopy, 0, SpringLayout.NORTH, passwordField);
         springLayout.putConstraint(SpringLayout.WEST, btnCopy, 10, SpringLayout.EAST, passwordField);
 
+        // Constrain delete button
+        springLayout.putConstraint(SpringLayout.SOUTH, btnDelete, 0, SpringLayout.SOUTH, this);
+        springLayout.putConstraint(SpringLayout.WEST, btnDelete, 10, SpringLayout.EAST, passwordField);
+
     }
 
     public Dimension getPreferredSize() {
@@ -93,7 +105,24 @@ public class PasswordPanel extends JPanel {
             int reply = JOptionPane.showConfirmDialog(null, "Are you sure you want to change this Password?", "Change Password?", JOptionPane.YES_NO_OPTION);
             if (reply == JOptionPane.YES_OPTION) {
                 SessionManager.updateAccount(id, new String(passwordField.getPassword()));
-                updateUI();
+                parent.passwordUI.addPasswords(SessionManager.getAccounts());
+                parent.passwordUI.updateData();
+            }
+
+        }
+
+    }
+
+    // Call function to confirm and delete specified account.
+    public class deleteAccountListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            int reply = JOptionPane.showConfirmDialog(null, "Are you sure you want to DELETE these credentials?", "DELETE Credentials?", JOptionPane.YES_NO_OPTION);
+            if (reply == JOptionPane.YES_OPTION) {
+                SessionManager.removeAccount(id);
+                parent.passwordUI.addPasswords(SessionManager.getAccounts());
+                parent.passwordUI.updateData();
             }
 
         }

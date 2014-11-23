@@ -1,5 +1,7 @@
 package ClaspBackend;
 
+
+// Main class for holding a User's single account.
 public class Account {
     //I guessed that these are all the attributes of a subaccount
     public String id;

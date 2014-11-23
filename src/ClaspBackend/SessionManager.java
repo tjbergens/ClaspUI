@@ -14,6 +14,7 @@ public class SessionManager {
 
     public static FileReader reader;
     public static FileWriter writer;
+
     // Intercepts all requests to append user agent string globally
     public static RequestInterceptor requestInterceptor = new RequestInterceptor() {
         @Override
@@ -85,6 +86,15 @@ public class SessionManager {
 
     }
 
+    public static void removeAccount(String id) {
+
+        for (Account account : accounts) {
+            if (account.getId().equals(id)) {
+                service.deleteAccount("Token " + authToken, id);
+            }
+        }
+    }
+
     // TO DO
     public static void getAuthToken() {
 
@@ -152,8 +162,8 @@ public class SessionManager {
         List<Account> listAccounts(@Header("Authorization") String token);
 
         // Delete Account Interface Method
-        @DELETE("/accounts/{id}")
-        void deleteAccount(@Header("Authorization") String token, @Path("id") String id);
+        @DELETE("/accounts/{id}/?format=json")
+        Account deleteAccount(@Header("Authorization") String token, @Path("id") String id);
 
         // Add Account Interface Method
         @POST("/accounts/?format=json")

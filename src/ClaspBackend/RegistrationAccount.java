@@ -1,5 +1,6 @@
 package ClaspBackend;
 
+// Account Registration class that is used to serialize an account registration request to the api
 public class RegistrationAccount {
 
     public String username;

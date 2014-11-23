@@ -46,9 +46,6 @@ public class PasswordUI extends JPanel {
         addButton.addActionListener(new addAccountListener());
         bottomPane.add(addButton);
 
-        JButton deleteButton = new JButton("Delete Password");
-        deleteButton.addActionListener(new deleteAccountListener());
-        bottomPane.add(deleteButton);
 
         bottomPane.add(logoutButton);
 
@@ -75,14 +72,15 @@ public class PasswordUI extends JPanel {
         for (int i = 0; i < passwords.size(); ++i) {
             Account current = passwords.get(i);
             gbc.gridy = i;
-            PasswordPanel pp = new PasswordPanel(current.accountName.toString(), current.userName.toString(), current.password.toString(), current.id);
+            PasswordPanel pp = new PasswordPanel(current.accountName.toString(), current.userName.toString(), current.password.toString(), current.id, parent);
             contentPane.add(pp, gbc);
         }
 
     }
 
-    private void updateData() {
+    public void updateData() {
         welcomeLabel.setText("Welcome " + SessionManager.getUserName() + "!");
+        contentPane.updateUI();
     }
 
     public void paintComponent(Graphics g) {
@@ -100,17 +98,6 @@ public class PasswordUI extends JPanel {
             addPasswords(SessionManager.getAccounts());
             contentPane.updateUI();
             System.err.println("....done.");
-
-        }
-
-    }
-
-    private class deleteAccountListener implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-
-            new DeleteAccountDialog(parent);
 
         }
 
