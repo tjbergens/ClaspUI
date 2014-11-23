@@ -28,10 +28,9 @@ class CreateAccountDialog extends JDialog {
         
         // Set column widths
         GridBagLayout gridBagLayout = new GridBagLayout();
-        gridBagLayout.columnWidths = new int[3];
+        gridBagLayout.columnWidths = new int[2];
         gridBagLayout.columnWidths[0] = 150;
         gridBagLayout.columnWidths[1] = 150;
-        gridBagLayout.columnWidths[2] = 150;
         setLayout(gridBagLayout);
 
         // Dialog title label
