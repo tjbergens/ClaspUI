@@ -1,6 +1,6 @@
 package ClaspBackend;
 
-final class Constraints {
+public class Constraints {
 
     private static final int MAX_CHAR_LENGTH = 100;
 
