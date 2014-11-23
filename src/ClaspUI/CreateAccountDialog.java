@@ -1,9 +1,11 @@
 package ClaspUI;
 
+import ClaspBackend.ErrorChecking;
 import ClaspBackend.SessionManager;
 import retrofit.RetrofitError;
 
 import javax.swing.*;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -101,7 +103,11 @@ class CreateAccountDialog extends JDialog {
                 SessionManager.createAccount(userField.getText(), emailField.getText(), new String(passField.getPassword()));
                 dispose();
             } catch (RetrofitError error) {
-                parent.handleRetroError(error);
+            	
+            	boolean known = ErrorChecking.handleRetrofit(error);
+            	if (!known) {
+            		JOptionPane.showMessageDialog(null, "Could not create an account");
+            	}
             }
         }
 
