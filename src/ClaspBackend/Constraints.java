@@ -7,18 +7,23 @@ final class Constraints {
     private Constraints() {
 
     }
-
-    //takes in a potential username
-    public static boolean userName(String userName) {
+    //checks username
+    public static boolean userName(String userName){
+    	String pattern = "^[a-zA-Z0-9]{1,100}$";
+        //check if the password is alphanumeric
+        return userName.matches(pattern); 
+    }
+    //takes in a potential email
+    public static boolean email(String email) {
         //splits the email at the @ symbol
-        String[] string = userName.split("@");
+        String[] string = email.split("@");
         //make sure both sides contain something
         return !(string.length != 2 || string[0].isEmpty() || string[1].isEmpty());
     }
 
     //takes in a potential password
     public static boolean password(String password) {
-        String pattern = "^[a-zA-Z0-9]{12,100}$";
+        String pattern = "^[a-zA-Z0-9]{10,100}$";
         //check if the password is alphanumeric
         return password.matches(pattern);
     }
