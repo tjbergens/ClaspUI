@@ -123,7 +123,7 @@ class LoginUI extends JPanel {
                 SessionManager.retrieveAccounts();
                 parent.passwordUI.addPasswords(SessionManager.getAccounts());
             } catch (RetrofitError error) {
-                parent.handleRetroError(error);
+            	JOptionPane.showMessageDialog(null, "Login Failed");
             }
 
         }
