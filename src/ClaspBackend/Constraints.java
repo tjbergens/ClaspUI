@@ -7,6 +7,7 @@ final class Constraints {
     private Constraints() {
 
     }
+    //checks username
     public static boolean userName(String userName){
     	String pattern = "^[a-zA-Z0-9]{1,100}$";
         //check if the password is alphanumeric
