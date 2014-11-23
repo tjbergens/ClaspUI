@@ -36,7 +36,7 @@ class LoginUI extends JPanel {
         gbc.gridy = 0;
         gbc.insets = new Insets(0, 0, 5, 0);
 
-        JLabel label = new JLabel(new ImageIcon("ClaspLogin.png"));
+        JLabel label = new JLabel(new ImageIcon(getClass().getResource("ClaspLogin.png")));
         this.add(label, gbc);
         gbc.ipady = 0;
         gbc.insets = new Insets(0, 0, 0, 0);
@@ -61,7 +61,7 @@ class LoginUI extends JPanel {
 
         // Add button for login
         JButton loginButton = new JButton("Log in");
-        loginButton.setIcon(new ImageIcon("LoginIcon.png"));
+        loginButton.setIcon(new ImageIcon(getClass().getResource("LoginIcon.png")));
         loginButton.addActionListener(loginListener);
         gbc.insets = new Insets(20, 0, 0, 0);
         gbc.gridy = 2;
@@ -69,11 +69,11 @@ class LoginUI extends JPanel {
 
         // Bottom most buttons for creating an account and resetting password
         JButton createAccountButton = new JButton("Create Account");
-        createAccountButton.setIcon(new ImageIcon("PlusIcon.png"));
+        createAccountButton.setIcon(new ImageIcon(getClass().getResource("PlusIcon.png")));
         createAccountButton.addActionListener(new createAccountListener());
 
         JButton forgotPassButton = new JButton("Forgot Password");
-        forgotPassButton.setIcon(new ImageIcon("QuestionIcon.png"));
+        forgotPassButton.setIcon(new ImageIcon(getClass().getResource("QuestionIcon.png")));
         forgotPassButton.addActionListener(new resetPasswordListener());
 
         JPanel bottomPane = new JPanel();
