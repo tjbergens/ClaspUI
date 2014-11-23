@@ -2,6 +2,7 @@ package ClaspUI;
 
 import ClaspBackend.NewAccount;
 import ClaspBackend.SessionManager;
+import retrofit.RetrofitError;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,8 +11,8 @@ import java.awt.event.ActionListener;
 
 @SuppressWarnings("serial")
 class AddAccountDialog extends JDialog {
-
-    public AddAccountDialog(final JFrame parent) {
+    // final JFrame
+    public AddAccountDialog(final MainUI parent) {
 
         // Set title, stop parent from allowing interaction
         super(parent, "Add new Password", true);
@@ -53,8 +54,14 @@ class AddAccountDialog extends JDialog {
         // Add account listener
         submitButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                SessionManager.addAccount(new NewAccount(accountName.getText(), username.getText(), password.getText()));
-                dispose();
+
+
+                try {
+                    SessionManager.addAccount(new NewAccount(accountName.getText(), username.getText(), password.getText()));
+                    dispose();
+                } catch (RetrofitError error) {
+                    parent.handleRetroError(error);
+                }
             }
         });
 

@@ -4,6 +4,8 @@ MainUI.java
 
 package ClaspUI;
 
+import retrofit.RetrofitError;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -63,6 +65,20 @@ public class MainUI extends JFrame {
         this.add(content);
         // Call to show all components
         setVisible(true);
+    }
+
+    // Handle any Network or Request errors and display to the user.
+    public void handleRetroError(RetrofitError e) {
+
+        if (e.getKind().equals(RetrofitError.Kind.NETWORK)) {
+
+            JOptionPane.showMessageDialog(null, "A connection error has occurred. Please check your connection and try again.", "Connection Error!", JOptionPane.ERROR_MESSAGE);
+
+        } else if (e.getKind().equals(RetrofitError.Kind.HTTP)) {
+
+
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error!", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     public void changeView(View view) {

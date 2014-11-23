@@ -1,6 +1,7 @@
 package ClaspUI;
 
 import ClaspBackend.SessionManager;
+import retrofit.RetrofitError;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,17 +11,16 @@ import java.awt.event.ActionListener;
 @SuppressWarnings("serial")
 class CreateAccountDialog extends JDialog {
 
-    private final int PAD_X = 20;
-    private final int PAD_Y = 10;
-
     private final JTextField userField;
     private final JTextField emailField;
     private final JPasswordField passField;
+    private final MainUI parent;
 
-    public CreateAccountDialog(JFrame parent) {
+    public CreateAccountDialog(final MainUI parent) {
 
+        this.parent = parent;
         // Set title, stop parent from allowing interaction
-        super(parent, "Create an account", true);
+        //super(parent, "Create an account", true);
 
         // Set column widths
         GridBagLayout gridBagLayout = new GridBagLayout();
@@ -82,6 +82,8 @@ class CreateAccountDialog extends JDialog {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = x;
         gbc.gridy = y;
+        int PAD_Y = 10;
+        int PAD_X = 20;
         gbc.insets = new Insets(PAD_Y, PAD_X, PAD_Y, PAD_X);
         gbc.fill = GridBagConstraints.BOTH;
 
@@ -94,8 +96,13 @@ class CreateAccountDialog extends JDialog {
         @Override
         public void actionPerformed(ActionEvent e) {
 
-            SessionManager.createAccount(userField.getText(), emailField.getText(), new String(passField.getPassword()));
-            dispose();
+
+            try {
+                SessionManager.createAccount(userField.getText(), emailField.getText(), new String(passField.getPassword()));
+                dispose();
+            } catch (RetrofitError error) {
+                parent.handleRetroError(error);
+            }
         }
 
     }

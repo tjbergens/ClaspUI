@@ -3,6 +3,7 @@ package ClaspUI;
 import ClaspBackend.Account;
 import ClaspBackend.SessionManager;
 import ClaspUI.MainUI.View;
+import retrofit.RetrofitError;
 
 import javax.swing.*;
 import java.awt.*;
@@ -92,11 +93,17 @@ class PasswordUI extends JPanel {
         @Override
         public void actionPerformed(ActionEvent e) {
 
+
             new AddAccountDialog(parent);
             System.err.println("about to update password list...");
-            SessionManager.retrieveAccounts();
-            addPasswords(SessionManager.getAccounts());
-            contentPane.updateUI();
+
+            try {
+                SessionManager.retrieveAccounts();
+                addPasswords(SessionManager.getAccounts());
+                contentPane.updateUI();
+            } catch (RetrofitError error) {
+                parent.handleRetroError(error);
+            }
             System.err.println("....done.");
 
         }

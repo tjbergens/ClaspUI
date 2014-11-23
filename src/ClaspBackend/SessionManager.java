@@ -42,32 +42,22 @@ public class SessionManager {
 
         cryptoKey = CryptoKit.getKey(SessionManager.getMasterPassword(), SessionManager.getUserName());
         passHash = CryptoKit.getHash(cryptoKey.toString(), SessionManager.getMasterPassword());
-        SessionManager.getAuthToken();
 
-        // Debug
-        System.err.println("Auth Token: " + authToken);
-
-        // Debug
-        System.err.println("Key: " + cryptoKey);
-        System.err.println("Password Hash: " + passHash);
-
-        return 200;
+        return SessionManager.getAuthToken();
     }
 
     // Register a user's account.
-    public static void createAccount(String username, String email, String password) {
+    public static int createAccount(String username, String email, String password) {
 
         // Make our password key and password hash.
         cryptoKey = CryptoKit.getKey(password, username);
         password = CryptoKit.getHash(cryptoKey.toString(), password);
 
 
-        try {
-            // Send it off to attempt registration.
-            service.createAccount(new RegistrationAccount(username, email, password));
-        } catch (RetrofitError e) {
+        // Send it off to attempt registration.
+        service.createAccount(new RegistrationAccount(username, email, password));
+        return 200;
 
-        }
 
     }
 
@@ -78,11 +68,7 @@ public class SessionManager {
             if (account.getId().equals(id)) {
                 account.password = newPass;
 
-                try {
-                    service.updateAccount("Token " + authToken, id, CryptoKit.encryptAccount(account, cryptoKey));
-                } catch (RetrofitError e) {
-
-                }
+                service.updateAccount("Token " + authToken, id, CryptoKit.encryptAccount(account, cryptoKey));
 
 
             }
@@ -96,12 +82,8 @@ public class SessionManager {
         for (Account account : accounts) {
             if (account.getId().equals(id)) {
 
+                service.deleteAccount("Token " + authToken, id);
 
-                try {
-                    service.deleteAccount("Token " + authToken, id);
-                } catch (RetrofitError e) {
-                    handleErrors(e);
-                }
 
             }
         }
@@ -110,13 +92,11 @@ public class SessionManager {
     // Form our token object which will hold a User's authentication token for later use in API calls.
     private static int getAuthToken() {
 
-        try {
-            AuthToken token = service.getAuthToken(userName, passHash);
-            // Make API call to retrieve user's token.
-            SessionManager.authToken = token.token;
-        } catch (RetrofitError e) {
 
-        }
+        AuthToken token = service.getAuthToken(userName, passHash);
+        // Make API call to retrieve user's token.
+        SessionManager.authToken = token.token;
+
 
         return 200;
     }
@@ -126,12 +106,8 @@ public class SessionManager {
 
         account = CryptoKit.encryptNewAccount(account, cryptoKey);
 
+        service.addAccount("Token " + authToken, account);
 
-        try {
-            service.addAccount("Token " + authToken, account);
-        } catch (RetrofitError e) {
-
-        }
 
         // No errors
         return 200;
@@ -146,12 +122,10 @@ public class SessionManager {
 
     public static int retrieveAccounts() {
 
-        try {
-            List<Account> encryptedAccounts = service.listAccounts("Token " + authToken);
-            accounts = CryptoKit.decryptAccounts(encryptedAccounts, cryptoKey);
-        } catch (RetrofitError e) {
 
-        }
+        List<Account> encryptedAccounts = service.listAccounts("Token " + authToken);
+        accounts = CryptoKit.decryptAccounts(encryptedAccounts, cryptoKey);
+
         return 200;
     }
 
@@ -175,9 +149,21 @@ public class SessionManager {
     }
 
     // Handle any Network or Request exceptions that are thrown.
-    private static void handleErrors(RetrofitError e) {
+    private static int handleErrors(RetrofitError e) {
 
+        if (e.getKind().equals(RetrofitError.Kind.HTTP)) {
 
+            return e.getResponse().getStatus();
+        } else if (e.getKind().equals(RetrofitError.Kind.NETWORK)) {
+
+            return 0;
+
+        }
+
+        // Must be an internal error. Crash the program. This should NEVER happen.
+        else {
+            throw e;
+        }
     }
 
     public interface AlpacaService {

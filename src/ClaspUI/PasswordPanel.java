@@ -1,6 +1,7 @@
 package ClaspUI;
 
 import ClaspBackend.SessionManager;
+import retrofit.RetrofitError;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
@@ -113,10 +114,15 @@ class PasswordPanel extends JPanel {
         public void actionPerformed(ActionEvent e) {
             int reply = JOptionPane.showConfirmDialog(null, "Are you sure you want to change this Password?", "Change Password?", JOptionPane.YES_NO_OPTION);
             if (reply == JOptionPane.YES_OPTION) {
-                SessionManager.updateAccount(id, new String(passwordField.getPassword()));
-                SessionManager.retrieveAccounts();
-                parent.passwordUI.addPasswords(SessionManager.getAccounts());
-                parent.passwordUI.updateData();
+
+                try {
+                    SessionManager.updateAccount(id, new String(passwordField.getPassword()));
+                    SessionManager.retrieveAccounts();
+                    parent.passwordUI.addPasswords(SessionManager.getAccounts());
+                    parent.passwordUI.updateData();
+                } catch (RetrofitError error) {
+                    parent.handleRetroError(error);
+                }
             }
 
         }
@@ -130,10 +136,15 @@ class PasswordPanel extends JPanel {
         public void actionPerformed(ActionEvent e) {
             int reply = JOptionPane.showConfirmDialog(null, "Are you sure you want to DELETE these credentials?", "DELETE Credentials?", JOptionPane.YES_NO_OPTION);
             if (reply == JOptionPane.YES_OPTION) {
-                SessionManager.removeAccount(id);
-                SessionManager.retrieveAccounts();
-                parent.passwordUI.addPasswords(SessionManager.getAccounts());
-                parent.passwordUI.updateData();
+
+                try {
+                    SessionManager.removeAccount(id);
+                    SessionManager.retrieveAccounts();
+                    parent.passwordUI.addPasswords(SessionManager.getAccounts());
+                    parent.passwordUI.updateData();
+                } catch (RetrofitError error) {
+                    parent.handleRetroError(error);
+                }
             }
 
         }

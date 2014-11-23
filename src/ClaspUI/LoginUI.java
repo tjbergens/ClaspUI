@@ -2,6 +2,7 @@ package ClaspUI;
 
 import ClaspBackend.SessionManager;
 import ClaspUI.MainUI.View;
+import retrofit.RetrofitError;
 
 import javax.swing.*;
 import java.awt.*;
@@ -112,17 +113,22 @@ class LoginUI extends JPanel {
             }
 
             // TO DO: Need to handle login failures, etc.
-            SessionManager.login();
+            try {
+                SessionManager.login();
 
-            JOptionPane.showMessageDialog(null,
-                    "You have logged in!\nUsername: " + SessionManager.getUserName() +
-                            "\nPass: " + SessionManager.getMasterPassword());
-            parent.changeView(View.PASSWORDS);
+                JOptionPane.showMessageDialog(null,
+                        "You have logged in!\nUsername: " + SessionManager.getUserName() +
+                                "\nPass: " + SessionManager.getMasterPassword());
+                parent.changeView(View.PASSWORDS);
+                SessionManager.retrieveAccounts();
+                parent.passwordUI.addPasswords(SessionManager.getAccounts());
+            } catch (RetrofitError error) {
+                parent.handleRetroError(error);
+            }
 
-            SessionManager.retrieveAccounts();
-            parent.passwordUI.addPasswords(SessionManager.getAccounts());
         }
     }
+
 
     private class createAccountListener implements ActionListener {
 
