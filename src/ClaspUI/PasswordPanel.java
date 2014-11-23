@@ -56,6 +56,11 @@ public class PasswordPanel extends JPanel {
         btnDelete.addActionListener(new deleteAccountListener());
         add(btnDelete);
 
+        // Update button
+        JButton btnUpdate = new JButton("Update");
+        btnUpdate.addActionListener(new updateAccountListener());
+        add(btnUpdate);
+
         JLabel userLabel = new JLabel("Username: " + userName);
         add(userLabel);
 
@@ -85,12 +90,16 @@ public class PasswordPanel extends JPanel {
         springLayout.putConstraint(SpringLayout.NORTH, chckbxShowPassword, 10, SpringLayout.SOUTH, passwordField);
 
         // Constrain copy button
-        springLayout.putConstraint(SpringLayout.NORTH, btnCopy, 0, SpringLayout.NORTH, passwordField);
-        springLayout.putConstraint(SpringLayout.WEST, btnCopy, 10, SpringLayout.EAST, passwordField);
+        springLayout.putConstraint(SpringLayout.NORTH, btnCopy, 0, SpringLayout.NORTH, this);
+        springLayout.putConstraint(SpringLayout.WEST, btnCopy, 10, SpringLayout.EAST, userLabel);
 
         // Constrain delete button
-        springLayout.putConstraint(SpringLayout.SOUTH, btnDelete, 0, SpringLayout.SOUTH, this);
+        springLayout.putConstraint(SpringLayout.SOUTH, btnDelete, 0, SpringLayout.SOUTH, passwordField);
         springLayout.putConstraint(SpringLayout.WEST, btnDelete, 10, SpringLayout.EAST, passwordField);
+
+        // Constrain update button
+        springLayout.putConstraint(SpringLayout.SOUTH, btnUpdate, 0, SpringLayout.SOUTH, chckbxShowPassword);
+        springLayout.putConstraint(SpringLayout.WEST, btnUpdate, 10, SpringLayout.EAST, chckbxShowPassword);
 
     }
 
