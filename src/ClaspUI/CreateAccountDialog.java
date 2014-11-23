@@ -2,6 +2,7 @@ package ClaspUI;
 
 import ClaspBackend.ErrorChecking;
 import ClaspBackend.SessionManager;
+import ClaspBackend.Constraints;
 import retrofit.RetrofitError;
 
 import javax.swing.*;
@@ -16,6 +17,7 @@ class CreateAccountDialog extends JDialog {
     private final JTextField userField;
     private final JTextField emailField;
     private final JPasswordField passField;
+    private final JPasswordField repeatField;
     private final MainUI parent;
 
     public CreateAccountDialog(final MainUI parent) {
@@ -26,16 +28,17 @@ class CreateAccountDialog extends JDialog {
         
         // Set column widths
         GridBagLayout gridBagLayout = new GridBagLayout();
-        gridBagLayout.columnWidths = new int[2];
+        gridBagLayout.columnWidths = new int[3];
         gridBagLayout.columnWidths[0] = 150;
         gridBagLayout.columnWidths[1] = 150;
+        gridBagLayout.columnWidths[2] = 150;
         setLayout(gridBagLayout);
 
         // Dialog title label
         JLabel titleLabel = new JLabel("Create Account");
         titleLabel.setFont(titleLabel.getFont().deriveFont(24.0f));
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.gridwidth = 2;
+        gbc.gridwidth = 3;
         gbc.insets = new Insets(20, 10, 10, 10);
         add(titleLabel, gbc);
 
@@ -55,8 +58,9 @@ class CreateAccountDialog extends JDialog {
         addComponent(passField, 1, 3);
 
         // Password retype field
+        repeatField = new JPasswordField(16);
         addComponent(new JLabel("Repeat Password"), 0, 4);
-        addComponent(new JPasswordField(16), 1, 4);
+        addComponent(repeatField, 1, 4);
 
         // Security Question
         addComponent(new JLabel("Security Question"), 0, 5);
@@ -92,22 +96,53 @@ class CreateAccountDialog extends JDialog {
         add(jc, gbc);
 
     }
+    
+    private boolean checkConstraints(){
+    	if(!Constraints.userName(userField.getText())){
+	    	JLabel errorFont = new JLabel("Username must be 2-100 characters and contain only Alphanumeric characters");
+	    	errorFont.setForeground(Color.red);
+	    	addComponent(errorFont, 2, 1);
+	    	return false;
+    	}
+    	else if(!Constraints.email(emailField.getText())){
+    		JLabel errorFont = new JLabel("email must follow format username@domain");
+        	errorFont.setForeground(Color.red);
+        	addComponent(errorFont, 2, 2);
+        	return false;
+    	}
+    	else if(!Constraints.password(new String(passField.getPassword()))){
+    		JLabel errorFont = new JLabel("Password must be 10-100 characters and contain only Alphanumeric characters");
+        	errorFont.setForeground(Color.red);
+        	addComponent(errorFont, 2, 3);
+        	return false;	
+    	}
+    	else if(!(new String(passField.getPassword()).equals(new String(repeatField.getPassword())))){
+    		JLabel errorFont = new JLabel("Passwords do not match");
+        	errorFont.setForeground(Color.red);
+        	addComponent(errorFont, 2, 4);
+        	return false;
+    	}
+    	else return true;
+    }
 
     private class submitButtonListener implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
 
-
-            try {
-                SessionManager.createAccount(userField.getText(), emailField.getText(), new String(passField.getPassword()));
-                dispose();
-            } catch (RetrofitError error) {
-            	
-            	boolean known = ErrorChecking.handleRetrofit(error);
-            	if (!known) {
-            		JOptionPane.showMessageDialog(null, "Could not create an account");
-            	}
+        	if(checkConstraints()){
+        		
+        	
+	            try {
+	                SessionManager.createAccount(userField.getText(), emailField.getText(), new String(passField.getPassword()));
+	                dispose();
+	            } catch (RetrofitError error) {
+	            	
+	            	boolean known = ErrorChecking.handleRetrofit(error);
+	            	if (!known) {
+	            		JOptionPane.showMessageDialog(null, "Could not create an account");
+	            	}
+	            }
             }
         }
 
