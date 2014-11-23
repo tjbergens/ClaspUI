@@ -18,10 +18,10 @@ class CreateAccountDialog extends JDialog {
 
     public CreateAccountDialog(final MainUI parent) {
 
-        this.parent = parent;
         // Set title, stop parent from allowing interaction
-        //super(parent, "Create an account", true);
-
+        super(parent, "Create an account", true);
+        this.parent = parent;
+        
         // Set column widths
         GridBagLayout gridBagLayout = new GridBagLayout();
         gridBagLayout.columnWidths = new int[2];
