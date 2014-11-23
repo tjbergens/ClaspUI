@@ -4,10 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 
 @SuppressWarnings("serial")
-public class ResetPasswordDialog extends JDialog {
-
-    final int PAD_X = 20;
-    final int PAD_Y = 10;
+class ResetPasswordDialog extends JDialog {
 
     public ResetPasswordDialog(JFrame parent) {
 
@@ -50,6 +47,8 @@ public class ResetPasswordDialog extends JDialog {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = x;
         gbc.gridy = y;
+        int PAD_Y = 10;
+        int PAD_X = 20;
         gbc.insets = new Insets(PAD_Y, PAD_X, PAD_Y, PAD_X);
         gbc.fill = GridBagConstraints.BOTH;
 

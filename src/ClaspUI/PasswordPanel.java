@@ -13,13 +13,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 @SuppressWarnings("serial")
-public class PasswordPanel extends JPanel {
+class PasswordPanel extends JPanel {
 
-    private MainUI parent;
-    private JPasswordField passwordField;
-    private JCheckBox chckbxShowPassword;
-    private char echoChar;
-    private String id;
+    private final MainUI parent;
+    private final JPasswordField passwordField;
+    private final JCheckBox chckbxShowPassword;
+    private final char echoChar;
+    private final String id;
 
     public PasswordPanel(String location, String userName, String userPass, String id, MainUI parent) {
 
@@ -107,13 +107,14 @@ public class PasswordPanel extends JPanel {
         return new Dimension(224, 112);
     }
 
-    public class updateAccountListener implements ActionListener {
+    private class updateAccountListener implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
             int reply = JOptionPane.showConfirmDialog(null, "Are you sure you want to change this Password?", "Change Password?", JOptionPane.YES_NO_OPTION);
             if (reply == JOptionPane.YES_OPTION) {
                 SessionManager.updateAccount(id, new String(passwordField.getPassword()));
+                SessionManager.retrieveAccounts();
                 parent.passwordUI.addPasswords(SessionManager.getAccounts());
                 parent.passwordUI.updateData();
             }
@@ -123,13 +124,14 @@ public class PasswordPanel extends JPanel {
     }
 
     // Call function to confirm and delete specified account.
-    public class deleteAccountListener implements ActionListener {
+    private class deleteAccountListener implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
             int reply = JOptionPane.showConfirmDialog(null, "Are you sure you want to DELETE these credentials?", "DELETE Credentials?", JOptionPane.YES_NO_OPTION);
             if (reply == JOptionPane.YES_OPTION) {
                 SessionManager.removeAccount(id);
+                SessionManager.retrieveAccounts();
                 parent.passwordUI.addPasswords(SessionManager.getAccounts());
                 parent.passwordUI.updateData();
             }

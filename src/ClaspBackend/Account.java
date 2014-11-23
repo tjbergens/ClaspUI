@@ -26,6 +26,6 @@ public class Account {
         if (obj == this) return true;
         if (!(obj instanceof Account)) return false;
         Account o = (Account) obj;
-        return o.id == this.id;
+        return o.id.equals(this.id);
     }
 }

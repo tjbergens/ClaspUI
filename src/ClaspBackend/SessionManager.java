@@ -2,34 +2,33 @@ package ClaspBackend;
 
 import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
+import retrofit.RetrofitError;
 import retrofit.http.*;
 
 import javax.crypto.SecretKey;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.List;
 
 public class SessionManager {
 
-    public static FileReader reader;
-    public static FileWriter writer;
+    // Our RESTful service endpoint.
+    private static final String API_ENDPOINT = "http://alpacapass.com:8001";
 
     // Intercepts all requests to append user agent string globally
-    public static RequestInterceptor requestInterceptor = new RequestInterceptor() {
+    private static final RequestInterceptor requestInterceptor = new RequestInterceptor() {
         @Override
         public void intercept(RequestFacade request) {
             request.addHeader("User-Agent", "Clasp-App");
         }
     };
     // Build REST service adapter with full logging
-    public static RestAdapter restAdapter = new RestAdapter.Builder()
+    private static final RestAdapter restAdapter = new RestAdapter.Builder()
             .setLogLevel(RestAdapter.LogLevel.FULL)
-            .setEndpoint("http://alpacapass.com:8001")
+            .setEndpoint(API_ENDPOINT)
             .setRequestInterceptor(requestInterceptor)
             .build();
     // Create interface instance for REST services
-    public static AlpacaService service = restAdapter.create(AlpacaService.class);
+    private static final AlpacaService service = restAdapter.create(AlpacaService.class);
     private static String authToken;
     private static String userName;
     private static String masterPassword;
@@ -48,66 +47,92 @@ public class SessionManager {
         // Debug
         System.err.println("Auth Token: " + authToken);
 
-        // Disabled for now until we get adding accounts working in the UI.
-        //accounts = getAccounts();
-
         // Debug
         System.err.println("Key: " + cryptoKey);
         System.err.println("Password Hash: " + passHash);
 
-        // Testing. Go on, add more accounts or whatever to see how it looks in the JSON file and in the UI.
-        //Account test = new Account(new String("Google"), new String("Googler"), new String("password123"));
-        //accounts.add(test);
-        //System.err.println(accounts.get(0).toString());
-        //saveAccounts(accounts);
-
-        // HTTP SUCCESS INT
         return 200;
     }
 
+    // Register a user's account.
     public static void createAccount(String username, String email, String password) {
 
+        // Make our password key and password hash.
         cryptoKey = CryptoKit.getKey(password, username);
         password = CryptoKit.getHash(cryptoKey.toString(), password);
 
 
-        // Send it off to attempt registration.
-        service.createAccount(new RegistrationAccount(username, email, password));
+        try {
+            // Send it off to attempt registration.
+            service.createAccount(new RegistrationAccount(username, email, password));
+        } catch (RetrofitError e) {
+
+        }
+
     }
 
+    // Update a user's account password.
     public static void updateAccount(String id, String newPass) {
 
         for (Account account : accounts) {
             if (account.getId().equals(id)) {
                 account.password = newPass;
-                service.updateAccount("Token " + authToken, id, CryptoKit.encryptAccount(account, cryptoKey));
+
+                try {
+                    service.updateAccount("Token " + authToken, id, CryptoKit.encryptAccount(account, cryptoKey));
+                } catch (RetrofitError e) {
+
+                }
+
+
             }
         }
 
     }
 
+    // Remove a specified set of credentials from the user's account list.
     public static void removeAccount(String id) {
 
         for (Account account : accounts) {
             if (account.getId().equals(id)) {
-                service.deleteAccount("Token " + authToken, id);
+
+
+                try {
+                    service.deleteAccount("Token " + authToken, id);
+                } catch (RetrofitError e) {
+                    handleErrors(e);
+                }
+
             }
         }
     }
 
-    // TO DO
-    public static void getAuthToken() {
+    // Form our token object which will hold a User's authentication token for later use in API calls.
+    private static int getAuthToken() {
 
-        // DO SOMETHING
-        AuthAccount account = new AuthAccount(userName, passHash);
-        AuthToken token = service.getAuthToken(userName, passHash);
-        SessionManager.authToken = token.token;
+        try {
+            AuthToken token = service.getAuthToken(userName, passHash);
+            // Make API call to retrieve user's token.
+            SessionManager.authToken = token.token;
+        } catch (RetrofitError e) {
+
+        }
+
+        return 200;
     }
 
+    // Encrypt and make the API call to add an account to a User's credential list.
     public static int addAccount(NewAccount account) {
 
         account = CryptoKit.encryptNewAccount(account, cryptoKey);
-        service.addAccount("Token " + authToken, account);
+
+
+        try {
+            service.addAccount("Token " + authToken, account);
+        } catch (RetrofitError e) {
+
+        }
+
         // No errors
         return 200;
     }
@@ -115,25 +140,19 @@ public class SessionManager {
     // Called by the UI when retrieving the credentials to display.
     public static List<Account> getAccounts() {
 
-//        try {
-//            reader = new FileReader(SessionManager.userName + ".json");
-//        } catch (FileNotFoundException e1) {
-//            e1.printStackTrace();
-//        }
-//
-//        GsonBuilder gsonBuilder = new GsonBuilder();
-//        Gson includeNullsGson = gsonBuilder.serializeNulls().create();
-//        List<Account> encryptedAccounts = includeNullsGson.fromJson(reader, new TypeToken<ArrayList<Account>>() {
-//        }.getType());
-        List<Account> encryptedAccounts = service.listAccounts("Token " + authToken);
-        accounts = CryptoKit.decryptAccounts(encryptedAccounts, cryptoKey);
-//        try {
-//            reader.close();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
         return accounts;
 
+    }
+
+    public static int retrieveAccounts() {
+
+        try {
+            List<Account> encryptedAccounts = service.listAccounts("Token " + authToken);
+            accounts = CryptoKit.decryptAccounts(encryptedAccounts, cryptoKey);
+        } catch (RetrofitError e) {
+
+        }
+        return 200;
     }
 
     public static String getMasterPassword() {
@@ -153,6 +172,12 @@ public class SessionManager {
     public static void setUserName(String userName) {
 
         SessionManager.userName = userName;
+    }
+
+    // Handle any Network or Request exceptions that are thrown.
+    private static void handleErrors(RetrofitError e) {
+
+
     }
 
     public interface AlpacaService {

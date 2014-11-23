@@ -13,12 +13,11 @@ import java.util.List;
 //import ClaspUI.LoginUI.createAccountListener;
 
 @SuppressWarnings("serial")
-public class PasswordUI extends JPanel {
+class PasswordUI extends JPanel {
 
-    private MainUI parent;
-    private JButton logoutButton;
-    private JLabel welcomeLabel;
-    private JPanel contentPane;
+    private final MainUI parent;
+    private final JLabel welcomeLabel;
+    private final JPanel contentPane;
 
     public PasswordUI(MainUI parent) {
 
@@ -33,7 +32,7 @@ public class PasswordUI extends JPanel {
         welcomeLabel.setFont(welcomeLabel.getFont().deriveFont(14.0f));
 
         // Add log out button
-        logoutButton = new JButton("Log out");
+        JButton logoutButton = new JButton("Log out");
         logoutButton.setIcon(new ImageIcon("LogoutIcon.png"));
         logoutButton.addActionListener(new LogoutButtonListener());
 
@@ -72,7 +71,7 @@ public class PasswordUI extends JPanel {
         for (int i = 0; i < passwords.size(); ++i) {
             Account current = passwords.get(i);
             gbc.gridy = i;
-            PasswordPanel pp = new PasswordPanel(current.accountName.toString(), current.userName.toString(), current.password.toString(), current.id, parent);
+            PasswordPanel pp = new PasswordPanel(current.accountName, current.userName, current.password, current.id, parent);
             contentPane.add(pp, gbc);
         }
 
@@ -95,6 +94,7 @@ public class PasswordUI extends JPanel {
 
             new AddAccountDialog(parent);
             System.err.println("about to update password list...");
+            SessionManager.retrieveAccounts();
             addPasswords(SessionManager.getAccounts());
             contentPane.updateUI();
             System.err.println("....done.");

@@ -9,11 +9,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 @SuppressWarnings("serial")
-public class LoginUI extends JPanel {
+class LoginUI extends JPanel {
 
-    private JTextField userField;
-    private JPasswordField passField;
-    private MainUI parent;
+    private final JTextField userField;
+    private final JPasswordField passField;
+    private final MainUI parent;
 
     public LoginUI(MainUI parent) {
 
@@ -119,7 +119,7 @@ public class LoginUI extends JPanel {
                             "\nPass: " + SessionManager.getMasterPassword());
             parent.changeView(View.PASSWORDS);
 
-
+            SessionManager.retrieveAccounts();
             parent.passwordUI.addPasswords(SessionManager.getAccounts());
         }
     }

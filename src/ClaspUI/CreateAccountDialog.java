@@ -8,14 +8,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 @SuppressWarnings("serial")
-public class CreateAccountDialog extends JDialog {
+class CreateAccountDialog extends JDialog {
 
-    final int PAD_X = 20;
-    final int PAD_Y = 10;
+    private final int PAD_X = 20;
+    private final int PAD_Y = 10;
 
-    private JTextField userField;
-    private JTextField emailField;
-    private JPasswordField passField;
+    private final JTextField userField;
+    private final JTextField emailField;
+    private final JPasswordField passField;
 
     public CreateAccountDialog(JFrame parent) {
 

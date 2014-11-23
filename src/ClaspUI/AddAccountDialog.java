@@ -9,10 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 @SuppressWarnings("serial")
-public class AddAccountDialog extends JDialog {
-
-    final int PAD_X = 20;
-    final int PAD_Y = 10;
+class AddAccountDialog extends JDialog {
 
     public AddAccountDialog(final JFrame parent) {
 
@@ -79,6 +76,8 @@ public class AddAccountDialog extends JDialog {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = x;
         gbc.gridy = y;
+        int PAD_Y = 10;
+        int PAD_X = 20;
         gbc.insets = new Insets(PAD_Y, PAD_X, PAD_Y, PAD_X);
         gbc.fill = GridBagConstraints.BOTH;
 

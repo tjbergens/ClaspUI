@@ -10,11 +10,16 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
+import java.util.Arrays;
 import java.util.List;
 
-public class CryptoKit {
+// Class of static methods containing routines to encrypt/decrypt pieces of data.
+class CryptoKit {
 
+    // Set number of iteration to perform the PBKDF2 algorithm.
     private static final int ITERATIONS = 5000;
+
+    // Set 128-bit key encyption.
     private static final int KEYLENGTH = 128;
 
     private static SecretKey makeKey(String phraseInput, String salt) {
@@ -33,9 +38,8 @@ public class CryptoKit {
         } catch (InvalidKeySpecException e) {
             e.printStackTrace();
         }
-        SecretKey secret = new SecretKeySpec(tmp.getEncoded(), "AES");
 
-        return secret;
+        return new SecretKeySpec(tmp.getEncoded(), "AES");
     }
 
     public static SecretKey getKey(String phraseInput, String salt) {
@@ -46,21 +50,6 @@ public class CryptoKit {
     public static String getHash(String phraseInput, String salt) {
 
         return DatatypeConverter.printBase64Binary(makeKey(phraseInput, salt).getEncoded());
-    }
-
-    // TO DO
-    public static List<Account> encryptAccounts(List<Account> accounts, SecretKey secret) {
-
-        for (Account currentAccount : accounts) {
-
-            currentAccount.accountName = encryptText(currentAccount.accountName, secret);
-
-            currentAccount.userName = encryptText(currentAccount.userName, secret);
-
-            currentAccount.password = encryptText(currentAccount.password, secret);
-        }
-
-        return accounts;
     }
 
     public static Account encryptAccount(Account account, SecretKey secret) {
@@ -85,7 +74,7 @@ public class CryptoKit {
         return account;
     }
 
-    // TO DO
+    // Decrypt the accounts that are serialized from the the API calls to retrieve all accounts.
     public static List<Account> decryptAccounts(List<Account> accounts, SecretKey secret) {
 
         for (Account currentAccount : accounts) {
@@ -97,7 +86,7 @@ public class CryptoKit {
         return accounts;
     }
 
-    public static String encryptText(String text, SecretKey key) {
+    private static String encryptText(String text, SecretKey key) {
 
         // TO DO
         byte[] cipherText = null;
@@ -126,10 +115,10 @@ public class CryptoKit {
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-        return cipherText.toString();
+        return Arrays.toString(cipherText);
     }
 
-    public static String decryptCipherText(String cipherText, SecretKey secret) {
+    private static String decryptCipherText(String cipherText, SecretKey secret) {
 
         byte[] text = null;
 

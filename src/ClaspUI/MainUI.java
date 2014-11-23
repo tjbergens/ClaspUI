@@ -13,14 +13,9 @@ import java.util.ArrayList;
 @SuppressWarnings("serial")
 public class MainUI extends JFrame {
 
-    // Constants for window width and height
-    private final int INIT_WIDTH = 400;
-    private final int INIT_HEIGHT = 300;
-    PasswordUI passwordUI;
-
-    ;
-    private CardLayout cardLayout;
-    private JPanel content;
+    final PasswordUI passwordUI;
+    private final CardLayout cardLayout;
+    private final JPanel content;
 
     public MainUI() {
 
@@ -30,6 +25,8 @@ public class MainUI extends JFrame {
         // Close the program when the window is closed
         // By default, closing the window leaves the program running in the background
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        int INIT_HEIGHT = 300;
+        int INIT_WIDTH = 400;
         setMinimumSize(new Dimension(INIT_WIDTH, INIT_HEIGHT));
 
         // Set window icons
