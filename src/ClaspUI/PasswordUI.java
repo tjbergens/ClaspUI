@@ -1,11 +1,13 @@
 package ClaspUI;
 
 import ClaspBackend.Account;
+import ClaspBackend.Language;
 import ClaspBackend.SessionManager;
 import ClaspUI.MainUI.View;
 import retrofit.RetrofitError;
 
 import javax.swing.*;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -33,7 +35,7 @@ class PasswordUI extends JPanel {
         welcomeLabel.setFont(welcomeLabel.getFont().deriveFont(14.0f));
 
         // Add log out button
-        JButton logoutButton = new JButton("Log out");
+        JButton logoutButton = new JButton(Language.getText("LOGOUT"));
         logoutButton.setIcon(new ImageIcon("LogoutIcon.png"));
         logoutButton.addActionListener(new LogoutButtonListener());
 
@@ -41,7 +43,7 @@ class PasswordUI extends JPanel {
         JPanel bottomPane = new JPanel();
         bottomPane.setLayout(new GridLayout(1, 3));
 
-        JButton addButton = new JButton("Add Password");
+        JButton addButton = new JButton(Language.getText("ADD_PASSWORD"));
         addButton.setIcon(new ImageIcon("PlusIcon.png"));
         addButton.addActionListener(new addAccountListener());
         bottomPane.add(addButton);
@@ -82,7 +84,7 @@ class PasswordUI extends JPanel {
     }
 
     public void updateData() {
-        welcomeLabel.setText("Welcome " + SessionManager.getUserName() + "!");
+        welcomeLabel.setText(Language.getText("WELCOME") + " " + SessionManager.getUserName() + "!");
         contentPane.updateUI();
     }
 

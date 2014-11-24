@@ -1,6 +1,7 @@
 package ClaspUI;
 
 import ClaspBackend.ErrorChecking;
+import ClaspBackend.Language;
 import ClaspBackend.SessionManager;
 import ClaspBackend.Constraints;
 import retrofit.RetrofitError;
@@ -23,7 +24,7 @@ class CreateAccountDialog extends JDialog {
     public CreateAccountDialog(final MainUI parent) {
 
         // Set title, stop parent from allowing interaction
-        super(parent, "Create an account", true);
+        super(parent, Language.getText("CREATE_HEADER"), true);
         this.parent = parent;
         
         // Set column widths
@@ -34,7 +35,7 @@ class CreateAccountDialog extends JDialog {
         setLayout(gridBagLayout);
 
         // Dialog title label
-        JLabel titleLabel = new JLabel("Create Account");
+        JLabel titleLabel = new JLabel(Language.getText("CREATE"));
         titleLabel.setFont(titleLabel.getFont().deriveFont(24.0f));
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridwidth = 3;
@@ -43,7 +44,7 @@ class CreateAccountDialog extends JDialog {
 
         // Username components
         userField = new JTextField(16);
-        addComponent(new JLabel("Username"), 0, 1);
+        addComponent(new JLabel(Language.getText("USERNAME")), 0, 1);
         addComponent(userField, 1, 1);
 
         // Email components
@@ -53,12 +54,12 @@ class CreateAccountDialog extends JDialog {
 
         // Password
         passField = new JPasswordField(16);
-        addComponent(new JLabel("Password"), 0, 3);
+        addComponent(new JLabel(Language.getText("PASSWORD")), 0, 3);
         addComponent(passField, 1, 3);
 
         // Password retype field
         repeatField = new JPasswordField(16);
-        addComponent(new JLabel("Repeat Password"), 0, 4);
+        addComponent(new JLabel(Language.getText("REPEAT_PASSWORD")), 0, 4);
         addComponent(repeatField, 1, 4);
 
         // Security Question
@@ -70,7 +71,7 @@ class CreateAccountDialog extends JDialog {
         //addComponent(new JTextField(16), 1, 6);
 
         // Submit button
-        JButton submitButton = new JButton("Submit");
+        JButton submitButton = new JButton(Language.getText("SUBMIT"));
         gbc.gridy = 7;
         gbc.insets = new Insets(10, 10, 20, 10);
         add(submitButton, gbc);

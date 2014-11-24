@@ -1,10 +1,12 @@
 package ClaspUI;
 
+import ClaspBackend.Language;
 import ClaspBackend.SessionManager;
 import ClaspUI.MainUI.View;
 import retrofit.RetrofitError;
 
 import javax.swing.*;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -44,13 +46,13 @@ class LoginUI extends JPanel {
         LoginListener loginListener = new LoginListener();
 
         // Add components to pane, add pane to window
-        pane.add(new JLabel("Username:"));
+        pane.add(new JLabel(Language.getText("USERNAME") + ":"));
         userField = new JTextField(16);
         userField.addActionListener(loginListener);
         userField.setToolTipText("Enter your username");
         pane.add(userField);
 
-        pane.add(new JLabel("Password:"));
+        pane.add(new JLabel(Language.getText("PASSWORD") + ":"));
         passField = new JPasswordField(16);
         passField.addActionListener(loginListener);
         passField.setToolTipText("Enter your password");
@@ -60,7 +62,7 @@ class LoginUI extends JPanel {
         this.add(pane, gbc);
 
         // Add button for login
-        JButton loginButton = new JButton("Log in");
+        JButton loginButton = new JButton(Language.getText("LOGIN"));
         loginButton.setIcon(new ImageIcon(getClass().getResource("LoginIcon.png")));
         loginButton.addActionListener(loginListener);
         gbc.insets = new Insets(20, 0, 0, 0);
@@ -69,11 +71,11 @@ class LoginUI extends JPanel {
         
 
         // Bottom most buttons for creating an account and resetting password
-        JButton createAccountButton = new JButton("Create Account");
+        JButton createAccountButton = new JButton(Language.getText("CREATE"));
         createAccountButton.setIcon(new ImageIcon(getClass().getResource("PlusIcon.png")));
         createAccountButton.addActionListener(new createAccountListener());
 
-        JButton deleteAccountButton = new JButton("Delete Account");
+        JButton deleteAccountButton = new JButton(Language.getText("DELETE"));
         deleteAccountButton.setIcon(new ImageIcon(getClass().getResource("QuestionIcon.png")));
         deleteAccountButton.addActionListener(new deleteAccountListener());
 
