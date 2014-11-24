@@ -14,4 +14,10 @@ public final class Language {
 				
 	}
 	
+	public static String getTextDynamic(String id, String... args) {
+		
+		return String.format(getText(id), (Object[])args);
+		
+	}
+	
 }

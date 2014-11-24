@@ -84,7 +84,7 @@ class PasswordUI extends JPanel {
     }
 
     public void updateData() {
-        welcomeLabel.setText(Language.getText("WELCOME") + " " + SessionManager.getUserName() + "!");
+        welcomeLabel.setText(Language.getTextDynamic("WELCOME", SessionManager.getUserName()));
         contentPane.updateUI();
     }
 
