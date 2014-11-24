@@ -4,19 +4,30 @@ MainUI.java
 
 package ClaspUI;
 
-import retrofit.RetrofitError;
-
-import javax.imageio.ImageIO;
-import javax.swing.*;
-
-import ClaspBackend.Language;
-
-import java.awt.*;
+import java.awt.CardLayout;
+import java.awt.Dimension;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Locale;
+import java.util.ResourceBundle;
+
+import javax.imageio.ImageIO;
+import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JRadioButtonMenuItem;
+import javax.swing.UIManager;
+
+import retrofit.RetrofitError;
+import ClaspBackend.Language;
 
 @SuppressWarnings("serial")
 public class MainUI extends JFrame {
@@ -46,42 +57,27 @@ public class MainUI extends JFrame {
         
         
         JMenu langMenu = new JMenu(Language.getText("LANGUAGE"));
+        final ResourceBundle resourceBundle = ResourceBundle.getBundle("lang.Languages");
+       
         ButtonGroup langGroup = new ButtonGroup();
-        JRadioButtonMenuItem defaultLangItem = new JRadioButtonMenuItem("Default");
-        JRadioButtonMenuItem englishLangItem = new JRadioButtonMenuItem("English");
-        JRadioButtonMenuItem spanishLangItem = new JRadioButtonMenuItem("Spanish");
-        if (Locale.getDefault() == Language.defaultLocale)
-        	defaultLangItem.setSelected(true);
-        else 
-        	if (Locale.getDefault().getLanguage().equals("en"))
-        	englishLangItem.setSelected(true);
-        else if (Locale.getDefault().getLanguage().equals("es"))
-        	spanishLangItem.setSelected(true);
-        
-        langMenu.add(defaultLangItem);
-        langMenu.add(englishLangItem);
-        langMenu.add(spanishLangItem);
-        langGroup.add(defaultLangItem);
-        langGroup.add(englishLangItem);
-        langGroup.add(spanishLangItem);
+        ArrayList<JRadioButtonMenuItem> langItems = new ArrayList<JRadioButtonMenuItem>();
+        for (final String s : resourceBundle.keySet()) {
+        	JRadioButtonMenuItem temp = new JRadioButtonMenuItem(s);
+        	langItems.add(temp);
+        	langGroup.add(temp);
+        	langMenu.add(temp);
+        	temp.addActionListener(new ActionListener() {
+            	public void actionPerformed(ActionEvent e) {
+            		Language.setLanguage(resourceBundle.getString(s));
+            	}
+            });
+        	if (Locale.getDefault().getLanguage().equals(resourceBundle.getString(s))) {
+        		temp.setSelected(true);
+        	}
+        }
+
         menuBar.add(fileMenu);
         menuBar.add(langMenu);
-        defaultLangItem.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent arg0) {
-        		Language.setLanguage("default");
-        	}
-        });
-        englishLangItem.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent arg0) {
-        		Language.setLanguage("en");
-        	}
-        });
-        spanishLangItem.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent arg0) {
-        		Language.setLanguage("es");
-        	}
-        });
-        
         
         JMenu aboutMenu = new JMenu(Language.getText("HELP"));
         JMenuItem aboutItem = new JMenuItem(Language.getText("ABOUT"));
