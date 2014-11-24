@@ -60,18 +60,19 @@ public class MainUI extends JFrame {
         final ResourceBundle resourceBundle = ResourceBundle.getBundle("lang.Languages");
        
         ButtonGroup langGroup = new ButtonGroup();
-        ArrayList<JRadioButtonMenuItem> langItems = new ArrayList<JRadioButtonMenuItem>();
-        for (final String s : resourceBundle.keySet()) {
-        	JRadioButtonMenuItem temp = new JRadioButtonMenuItem(s);
-        	langItems.add(temp);
+        //ArrayList<JRadioButtonMenuItem> langItems = new ArrayList<JRadioButtonMenuItem>();
+        String[] langs = resourceBundle.getString("order").split(",");
+        for (final String s : langs) {
+        	JRadioButtonMenuItem temp = new JRadioButtonMenuItem(resourceBundle.getString(s));
+        	//langItems.add(temp);
         	langGroup.add(temp);
         	langMenu.add(temp);
         	temp.addActionListener(new ActionListener() {
             	public void actionPerformed(ActionEvent e) {
-            		Language.setLanguage(resourceBundle.getString(s));
+            		Language.setLanguage(s);
             	}
             });
-        	if (Locale.getDefault().getLanguage().equals(resourceBundle.getString(s))) {
+        	if (Locale.getDefault().getLanguage().equals(s)) {
         		temp.setSelected(true);
         	}
         }
