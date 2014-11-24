@@ -1,6 +1,7 @@
 package ClaspUI;
 
 import ClaspBackend.Constraints;
+import ClaspBackend.Language;
 import ClaspBackend.NewAccount;
 import ClaspBackend.SessionManager;
 import retrofit.RetrofitError;
@@ -21,7 +22,7 @@ class DestroyAccountDialog extends JDialog {
     public DestroyAccountDialog(final MainUI parent) {
 
         // Set title, stop parent from allowing interaction
-        super(parent, "Delete Main Account", true);
+        super(parent, Language.getText("DELETE_ACCOUNT"), true);
 
         // Set column widths
         GridBagLayout gridBagLayout = new GridBagLayout();
@@ -31,7 +32,7 @@ class DestroyAccountDialog extends JDialog {
         setLayout(gridBagLayout);
 
         // Dialog title label
-        JLabel titleLabel = new JLabel("Delete Main Account");
+        JLabel titleLabel = new JLabel(Language.getText("DELETE_ACCOUNT"));
         titleLabel.setFont(titleLabel.getFont().deriveFont(24.0f));
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridwidth = 2;
@@ -39,22 +40,22 @@ class DestroyAccountDialog extends JDialog {
         add(titleLabel, gbc);
 
         // Username
-        addComponent(new JLabel("Enter Account Username"), 0, 1);
+        addComponent(new JLabel(Language.getText("USERNAME")), 0, 1);
         final JTextField accountName = (JTextField) addComponent(new JTextField(16), 1, 1);
         username = accountName;
 
         // Password
-        addComponent(new JLabel("Enter Password"), 0, 2);
+        addComponent(new JLabel(Language.getText("PASSWORD")), 0, 2);
         final JTextField username = (JTextField) addComponent(new JTextField(16), 1, 2);
         password = username;
 
         // Password Confirmation
-        addComponent(new JLabel("Reenter Password"), 0, 3);
+        addComponent(new JLabel(Language.getText("REPEAT_PASSWORD")), 0, 3);
         final JTextField password = (JTextField) addComponent(new JPasswordField(16), 1, 3);
         password2 = password;
 
         // Submit button
-        JButton submitButton = new JButton("Submit");
+        JButton submitButton = new JButton(Language.getText("SUBMIT"));
         gbc.gridy = 6;
         gbc.insets = new Insets(10, -100, 20, 10);
         add(submitButton, gbc);
@@ -66,7 +67,7 @@ class DestroyAccountDialog extends JDialog {
 
             	if(checkLength()){
 	                try {
-	                    JOptionPane.showConfirmDialog(null, "Are you sure you want to delete this account", "Delete Account", 2);
+	                    JOptionPane.showConfirmDialog(null, Language.getText("CONFIRM_DELETE"), Language.getText("DELETE_ACCOUNT"), 2);
 	                    dispose();
 	                } catch (RetrofitError error) {
 	                    parent.handleRetroError(error);
@@ -77,7 +78,7 @@ class DestroyAccountDialog extends JDialog {
         });
 
         // Cancel button
-        JButton cancelButton = new JButton("Cancel");
+        JButton cancelButton = new JButton(Language.getText("CANCEL"));
         gbc.gridy = 6;
         gbc.insets = new Insets(10, -250, 20, 10);
         add(cancelButton, gbc);
@@ -105,15 +106,15 @@ class DestroyAccountDialog extends JDialog {
     
     private boolean checkLength() {
     	if(!Constraints.chkLength(username.getText())){
-    		JOptionPane.showMessageDialog(null, "Account Name must be less than 100 characters", "Account Name Error", JOptionPane.ERROR_MESSAGE);
+    		JOptionPane.showMessageDialog(null, Language.getText("ERROR_ACCOUNT_NAME"), Language.getText("ERROR_ACCOUNT_NAME_H"), JOptionPane.ERROR_MESSAGE);
     		return false;
     	}
     	else if(!Constraints.chkLength(password.getText())){
-    		JOptionPane.showMessageDialog(null, "User Name must be less than 100 characters", "User Name Error", JOptionPane.ERROR_MESSAGE);
+    		JOptionPane.showMessageDialog(null, Language.getText("ERROR_USER_NAME"), Language.getText("ERROR_USER_NAME_H"), JOptionPane.ERROR_MESSAGE);
     		return false;
     	}
     	else if(!Constraints.chkLength(password2.getText())){
-    		JOptionPane.showMessageDialog(null, "Password must be less than 100 characters", "Password Error", JOptionPane.ERROR_MESSAGE);
+    		JOptionPane.showMessageDialog(null, Language.getText("ERROR_PASSWORD"), Language.getText("ERROR_PASSWORD_H"), JOptionPane.ERROR_MESSAGE);
     		return false;
     	}
     	else return true;

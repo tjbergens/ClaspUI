@@ -49,13 +49,13 @@ class LoginUI extends JPanel {
         pane.add(new JLabel(Language.getText("USERNAME") + ":"));
         userField = new JTextField(16);
         userField.addActionListener(loginListener);
-        userField.setToolTipText("Enter your username");
+        userField.setToolTipText(Language.getText("ENTER_USER_NAME"));
         pane.add(userField);
 
         pane.add(new JLabel(Language.getText("PASSWORD") + ":"));
         passField = new JPasswordField(16);
         passField.addActionListener(loginListener);
-        passField.setToolTipText("Enter your password");
+        passField.setToolTipText(Language.getText("ENTER_PASSWORD"));
         pane.add(passField);
 
         gbc.gridy = 1;
@@ -120,12 +120,12 @@ class LoginUI extends JPanel {
                 SessionManager.login();
 
                 JOptionPane.showMessageDialog(null,
-                        "You have logged in!\nUsername: " + SessionManager.getUserName());
+                        Language.getText("LOGIN_SUCCESS")+" " + SessionManager.getUserName());
                 parent.changeView(View.PASSWORDS);
                 SessionManager.retrieveAccounts();
                 parent.passwordUI.addPasswords(SessionManager.getAccounts());
             } catch (RetrofitError error) {
-            	JOptionPane.showMessageDialog(null, "Login Failed");
+            	JOptionPane.showMessageDialog(null, Language.getText("ERROR_LOGIN_FAILED"));
             }
 
         }

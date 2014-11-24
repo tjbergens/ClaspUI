@@ -28,7 +28,7 @@ public class MainUI extends JFrame {
     public MainUI() {
 
         // Calls JFrame constructor to set title
-        super("Clasp Password Manager");
+        super(Language.getText("CLASP_MANAGER"));
         
         JMenuBar menuBar = new JMenuBar();
         setJMenuBar(menuBar);
@@ -89,11 +89,11 @@ public class MainUI extends JFrame {
         aboutItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				JOptionPane.showMessageDialog(null, 
-						"Created by the Alpaca Team:\n\n" +
+						Language.getText("ALPACA_TEAM") + "\n\n" +
 						"Nigel Carter    Cindy Harn\n" +
 						"Mathew Church    Thomas Bergens\n" +
 						"Michelle Edwards    William Pearigen", 
-						"About", JOptionPane.PLAIN_MESSAGE,
+						Language.getText("ABOUT"), JOptionPane.PLAIN_MESSAGE,
 						new ImageIcon("ClaspIcon32.png")
 						);
 			}
@@ -150,12 +150,13 @@ public class MainUI extends JFrame {
 
         if (e.getKind().equals(RetrofitError.Kind.NETWORK)) {
 
-            JOptionPane.showMessageDialog(null, "A connection error has occurred. Please check your connection and try again.", "Connection Error!", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, Language.getText("ERROR_CONNECTION"), 
+            		Language.getText("ERROR_CONNECTION_H"), JOptionPane.ERROR_MESSAGE);
 
         } else if (e.getKind().equals(RetrofitError.Kind.HTTP)) {
 
 
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Error!", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, e.getMessage(), Language.getText("ERROR"), JOptionPane.ERROR_MESSAGE);
         }
     }
 

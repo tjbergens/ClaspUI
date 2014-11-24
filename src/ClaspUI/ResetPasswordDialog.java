@@ -1,6 +1,9 @@
 package ClaspUI;
 
 import javax.swing.*;
+
+import ClaspBackend.Language;
+
 import java.awt.*;
 
 @SuppressWarnings("serial")
@@ -9,7 +12,7 @@ class ResetPasswordDialog extends JDialog {
     public ResetPasswordDialog(JFrame parent) {
 
         // Set title, stop parent from allowing interaction
-        super(parent, "Reset your password", true);
+        super(parent, Language.getText("RESET_PASSWORD"), true);
 
         // Set column widths
         GridBagLayout gridBagLayout = new GridBagLayout();
@@ -19,7 +22,7 @@ class ResetPasswordDialog extends JDialog {
         setLayout(gridBagLayout);
 
         // Dialog title label
-        JLabel titleLabel = new JLabel("Reset Password");
+        JLabel titleLabel = new JLabel(Language.getText("RESET_PASSWORD"));
         titleLabel.setFont(titleLabel.getFont().deriveFont(24.0f));
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridwidth = 2;
@@ -27,11 +30,11 @@ class ResetPasswordDialog extends JDialog {
         add(titleLabel, gbc);
 
         // Username components
-        addComponent(new JLabel("Username"), 0, 1);
+        addComponent(new JLabel(Language.getText("USERNAME")), 0, 1);
         addComponent(new JTextField(16), 1, 1);
 
         // Submit button
-        JButton nextButton = new JButton("Next");
+        JButton nextButton = new JButton(Language.getText("NEXT"));
         gbc.gridy = 6;
         gbc.insets = new Insets(10, 10, 20, 10);
         add(nextButton, gbc);

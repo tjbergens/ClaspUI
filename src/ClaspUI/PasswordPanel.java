@@ -76,7 +76,7 @@ class PasswordPanel extends JPanel {
         btnUpdate.addActionListener(new updateAccountListener());
         add(btnUpdate);
 
-        JLabel userLabel = new JLabel("Username: " + userName);
+        JLabel userLabel = new JLabel(Language.getText("USERNAME") + ": " + userName);
         add(userLabel);
 
         // Checkbox
@@ -115,7 +115,8 @@ class PasswordPanel extends JPanel {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            int reply = JOptionPane.showConfirmDialog(null, "Are you sure you want to change this Password?", "Change Password?", JOptionPane.YES_NO_OPTION);
+            int reply = JOptionPane.showConfirmDialog(null, Language.getText("CHANGE_PASSWORD_H"), 
+            		Language.getText("CHANGE_PASSWORD"), JOptionPane.YES_NO_OPTION);
             if (reply == JOptionPane.YES_OPTION && checkLength()) {
             
                 try {
@@ -134,7 +135,8 @@ class PasswordPanel extends JPanel {
     
     private boolean checkLength() {
     	    if(!Constraints.chkLength(new String(passwordField.getPassword()))){
-    		JOptionPane.showMessageDialog(null, "Password must be less than 100 characters", "Password Error", JOptionPane.ERROR_MESSAGE);
+    		JOptionPane.showMessageDialog(null, Language.getText("ERROR_PASSWORD"), 
+    				Language.getText("ERROR_PASSWORD_H"), JOptionPane.ERROR_MESSAGE);
     		return false;
     	}
     	else return true;
@@ -145,7 +147,8 @@ class PasswordPanel extends JPanel {
 
 		@Override
 		public void mouseClicked(MouseEvent arg0) {
-			int reply = JOptionPane.showConfirmDialog(null, "Are you sure you want to DELETE these credentials?", "DELETE Credentials?", JOptionPane.YES_NO_OPTION);
+			int reply = JOptionPane.showConfirmDialog(null, Language.getText("DELETE_PASSWORD"), 
+					Language.getText("DELETE_PASSWORD_H"), JOptionPane.YES_NO_OPTION);
             if (reply == JOptionPane.YES_OPTION) {
 
                 try {
