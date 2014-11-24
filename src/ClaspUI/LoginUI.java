@@ -66,19 +66,20 @@ class LoginUI extends JPanel {
         gbc.insets = new Insets(20, 0, 0, 0);
         gbc.gridy = 2;
         this.add(loginButton, gbc);
+        
 
         // Bottom most buttons for creating an account and resetting password
         JButton createAccountButton = new JButton("Create Account");
         createAccountButton.setIcon(new ImageIcon(getClass().getResource("PlusIcon.png")));
         createAccountButton.addActionListener(new createAccountListener());
 
-        JButton forgotPassButton = new JButton("Delete Account");
-        forgotPassButton.setIcon(new ImageIcon(getClass().getResource("QuestionIcon.png")));
-        forgotPassButton.addActionListener(new deleteAccountListener());
+        JButton deleteAccountButton = new JButton("Delete Account");
+        deleteAccountButton.setIcon(new ImageIcon(getClass().getResource("QuestionIcon.png")));
+        deleteAccountButton.addActionListener(new deleteAccountListener());
 
         JPanel bottomPane = new JPanel();
         bottomPane.add(createAccountButton);
-        bottomPane.add(forgotPassButton);
+        bottomPane.add(deleteAccountButton);
 
         gbc.gridy = 3;
         this.add(bottomPane, gbc);
@@ -140,12 +141,13 @@ class LoginUI extends JPanel {
 
     }
 
+    
     private class deleteAccountListener implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
 
-            new ResetPasswordDialog(parent);
+            new DestroyAccountDialog(parent);
 
         }
 
