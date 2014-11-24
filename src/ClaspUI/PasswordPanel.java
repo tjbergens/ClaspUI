@@ -1,6 +1,7 @@
 package ClaspUI;
 
 import ClaspBackend.Constraints;
+import ClaspBackend.Language;
 import ClaspBackend.SessionManager;
 import retrofit.RetrofitError;
 
@@ -46,7 +47,7 @@ class PasswordPanel extends JPanel {
         add(passwordField);
 
         // Copy button
-        JButton btnCopy = new JButton("Copy");
+        JButton btnCopy = new JButton(Language.getText("COPY"));
         springLayout.putConstraint(SpringLayout.NORTH, btnCopy, -1, SpringLayout.NORTH, passwordField);
         springLayout.putConstraint(SpringLayout.WEST, btnCopy, 6, SpringLayout.EAST, passwordField);
         btnCopy.addActionListener(new ActionListener() {
@@ -70,7 +71,7 @@ class PasswordPanel extends JPanel {
         
 
         // Update button
-        JButton btnUpdate = new JButton("Save");
+        JButton btnUpdate = new JButton(Language.getText("SAVE"));
         springLayout.putConstraint(SpringLayout.EAST, btnUpdate, 0, SpringLayout.EAST, btnCopy);
         btnUpdate.addActionListener(new updateAccountListener());
         add(btnUpdate);
@@ -79,7 +80,7 @@ class PasswordPanel extends JPanel {
         add(userLabel);
 
         // Checkbox
-        chckbxShowPassword = new JCheckBox("Show Password?");
+        chckbxShowPassword = new JCheckBox(Language.getText("SHOW_PASSWORD"));
         springLayout.putConstraint(SpringLayout.NORTH, btnUpdate, 0, SpringLayout.NORTH, chckbxShowPassword);
         chckbxShowPassword.addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent e) {

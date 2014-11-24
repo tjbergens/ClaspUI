@@ -33,8 +33,8 @@ public class MainUI extends JFrame {
         JMenuBar menuBar = new JMenuBar();
         setJMenuBar(menuBar);
         
-        JMenu fileMenu = new JMenu("File");
-        JMenuItem fileExitItem = new JMenuItem("Exit");
+        JMenu fileMenu = new JMenu(Language.getText("FILE"));
+        JMenuItem fileExitItem = new JMenuItem(Language.getText("EXIT"));
         fileExitItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				System.exit(0);
@@ -45,7 +45,7 @@ public class MainUI extends JFrame {
         menuBar.add(fileMenu);
         
         
-        JMenu langMenu = new JMenu("Language");
+        JMenu langMenu = new JMenu(Language.getText("LANGUAGE"));
         ButtonGroup langGroup = new ButtonGroup();
         JRadioButtonMenuItem defaultLangItem = new JRadioButtonMenuItem("Default");
         JRadioButtonMenuItem englishLangItem = new JRadioButtonMenuItem("English");
@@ -83,8 +83,8 @@ public class MainUI extends JFrame {
         });
         
         
-        JMenu aboutMenu = new JMenu("Help");
-        JMenuItem aboutItem = new JMenuItem("About");
+        JMenu aboutMenu = new JMenu(Language.getText("HELP"));
+        JMenuItem aboutItem = new JMenuItem(Language.getText("ABOUT"));
 
         aboutItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {

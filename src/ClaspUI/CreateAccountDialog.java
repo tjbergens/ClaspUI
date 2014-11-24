@@ -100,7 +100,8 @@ class CreateAccountDialog extends JDialog {
   //checks validity of user argument
     private boolean checkConstraints(){
     	if(!Constraints.userName(userField.getText())){
-    		JOptionPane.showMessageDialog(null, "Username must be 2-100 characters and contain only Alphanumeric characters", "Username Error", JOptionPane.ERROR_MESSAGE);
+    		JOptionPane.showMessageDialog(null, Language.getText("ERROR_USER_NAME"), 
+    				Language.getText("ERROR_USER_NAME_H"), JOptionPane.ERROR_MESSAGE);
 	    	return false;
     	}
     	//else if(!Constraints.email(emailField.getText())){
@@ -108,11 +109,13 @@ class CreateAccountDialog extends JDialog {
         //	return false;
     	//}
     	else if(!Constraints.password(new String(passField.getPassword()))){
-    		JOptionPane.showMessageDialog(null, "Password must be 10-100 characters and contain only Alphanumeric characters", "Password Error", JOptionPane.ERROR_MESSAGE);
+    		JOptionPane.showMessageDialog(null, Language.getText("ERROR_PASSWORD"), 
+    				Language.getText("ERROR_PASSWORD_H"), JOptionPane.ERROR_MESSAGE);
         	return false;	
     	}
     	else if(!(new String(passField.getPassword()).equals(new String(repeatField.getPassword())))){
-    		JOptionPane.showMessageDialog(null, "Passwords do not match", "Password Error", JOptionPane.ERROR_MESSAGE);
+    		JOptionPane.showMessageDialog(null, Language.getText("ERROR_PASSWORD_NOMATCH"), 
+    				Language.getText("ERROR_PASSWORD_H"), JOptionPane.ERROR_MESSAGE);
         	return false;
     	}
     	else return true;
@@ -133,7 +136,7 @@ class CreateAccountDialog extends JDialog {
 	            	
 	            	boolean known = ErrorChecking.handleRetrofit(error);
 	            	if (!known) {
-	            		JOptionPane.showMessageDialog(null, "Could not create an account");
+	            		JOptionPane.showMessageDialog(null, Language.getText("ERROR_CREATE_FAILED"));
 	            	}
 	            }
             }

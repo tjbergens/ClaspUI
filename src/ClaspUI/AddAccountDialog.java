@@ -1,6 +1,7 @@
 package ClaspUI;
 
 import ClaspBackend.Constraints;
+import ClaspBackend.Language;
 import ClaspBackend.NewAccount;
 import ClaspBackend.SessionManager;
 import retrofit.RetrofitError;
@@ -21,7 +22,7 @@ class AddAccountDialog extends JDialog {
     public AddAccountDialog(final MainUI parent) {
 
         // Set title, stop parent from allowing interaction
-        super(parent, "Add new Password", true);
+        super(parent, Language.getText("ADD_ACCOUNT_HEADER"), true);
 
         // Set column widths
         GridBagLayout gridBagLayout = new GridBagLayout();
@@ -31,7 +32,7 @@ class AddAccountDialog extends JDialog {
         setLayout(gridBagLayout);
 
         // Dialog title label
-        JLabel titleLabel = new JLabel("Add New Password");
+        JLabel titleLabel = new JLabel(Language.getText("ADD_ACCOUNT_HEADER"));
         titleLabel.setFont(titleLabel.getFont().deriveFont(24.0f));
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridwidth = 2;
@@ -39,22 +40,22 @@ class AddAccountDialog extends JDialog {
         add(titleLabel, gbc);
 
         // Account site
-        addComponent(new JLabel("Account Location"), 0, 1);
+        addComponent(new JLabel(Language.getText("ACCOUNT_LOCATION")), 0, 1);
         final JTextField accountName = (JTextField) addComponent(new JTextField(16), 1, 1);
         accountField = accountName;
 
         // Username components
-        addComponent(new JLabel("Username"), 0, 2);
+        addComponent(new JLabel(Language.getText("USERNAME")), 0, 2);
         final JTextField username = (JTextField) addComponent(new JTextField(16), 1, 2);
         userField = username;
 
         // Password
-        addComponent(new JLabel("Password"), 0, 3);
+        addComponent(new JLabel(Language.getText("PASSWORD")), 0, 3);
         final JTextField password = (JTextField) addComponent(new JPasswordField(16), 1, 3);
         passField = password;
 
         // Submit button
-        JButton submitButton = new JButton("Submit");
+        JButton submitButton = new JButton(Language.getText("SUBMIT"));
         gbc.gridy = 6;
         gbc.insets = new Insets(10, -100, 20, 10);
         add(submitButton, gbc);
@@ -77,7 +78,7 @@ class AddAccountDialog extends JDialog {
         });
 
         // Cancel button
-        JButton cancelButton = new JButton("Cancel");
+        JButton cancelButton = new JButton(Language.getText("CANCEL"));
         gbc.gridy = 6;
         gbc.insets = new Insets(10, -250, 20, 10);
         add(cancelButton, gbc);
@@ -105,15 +106,18 @@ class AddAccountDialog extends JDialog {
     
     private boolean checkLength() {
     	if(!Constraints.chkLength(accountField.getText())){
-    		JOptionPane.showMessageDialog(null, "Account Name must be less than 100 characters", "Account Name Error", JOptionPane.ERROR_MESSAGE);
+    		JOptionPane.showMessageDialog(null, Language.getText("ERROR_ACCOUNT_NAME"), 
+    				Language.getText("ERROR_ACCOUNT_NAME_H"), JOptionPane.ERROR_MESSAGE);
     		return false;
     	}
     	else if(!Constraints.chkLength(userField.getText())){
-    		JOptionPane.showMessageDialog(null, "User Name must be less than 100 characters", "User Name Error", JOptionPane.ERROR_MESSAGE);
+    		JOptionPane.showMessageDialog(null, Language.getText("ERROR_USER_NAME"), 
+    				Language.getText("ERROR_USER_NAME_H"), JOptionPane.ERROR_MESSAGE);
     		return false;
     	}
     	else if(!Constraints.chkLength(passField.getText())){
-    		JOptionPane.showMessageDialog(null, "Password must be less than 100 characters", "Password Error", JOptionPane.ERROR_MESSAGE);
+    		JOptionPane.showMessageDialog(null, Language.getText("ERROR_PASSWORD"), 
+    				Language.getText("ERROR_PASSWORD_H"), JOptionPane.ERROR_MESSAGE);
     		return false;
     	}
     	else return true;

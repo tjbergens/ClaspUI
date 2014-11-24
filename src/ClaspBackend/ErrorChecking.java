@@ -14,7 +14,7 @@ public final class ErrorChecking {
 		switch (e.getKind()) {
     	
     		case NETWORK:
-    			JOptionPane.showMessageDialog(null, "Could not connect to the network\n(Do you have internet access, Matt?)");
+    			JOptionPane.showMessageDialog(null, Language.getText("ERROR_NETWORK"));
     			break;
     		default:
     			return false;
