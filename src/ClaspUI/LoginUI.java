@@ -72,9 +72,9 @@ class LoginUI extends JPanel {
         createAccountButton.setIcon(new ImageIcon(getClass().getResource("PlusIcon.png")));
         createAccountButton.addActionListener(new createAccountListener());
 
-        JButton forgotPassButton = new JButton("Forgot Password");
+        JButton forgotPassButton = new JButton("Delete Account");
         forgotPassButton.setIcon(new ImageIcon(getClass().getResource("QuestionIcon.png")));
-        forgotPassButton.addActionListener(new resetPasswordListener());
+        forgotPassButton.addActionListener(new deleteAccountListener());
 
         JPanel bottomPane = new JPanel();
         bottomPane.add(createAccountButton);
@@ -117,8 +117,7 @@ class LoginUI extends JPanel {
                 SessionManager.login();
 
                 JOptionPane.showMessageDialog(null,
-                        "You have logged in!\nUsername: " + SessionManager.getUserName() +
-                                "\nPass: " + SessionManager.getMasterPassword());
+                        "You have logged in!\nUsername: " + SessionManager.getUserName());
                 parent.changeView(View.PASSWORDS);
                 SessionManager.retrieveAccounts();
                 parent.passwordUI.addPasswords(SessionManager.getAccounts());
@@ -141,7 +140,7 @@ class LoginUI extends JPanel {
 
     }
 
-    private class resetPasswordListener implements ActionListener {
+    private class deleteAccountListener implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {

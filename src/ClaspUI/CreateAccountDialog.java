@@ -15,7 +15,7 @@ import java.awt.event.ActionListener;
 class CreateAccountDialog extends JDialog {
 
     private final JTextField userField;
-    private final JTextField emailField;
+    //private final JTextField emailField;
     private final JPasswordField passField;
     private final JPasswordField repeatField;
     private final MainUI parent;
@@ -47,9 +47,9 @@ class CreateAccountDialog extends JDialog {
         addComponent(userField, 1, 1);
 
         // Email components
-        emailField = new JTextField(16);
-        addComponent(new JLabel("Email"), 0, 2);
-        addComponent(emailField, 1, 2);
+        //emailField = new JTextField(16);
+        //addComponent(new JLabel("Email"), 0, 2);
+        //addComponent(emailField, 1, 2);
 
         // Password
         passField = new JPasswordField(16);
@@ -62,12 +62,12 @@ class CreateAccountDialog extends JDialog {
         addComponent(repeatField, 1, 4);
 
         // Security Question
-        addComponent(new JLabel("Security Question"), 0, 5);
-        addComponent(new JTextField(16), 1, 5);
+        //addComponent(new JLabel("Security Question"), 0, 5);
+        //addComponent(new JTextField(16), 1, 5);
 
         // Answer to Security Question
-        addComponent(new JLabel("Security Answer"), 0, 6);
-        addComponent(new JTextField(16), 1, 6);
+        //addComponent(new JLabel("Security Answer"), 0, 6);
+        //addComponent(new JTextField(16), 1, 6);
 
         // Submit button
         JButton submitButton = new JButton("Submit");
@@ -102,10 +102,10 @@ class CreateAccountDialog extends JDialog {
     		JOptionPane.showMessageDialog(null, "Username must be 2-100 characters and contain only Alphanumeric characters", "Username Error", JOptionPane.ERROR_MESSAGE);
 	    	return false;
     	}
-    	else if(!Constraints.email(emailField.getText())){
-    		JOptionPane.showMessageDialog(null, "Email must be in format Username@Domain", "Email Error", JOptionPane.ERROR_MESSAGE);
-        	return false;
-    	}
+    	//else if(!Constraints.email(emailField.getText())){
+    	//	JOptionPane.showMessageDialog(null, "Email must be in format Username@Domain", "Email Error", JOptionPane.ERROR_MESSAGE);
+        //	return false;
+    	//}
     	else if(!Constraints.password(new String(passField.getPassword()))){
     		JOptionPane.showMessageDialog(null, "Password must be 10-100 characters and contain only Alphanumeric characters", "Password Error", JOptionPane.ERROR_MESSAGE);
         	return false;	
@@ -126,7 +126,7 @@ class CreateAccountDialog extends JDialog {
         		
         	
 	            try {
-	                SessionManager.createAccount(userField.getText(), emailField.getText(), new String(passField.getPassword()));
+	                SessionManager.createAccount(userField.getText(), "", new String(passField.getPassword()));
 	                dispose();
 	            } catch (RetrofitError error) {
 	            	

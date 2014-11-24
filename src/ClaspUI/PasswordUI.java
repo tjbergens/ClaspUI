@@ -55,6 +55,9 @@ class PasswordUI extends JPanel {
         contentPane.setLayout(new GridBagLayout());
         JScrollPane scrollPane = new JScrollPane(contentPane);
 
+        // Fix slow scroll
+        scrollPane.getVerticalScrollBar().setUnitIncrement(16);
+
         // Add components
         add(welcomeLabel, BorderLayout.NORTH);
         add(scrollPane, BorderLayout.CENTER);
