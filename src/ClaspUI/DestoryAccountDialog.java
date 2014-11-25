@@ -63,7 +63,7 @@ class DestroyAccountDialog extends JDialog {
         submitButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
 
-            	if(checkLength()){
+            	if(checkConstraints()){
 	                try {
 	                    JOptionPane.showConfirmDialog(null, Language.getText("CONFIRM_DELETE"), Language.getText("DELETE_ACCOUNT"), 2);
 
@@ -106,19 +106,34 @@ class DestroyAccountDialog extends JDialog {
         return jc;
     }
     
-    private boolean checkLength() {
-    	if(!Constraints.chkLength(username.getText())){
-    		JOptionPane.showMessageDialog(null, Language.getText("ERROR_ACCOUNT_NAME"), Language.getText("ERROR_ACCOUNT_NAME_H"), JOptionPane.ERROR_MESSAGE);
-    		return false;
+  //checks validity of user argument
+    private boolean checkConstraints(){
+    	//makes sure the username entered is valid if it is not it pops error message
+    	if(!Constraints.userName(username.getText()) || username.getText().isEmpty()){
+    		JOptionPane.showMessageDialog(null, Language.getText("ERROR_USER_NAME"), 
+    				Language.getText("ERROR_USER_NAME_H"), JOptionPane.ERROR_MESSAGE);
+    		//not true so return false
+	    	return false;
     	}
-    	else if(!Constraints.chkLength(String.valueOf(password.getPassword()))){
-    		JOptionPane.showMessageDialog(null, Language.getText("ERROR_USER_NAME"), Language.getText("ERROR_USER_NAME_H"), JOptionPane.ERROR_MESSAGE);
-    		return false;
+    	//else if(!Constraints.email(emailField.getText())){
+    	//	JOptionPane.showMessageDialog(null, "Email must be in format Username@Domain", "Email Error", JOptionPane.ERROR_MESSAGE);
+        //	return false;
+    	//}
+    	//check if password is valid, if not spawn error message
+    	else if((!Constraints.password(new String(password.getPassword()))) || (new String(password.getPassword()).isEmpty())){
+    		JOptionPane.showMessageDialog(null, Language.getText("ERROR_PASSWORD"), 
+    				Language.getText("ERROR_PASSWORD_H"), JOptionPane.ERROR_MESSAGE);
+    		//return false
+        	return false;	
     	}
-    	else if(!Constraints.chkLength(String.valueOf(confirmPassword.getPassword()))){
-    		JOptionPane.showMessageDialog(null, Language.getText("ERROR_PASSWORD"), Language.getText("ERROR_PASSWORD_H"), JOptionPane.ERROR_MESSAGE);
-    		return false;
+    	//check that passwords match if not spawn error
+    	else if(!(new String(confirmPassword.getPassword()).equals(new String(password.getPassword()))) || (new String(confirmPassword.getPassword()).isEmpty())){
+    		JOptionPane.showMessageDialog(null, Language.getText("ERROR_PASSWORD_NOMATCH"), 
+    				Language.getText("ERROR_PASSWORD_H"), JOptionPane.ERROR_MESSAGE);
+    		//return false
+        	return false;
     	}
+    	//otherwise all fields are valid return true
     	else return true;
     }
 

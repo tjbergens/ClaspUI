@@ -103,23 +103,27 @@ class AddAccountDialog extends JDialog {
         add(jc, gbc);
         return jc;
     }
-    
+    //checks validity of user input
     private boolean checkLength() {
+    	//makes sure the username is less than 100 characters else spawn error message and return false
     	if(!Constraints.chkLength(accountField.getText())){
     		JOptionPane.showMessageDialog(null, Language.getText("ERROR_ACCOUNT_NAME"), 
     				Language.getText("ERROR_ACCOUNT_NAME_H"), JOptionPane.ERROR_MESSAGE);
     		return false;
     	}
+    	//if username is longer than 100 characters spawn error message and return false
     	else if(!Constraints.chkLength(userField.getText())){
     		JOptionPane.showMessageDialog(null, Language.getText("ERROR_USER_NAME"), 
     				Language.getText("ERROR_USER_NAME_H"), JOptionPane.ERROR_MESSAGE);
     		return false;
     	}
+    	//if password is longer than 100 characters spawn error message and return false
     	else if(!Constraints.chkLength(passField.getText())){
     		JOptionPane.showMessageDialog(null, Language.getText("ERROR_PASSWORD"), 
     				Language.getText("ERROR_PASSWORD_H"), JOptionPane.ERROR_MESSAGE);
     		return false;
     	}
+    	//if it passes all checks then the input is valid and returns true
     	else return true;
     }
 

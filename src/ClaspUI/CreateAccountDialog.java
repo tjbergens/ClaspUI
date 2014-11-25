@@ -99,25 +99,32 @@ class CreateAccountDialog extends JDialog {
     
   //checks validity of user argument
     private boolean checkConstraints(){
-    	if(!Constraints.userName(userField.getText())){
+    	//makes sure the username entered is valid if it is not it pops error message
+    	if(!Constraints.userName(userField.getText()) || userField.getText().isEmpty()){
     		JOptionPane.showMessageDialog(null, Language.getText("ERROR_USER_NAME"), 
     				Language.getText("ERROR_USER_NAME_H"), JOptionPane.ERROR_MESSAGE);
+    		//not true so return false
 	    	return false;
     	}
     	//else if(!Constraints.email(emailField.getText())){
     	//	JOptionPane.showMessageDialog(null, "Email must be in format Username@Domain", "Email Error", JOptionPane.ERROR_MESSAGE);
         //	return false;
     	//}
-    	else if(!Constraints.password(new String(passField.getPassword()))){
+    	//check if password is valid, if not spawn error message
+    	else if((!Constraints.password(new String(passField.getPassword()))) || (new String(passField.getPassword()).isEmpty())){
     		JOptionPane.showMessageDialog(null, Language.getText("ERROR_PASSWORD"), 
     				Language.getText("ERROR_PASSWORD_H"), JOptionPane.ERROR_MESSAGE);
+    		//return false
         	return false;	
     	}
-    	else if(!(new String(passField.getPassword()).equals(new String(repeatField.getPassword())))){
+    	//check that passwords match if not spawn error
+    	else if(!(new String(passField.getPassword()).equals(new String(repeatField.getPassword()))) || (new String(passField.getPassword()).isEmpty())){
     		JOptionPane.showMessageDialog(null, Language.getText("ERROR_PASSWORD_NOMATCH"), 
     				Language.getText("ERROR_PASSWORD_H"), JOptionPane.ERROR_MESSAGE);
+    		//return false
         	return false;
     	}
+    	//otherwise all fields are valid return true
     	else return true;
     }
 
@@ -125,13 +132,14 @@ class CreateAccountDialog extends JDialog {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-
+        	//if user fields are valid
         	if(checkConstraints()){
         		
-        	
+        		//try to connect to the server
 	            try {
 	                SessionManager.createAccount(userField.getText(), "", new String(passField.getPassword()));
 	                dispose();
+	                //if server communication fails display corresponding error message.
 	            } catch (RetrofitError error) {
 	            	
 	            	boolean known = ErrorChecking.handleRetrofit(error);
