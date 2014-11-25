@@ -3,24 +3,25 @@ package ClaspBackend;
 
 // Main class for holding a User's single account.
 public class Account {
-    //I guessed that these are all the attributes of a subaccount
+    // Account attrs
     public String id;
     public String accountName;
-    public String userName; //says unused but used in constructor
-    public String password; //says unused but used in constructor
+    public String userName;
+    public String password;
 
-
+    // Account constructor
     public Account(String accountName, String userName, String password) {
         this.accountName = accountName;
         this.userName = userName;
         this.password = password;
     }
 
+    // Gets an account object's id for use in API calls.
     public String getId() {
         return this.id;
     }
 
-    //created equals function for the arraylist.remove method.
+    // created equals function for the arraylist.remove method.The account id is the key within the database and determines uniqueness
     public boolean equals(Object obj) {
         if (obj == null) return false;
         if (obj == this) return true;

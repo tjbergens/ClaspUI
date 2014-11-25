@@ -1,23 +1,10 @@
 <component name="ArtifactManager">
   <artifact type="jar" name="ClaspUI:jar">
-    <output-path>$PROJECT_DIR$/classes/artifacts/ClaspUI_jar</output-path>
+    <output-path>$PROJECT_DIR$/out/artifacts/ClaspUI_jar</output-path>
     <root id="archive" name="ClaspUI.jar">
       <element id="module-output" name="ClaspUI" />
-      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/google/code/gson/gson/2.3/gson-2.3.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../gson-2.3.1.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$PROJECT_DIR$/retrofit-1.8.0.jar" path-in-jar="/" />
-      <element id="file-copy" path="$PROJECT_DIR$/ClaspIcon32.png" />
-      <element id="file-copy" path="$PROJECT_DIR$/ClaspUI.iml" />
-      <element id="file-copy" path="$PROJECT_DIR$/ClaspLogin.png" />
-      <element id="file-copy" path="$PROJECT_DIR$/ClaspIcon256.png" />
-      <element id="file-copy" path="$PROJECT_DIR$/ClaspBackend.uml" />
-      <element id="file-copy" path="$PROJECT_DIR$/claspui.properties" />
-      <element id="file-copy" path="$PROJECT_DIR$/ClaspIcon16.png" />
-      <element id="file-copy" path="$PROJECT_DIR$/claspui.xml" />
-      <element id="file-copy" path="$PROJECT_DIR$/LoginIcon.png" />
-      <element id="file-copy" path="$PROJECT_DIR$/LogoutIcon.png" />
-      <element id="file-copy" path="$PROJECT_DIR$/PlusIcon.png" />
-      <element id="file-copy" path="$PROJECT_DIR$/QuestionIcon.png" />
-      <element id="file-copy" path="$PROJECT_DIR$/representations.aird" />
     </root>
   </artifact>
 </component>

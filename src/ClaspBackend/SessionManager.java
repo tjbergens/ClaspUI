@@ -12,7 +12,7 @@ import java.util.List;
 public class SessionManager {
 
     // Our RESTful service endpoint.
-    private static final String API_ENDPOINT = "http://alpacapass.com/alpacapass";
+    private static final String API_ENDPOINT = "https://alpacapass.com/alpacapass";
 
     // Intercepts all requests to append user agent string globally
     private static final RequestInterceptor requestInterceptor = new RequestInterceptor() {
