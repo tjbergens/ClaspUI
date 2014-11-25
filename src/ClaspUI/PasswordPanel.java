@@ -106,24 +106,27 @@ class PasswordPanel extends JPanel {
         springLayout.putConstraint(SpringLayout.NORTH, chckbxShowPassword, 10, SpringLayout.SOUTH, passwordField);
 
     }
-
+ 
     public Dimension getPreferredSize() {
         return new Dimension(224, 112);
     }
-
+//updates account to reflect new password if save is pressed
     private class updateAccountListener implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
+        	//prompt user for confirmation
             int reply = JOptionPane.showConfirmDialog(null, Language.getText("CHANGE_PASSWORD_H"), 
             		Language.getText("CHANGE_PASSWORD"), JOptionPane.YES_NO_OPTION);
+            //if confirmed
             if (reply == JOptionPane.YES_OPTION && checkLength()) {
-            
+            	//attempt to update the password in the account
                 try {
                     SessionManager.updateAccount(id, new String(passwordField.getPassword()));
                     SessionManager.retrieveAccounts();
                     parent.passwordUI.addPasswords(SessionManager.getAccounts());
                     parent.passwordUI.updateData();
+                  //handle any errors thrown by the server
                 } catch (RetrofitError error) {
                     parent.handleRetroError(error);
                 }
