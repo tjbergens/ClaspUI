@@ -5,7 +5,7 @@ class RegistrationAccount {
     String username;
     String email;
     String password;
-
+    //Constructor that initializes a new Account upon creation
     public RegistrationAccount(String username, String email, String password) {
         this.username = username;
         this.email = email;
