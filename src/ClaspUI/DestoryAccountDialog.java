@@ -65,6 +65,8 @@ class DestroyAccountDialog extends JDialog {
 
             	if(checkConstraints()){
 	                try {
+	                	
+	                	// Puts up one more dialog box to confirm delete
 	                    JOptionPane.showConfirmDialog(null, Language.getText("CONFIRM_DELETE"), Language.getText("DELETE_ACCOUNT"), 2);
 
                         SessionManager.setUserName(accountName.getText());
@@ -75,7 +77,6 @@ class DestroyAccountDialog extends JDialog {
 	                    parent.handleRetroError(error);
 	                }
             	} 
-            		
             }
         });
 
@@ -137,7 +138,7 @@ class DestroyAccountDialog extends JDialog {
     	else return true;
     }
 
-
+    // simply closes the window without retaining any information
     private class cancelButtonListener implements ActionListener {
 
         @Override

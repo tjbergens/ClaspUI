@@ -1,3 +1,4 @@
+//This class represents adding a new subaccount to your main list of subaccounts
 package ClaspUI;
 
 import ClaspBackend.Constraints;

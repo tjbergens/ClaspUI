@@ -1,3 +1,4 @@
+// First UI that is displayed before logging in
 package ClaspUI;
 
 import ClaspBackend.Language;
@@ -37,7 +38,8 @@ class LoginUI extends JPanel {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridy = 0;
         gbc.insets = new Insets(0, 0, 5, 0);
-
+        
+        // adds icons and labels
         JLabel label = new JLabel(new ImageIcon(getClass().getResource("ClaspLogin.png")));
         this.add(label, gbc);
         gbc.ipady = 0;
@@ -52,6 +54,7 @@ class LoginUI extends JPanel {
         userField.setToolTipText(Language.getText("ENTER_USER_NAME"));
         pane.add(userField);
 
+        // sets password field with entered text
         pane.add(new JLabel(Language.getText("PASSWORD") + ":"));
         passField = new JPasswordField(16);
         passField.addActionListener(loginListener);
@@ -74,7 +77,7 @@ class LoginUI extends JPanel {
         JButton createAccountButton = new JButton(Language.getText("CREATE"));
         createAccountButton.setIcon(new ImageIcon(getClass().getResource("PlusIcon.png")));
         createAccountButton.addActionListener(new createAccountListener());
-
+        
         JButton deleteAccountButton = new JButton(Language.getText("DELETE"));
         deleteAccountButton.setIcon(new ImageIcon(getClass().getResource("QuestionIcon.png")));
         deleteAccountButton.addActionListener(new deleteAccountListener());
@@ -115,7 +118,7 @@ class LoginUI extends JPanel {
                 return;
             }
 
-            // TO DO: Need to handle login failures, etc.
+            // checks for failures and completes if none exist
             try {
                 SessionManager.login();
 
@@ -131,7 +134,7 @@ class LoginUI extends JPanel {
         }
     }
 
-
+    //opens new dialog to create new master account
     private class createAccountListener implements ActionListener {
 
         @Override
@@ -143,7 +146,7 @@ class LoginUI extends JPanel {
 
     }
 
-    
+    // opens new dialog to delete a master account
     private class deleteAccountListener implements ActionListener {
 
         @Override
