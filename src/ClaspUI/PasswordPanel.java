@@ -132,7 +132,7 @@ class PasswordPanel extends JPanel {
         }
 
     }
-    
+    //checks the length of the password to make sure it is less than 100 characters if it is not an error message is spawned and returns false
     private boolean checkLength() {
     	    if(!Constraints.chkLength(new String(passwordField.getPassword()))){
     		JOptionPane.showMessageDialog(null, Language.getText("ERROR_PASSWORD"), 
