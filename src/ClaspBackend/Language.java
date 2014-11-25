@@ -1,9 +1,9 @@
 package ClaspBackend;
 
+import ClaspUI.MainUI;
+
 import java.util.Locale;
 import java.util.ResourceBundle;
-
-import ClaspUI.MainUI;
 
 public final class Language {
 	

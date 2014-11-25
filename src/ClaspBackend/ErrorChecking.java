@@ -1,8 +1,8 @@
 package ClaspBackend;
 
-import javax.swing.JOptionPane;
-
 import retrofit.RetrofitError;
+
+import javax.swing.*;
 
 // Exception handler for all web service requests
 public final class ErrorChecking {

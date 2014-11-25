@@ -1,13 +1,12 @@
 package ClaspUI;
 
+import ClaspBackend.Constraints;
 import ClaspBackend.ErrorChecking;
 import ClaspBackend.Language;
 import ClaspBackend.SessionManager;
-import ClaspBackend.Constraints;
 import retrofit.RetrofitError;
 
 import javax.swing.*;
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -101,8 +100,8 @@ class CreateAccountDialog extends JDialog {
     private boolean checkConstraints(){
     	//makes sure the username entered is valid if it is not it pops error message
     	if(!Constraints.userName(userField.getText()) || userField.getText().isEmpty()){
-    		JOptionPane.showMessageDialog(null, Language.getText("ERROR_USER_NAME"), 
-    				Language.getText("ERROR_USER_NAME_H"), JOptionPane.ERROR_MESSAGE);
+    		JOptionPane.showMessageDialog(null, Language.getText("ERROR_USER_NAME"),
+                    Language.getText("ERROR_USER_NAME_H"), JOptionPane.ERROR_MESSAGE);
     		//not true so return false
 	    	return false;
     	}

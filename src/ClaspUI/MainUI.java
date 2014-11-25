@@ -4,30 +4,18 @@ MainUI.java
 
 package ClaspUI;
 
-import java.awt.CardLayout;
-import java.awt.Dimension;
-import java.awt.Image;
+import ClaspBackend.Language;
+import retrofit.RetrofitError;
+
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.ResourceBundle;
-
-import javax.imageio.ImageIO;
-import javax.swing.ButtonGroup;
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JRadioButtonMenuItem;
-import javax.swing.UIManager;
-
-import retrofit.RetrofitError;
-import ClaspBackend.Language;
 
 @SuppressWarnings("serial")
 public class MainUI extends JFrame {

@@ -1,9 +1,8 @@
 package ClaspUI;
 
-import javax.swing.*;
-
 import ClaspBackend.Language;
 
+import javax.swing.*;
 import java.awt.*;
 
 @SuppressWarnings("serial")

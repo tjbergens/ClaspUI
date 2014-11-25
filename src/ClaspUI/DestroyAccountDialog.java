@@ -2,12 +2,10 @@ package ClaspUI;
 
 import ClaspBackend.Constraints;
 import ClaspBackend.Language;
-import ClaspBackend.NewAccount;
 import ClaspBackend.SessionManager;
 import retrofit.RetrofitError;
 
 import javax.swing.*;
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -44,8 +42,7 @@ class DestroyAccountDialog extends JDialog {
 
         // Password
         addComponent(new JLabel(Language.getText("PASSWORD")), 0, 2);
-        final JPasswordField password = (JPasswordField) addComponent(new JPasswordField(16), 1, 2);
-        this.password = password;
+        this.password = (JPasswordField) addComponent(new JPasswordField(16), 1, 2);
 
         // Password Confirmation
         addComponent(new JLabel(Language.getText("REPEAT_PASSWORD")), 0, 3);
