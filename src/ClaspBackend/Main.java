@@ -2,6 +2,7 @@ package ClaspBackend;
 
 import ClaspUI.MainUI;
 
+// Entry point
 public final class Main {
 	
 	public static MainUI mainUI;

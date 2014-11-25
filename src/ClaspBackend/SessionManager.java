@@ -36,7 +36,7 @@ public class SessionManager {
     private static String passHash;
     private static List<Account> accounts = new ArrayList<Account>();
 
-    //TO DO
+    // Login method called by front-end to execute login API call
     public static int login() {
 
 
@@ -79,6 +79,7 @@ public class SessionManager {
     // Remove a specified set of credentials from the user's account list.
     public static void removeAccount(String id) {
 
+        // Find the Account object that we want to remove
         for (Account account : accounts) {
             if (account.getId().equals(id)) {
 
@@ -120,36 +121,48 @@ public class SessionManager {
 
     }
 
+    // Method called by front-end to make the API call to destroy the main account
     public static void destroyMainAccount() {
+
+        // Login to get the authtoken to make the destroy call
         SessionManager.login();
+
+        // Get the account id of the account object we want to destroy
         List<DestructionAccount> accountToDestroy = service.getMainAccount("Token " + authToken);
         System.err.println("ACCOUNT ID:" + accountToDestroy.get(0).id);
         service.deleteMainAccount("Token " + authToken, accountToDestroy.get(0).id);
     }
 
+    // Method called by front-end to retreive the list of accounts for the authenticated user
     public static int retrieveAccounts() {
 
-
+        // Make API call to retrieve encrypted accounts
         List<Account> encryptedAccounts = service.listAccounts("Token " + authToken);
+
+        // Decrypt accounts
         accounts = CryptoKit.decryptAccounts(encryptedAccounts, cryptoKey);
 
         return 200;
     }
 
+    // Get master password
     public static String getMasterPassword() {
         return SessionManager.masterPassword;
     }
 
+    // Set master password
     public static void setMasterPassword(String masterPassword) {
 
         SessionManager.masterPassword = masterPassword;
     }
 
+    // Get username
     public static String getUserName() {
 
         return SessionManager.userName;
     }
 
+    // Set username
     public static void setUserName(String userName) {
 
         SessionManager.userName = userName;
@@ -172,7 +185,7 @@ public class SessionManager {
             throw e;
         }
     }
-
+    // Interface for all possible API calls
     public interface AlpacaService {
 
         // Get Accounts Interface Method

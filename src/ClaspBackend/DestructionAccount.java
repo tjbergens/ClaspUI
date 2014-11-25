@@ -1,8 +1,6 @@
 package ClaspBackend;
 
-/**
- * Created by TJ on 11/25/2014.
- */
+// Shell class for serializing a destroyed account
 class DestructionAccount {
     String id;
     String username;

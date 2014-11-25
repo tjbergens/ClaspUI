@@ -4,12 +4,15 @@ import javax.swing.JOptionPane;
 
 import retrofit.RetrofitError;
 
+// Exception handler for all web service requests
 public final class ErrorChecking {
 
 	private ErrorChecking() {
 		
 	}
-	
+
+
+	// Handler for our API call exception
 	public static boolean handleRetrofit(RetrofitError e) {
 		switch (e.getKind()) {
     	
