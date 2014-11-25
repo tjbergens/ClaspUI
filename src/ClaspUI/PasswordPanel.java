@@ -147,15 +147,19 @@ class PasswordPanel extends JPanel {
 
 		@Override
 		public void mouseClicked(MouseEvent arg0) {
+			//when x is clicked by the user prompt a confirm window
 			int reply = JOptionPane.showConfirmDialog(null, Language.getText("DELETE_PASSWORD"), 
 					Language.getText("DELETE_PASSWORD_H"), JOptionPane.YES_NO_OPTION);
+			//if the reply is YES then proceed
             if (reply == JOptionPane.YES_OPTION) {
 
                 try {
+                	//try to delete account from server
                     SessionManager.removeAccount(id);
                     SessionManager.retrieveAccounts();
                     parent.passwordUI.addPasswords(SessionManager.getAccounts());
                     parent.passwordUI.updateData();
+                    //if the server replies with an error (account doesn't exist or can't communicate with server) then handle that error
                 } catch (RetrofitError error) {
                     parent.handleRetroError(error);
                 }

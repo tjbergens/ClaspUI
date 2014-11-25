@@ -128,10 +128,11 @@ class AddAccountDialog extends JDialog {
     	else return true;
     }
 
-
+    //Decides what to do when cancel button is pressed
     private class cancelButtonListener implements ActionListener {
 
         @Override
+        //disposes of the current window
         public void actionPerformed(ActionEvent e) {
             dispose();
 
