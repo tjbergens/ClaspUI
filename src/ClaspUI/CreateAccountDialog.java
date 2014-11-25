@@ -1,4 +1,3 @@
-// represents creating a new master class that will contain a list of subaccounts
 package ClaspUI;
 
 import ClaspBackend.ErrorChecking;
@@ -48,6 +47,11 @@ class CreateAccountDialog extends JDialog {
         addComponent(new JLabel(Language.getText("USERNAME")), 0, 1);
         addComponent(userField, 1, 1);
 
+        // Email components
+        //emailField = new JTextField(16);
+        //addComponent(new JLabel("Email"), 0, 2);
+        //addComponent(emailField, 1, 2);
+
         // Password
         passField = new JPasswordField(16);
         addComponent(new JLabel(Language.getText("PASSWORD")), 0, 3);
@@ -57,6 +61,14 @@ class CreateAccountDialog extends JDialog {
         repeatField = new JPasswordField(16);
         addComponent(new JLabel(Language.getText("REPEAT_PASSWORD")), 0, 4);
         addComponent(repeatField, 1, 4);
+
+        // Security Question
+        //addComponent(new JLabel("Security Question"), 0, 5);
+        //addComponent(new JTextField(16), 1, 5);
+
+        // Answer to Security Question
+        //addComponent(new JLabel("Security Answer"), 0, 6);
+        //addComponent(new JTextField(16), 1, 6);
 
         // Submit button
         JButton submitButton = new JButton(Language.getText("SUBMIT"));
@@ -115,7 +127,7 @@ class CreateAccountDialog extends JDialog {
     	//otherwise all fields are valid return true
     	else return true;
     }
-
+    //decided what to do when submit button is clicked by the user
     private class submitButtonListener implements ActionListener {
 
         @Override

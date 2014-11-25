@@ -121,7 +121,6 @@ public class SessionManager {
     }
 
     public static void destroyMainAccount() {
-
         SessionManager.login();
         List<DestructionAccount> accountToDestroy = service.getMainAccount("Token " + authToken);
         System.err.println("ACCOUNT ID:" + accountToDestroy.get(0).id);
