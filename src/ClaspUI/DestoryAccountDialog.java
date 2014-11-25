@@ -14,11 +14,9 @@ import java.awt.event.ActionListener;
 
 @SuppressWarnings("serial")
 class DestroyAccountDialog extends JDialog {
-    // final JFrame
 	final JTextField username;
-	final JTextField password;
-	final JTextField password2;
-	
+    final JPasswordField password;
+    final JPasswordField confirmPassword;
     public DestroyAccountDialog(final MainUI parent) {
 
         // Set title, stop parent from allowing interaction
@@ -46,13 +44,13 @@ class DestroyAccountDialog extends JDialog {
 
         // Password
         addComponent(new JLabel(Language.getText("PASSWORD")), 0, 2);
-        final JTextField username = (JTextField) addComponent(new JTextField(16), 1, 2);
-        password = username;
+        final JPasswordField password = (JPasswordField) addComponent(new JPasswordField(16), 1, 2);
+        this.password = password;
 
         // Password Confirmation
         addComponent(new JLabel(Language.getText("REPEAT_PASSWORD")), 0, 3);
-        final JTextField password = (JTextField) addComponent(new JPasswordField(16), 1, 3);
-        password2 = password;
+        final JPasswordField password2 = (JPasswordField) addComponent(new JPasswordField(16), 1, 3);
+        this.confirmPassword = password2;
 
         // Submit button
         JButton submitButton = new JButton(Language.getText("SUBMIT"));
@@ -68,6 +66,10 @@ class DestroyAccountDialog extends JDialog {
             	if(checkLength()){
 	                try {
 	                    JOptionPane.showConfirmDialog(null, Language.getText("CONFIRM_DELETE"), Language.getText("DELETE_ACCOUNT"), 2);
+
+                        SessionManager.setUserName(accountName.getText());
+                        SessionManager.setMasterPassword(String.valueOf(password2.getPassword()));
+                        SessionManager.destroyMainAccount();
 	                    dispose();
 	                } catch (RetrofitError error) {
 	                    parent.handleRetroError(error);
@@ -109,11 +111,11 @@ class DestroyAccountDialog extends JDialog {
     		JOptionPane.showMessageDialog(null, Language.getText("ERROR_ACCOUNT_NAME"), Language.getText("ERROR_ACCOUNT_NAME_H"), JOptionPane.ERROR_MESSAGE);
     		return false;
     	}
-    	else if(!Constraints.chkLength(password.getText())){
+    	else if(!Constraints.chkLength(String.valueOf(password.getPassword()))){
     		JOptionPane.showMessageDialog(null, Language.getText("ERROR_USER_NAME"), Language.getText("ERROR_USER_NAME_H"), JOptionPane.ERROR_MESSAGE);
     		return false;
     	}
-    	else if(!Constraints.chkLength(password2.getText())){
+    	else if(!Constraints.chkLength(String.valueOf(confirmPassword.getPassword()))){
     		JOptionPane.showMessageDialog(null, Language.getText("ERROR_PASSWORD"), Language.getText("ERROR_PASSWORD_H"), JOptionPane.ERROR_MESSAGE);
     		return false;
     	}

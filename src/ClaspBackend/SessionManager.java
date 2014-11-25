@@ -120,6 +120,14 @@ public class SessionManager {
 
     }
 
+    public static void destroyMainAccount() {
+
+        SessionManager.login();
+        List<DestructionAccount> accountToDestroy = service.getMainAccount("Token " + authToken);
+        System.err.println("ACCOUNT ID:" + accountToDestroy.get(0).id);
+        service.deleteMainAccount("Token " + authToken, accountToDestroy.get(0).id);
+    }
+
     public static int retrieveAccounts() {
 
 
@@ -175,6 +183,14 @@ public class SessionManager {
         // Delete Account Interface Method
         @DELETE("/accounts/{id}/?format=json")
         Account deleteAccount(@Header("Authorization") String token, @Path("id") String id);
+
+        // Get Main Account Interface Method
+        @GET("/user/?format=json")
+        List<DestructionAccount> getMainAccount(@Header("Authorization") String token);
+
+        // Delete Main Account Interface Method
+        @DELETE("/user/{id}/?format=json")
+        Account deleteMainAccount(@Header("Authorization") String token, @Path("id") String id);
 
         // Add Account Interface Method
         @POST("/accounts/?format=json")
